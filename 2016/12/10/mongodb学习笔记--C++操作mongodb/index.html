@@ -162,7 +162,7 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                3
+                4
                 <span>文章</span>
             </div>
             <div class="article-info-block">
@@ -208,7 +208,199 @@
 </aside>
 
             
-            <section id="main"></section>
+            <section id="main"><article id="post-mongodb学习笔记--C++操作mongodb" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            
+	
+		<img src="http://bizhi.zhuoku.com/2015/04/29/zhuoku/ZHUOKU005.jpg" class="article-banner" />
+	
+
+
+
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            mongodb学习笔记--C++操作mongodb
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/12/10/mongodb学习笔记--C++操作mongodb/">
+            <time datetime="2016-12-09T16:00:00.000Z" itemprop="datePublished">2016-12-10</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/mongodb/">mongodb</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/mongodb/C/">C++</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/C/">C++</a>, <a class="tag-link" href="/tags/mongodb/">mongodb</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>　　在学习mongodb过程当中，必须学习的就是用C++（Java、PHP、C#等）操作mongodb，这里讲述C++操作mongodb，在官方提供的mongo-cxx-driver驱动中有相关的操作例子，可以结合例子学习，目录是<code>mongo-cxx-driver-legacy-1.0.0-rc0\src\mongo\client\examples</code>，这里针对几个重要的点讲述。</p>
+<a id="more"></a>
+<p>##<strong>1. C++连接mongodb</strong></p>
+<p><strong>（1）<font color="#0000FF">有无密码都适用</font></strong><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">mongo::client::GlobalInstance instance;</div><div class="line"><span class="keyword">if</span> (!instance.initialized()) &#123;</div><div class="line">	<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"failed to initialize the client driver: "</span> &lt;&lt; instance.status() &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line">    <span class="keyword">return</span> EXIT_FAILURE;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">std</span>::<span class="built_in">string</span> uri = <span class="string">"mongodb://username:password@127.0.0.1:27017"</span>;</div><div class="line"><span class="built_in">std</span>::<span class="built_in">string</span> errmsg;</div><div class="line"></div><div class="line">ConnectionString cs = ConnectionString::parse(uri, errmsg);</div><div class="line"></div><div class="line"><span class="keyword">if</span> (!cs.isValid()) &#123;</div><div class="line">	<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Error parsing connection string "</span> &lt;&lt; uri &lt;&lt; <span class="string">": "</span> &lt;&lt; errmsg &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line">    <span class="keyword">return</span> EXIT_FAILURE;</div><div class="line">&#125;</div><div class="line"></div><div class="line">boost::scoped_ptr&lt;DBClientBase&gt; conn(cs.connect(errmsg));</div><div class="line"><span class="keyword">if</span> (!conn) &#123;</div><div class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"couldn't connect : "</span> &lt;&lt; errmsg &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">	<span class="keyword">return</span> EXIT_FAILURE;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>　　<font color="#0000FF">这种方式有密码和无密码的情况都适用，<code>&quot;username&quot;</code>为登录名，<code>&quot;password&quot;</code>为登录密码；无密码时去掉<code>&quot;username:password@&quot;</code>即可连接，这样连接方式比较常用。</font></p>
+<p><strong>（2）常规连接操作（不带密码连接）</strong><br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">mongo::DBClientConnection conn; </div><div class="line">mongo::Status status = mongo::client::initialize();</div><div class="line">if (!status.isOK()) &#123;</div><div class="line">	MongoException m(-1, "failed to initialize the client driver: " + status.toString());</div><div class="line">	return -1;</div><div class="line">&#125;</div><div class="line">string url = "localhost:27017";</div><div class="line">if (!conn.connect(url, errmsg)) &#123;</div><div class="line">	MongoException m(0, "couldn’t connect : " + errmsg);</div><div class="line">	return -1;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>通过这种方式可建立与mongodb的连接，但是是未带权限的连接。</p>
+<p><strong>（3）带密码连接</strong><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">conn.auth( <span class="string">"admin"</span> , <span class="string">"username"</span> , <span class="string">"password"</span> , errmsg );</div></pre></td></tr></table></figure></p>
+<p>　　其中<code>&quot;admin&quot;</code>为验证用户的所在数据库，一般在<code>&quot;test.system.users&quot;</code>或<code>&quot;admin.system.users&quot;</code>表中，所以填库名<code>&quot;test&quot;</code>或<code>&quot;admin&quot;</code>，<code>&quot;username&quot;</code>为登录名，<code>&quot;password&quot;</code>为登录密码。<br>或者下面的auth方式也可以：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">conn.auth(BSON(</div><div class="line">	<span class="string">"user"</span> &lt;&lt; <span class="string">"root"</span> &lt;&lt; <span class="string">"db"</span> &lt;&lt; <span class="string">"admin"</span> &lt;&lt;</div><div class="line">	<span class="string">"pwd"</span> &lt;&lt; <span class="string">"password"</span> &lt;&lt; <span class="string">"mechanism"</span> &lt;&lt; <span class="string">"DEFAULT"</span></div><div class="line">));</div></pre></td></tr></table></figure>
+<p>根据mongodb的设置更改传递给函数<code>conn.auth</code>的参数值。</p>
+<p>##<strong>2. C++查询数据</strong><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> <span class="keyword">char</span>* ns = <span class="string">"test.first"</span>;</div><div class="line">conn-&gt;findOne(ns, BSONObj()); <span class="comment">//查询一条数据</span></div><div class="line">conn-&gt;findOne(ns, BSONObjBuilder().append(<span class="string">"name"</span>, <span class="string">"joe"</span>).obj()); <span class="comment">//条件查询</span></div></pre></td></tr></table></figure></p>
+<p>##<strong>3. C++插入数据</strong><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> <span class="keyword">char</span>* ns = <span class="string">"test.first"</span>;</div><div class="line">conn-&gt;insert(ns, BSON(<span class="string">"name"</span> &lt;&lt; <span class="string">"joe"</span> </div><div class="line">                      &lt;&lt; <span class="string">"pwd"</span> &lt;&lt; <span class="string">"123456"</span> </div><div class="line">                      &lt;&lt; <span class="string">"age"</span> &lt;&lt; <span class="number">20</span>));</div></pre></td></tr></table></figure></p>
+<p>##<strong>4. C++删除数据</strong><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> <span class="keyword">char</span>* ns = <span class="string">"test.first"</span>;</div><div class="line">conn-&gt;remove(ns, BSONObj()); <span class="comment">//删除所有</span></div><div class="line">conn-&gt;remove(ns, BSONObjBuilder().append(<span class="string">"name"</span>, <span class="string">"joe"</span>).obj()); <span class="comment">//删除指定文档</span></div></pre></td></tr></table></figure></p>
+<p>##<strong>5. C++更新数据</strong></p>
+<p><strong>(1) 在原数据基础上增加属性</strong><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> <span class="keyword">char</span>* ns = <span class="string">"test.first"</span>;</div><div class="line">BSONObj res = conn-&gt;findOne(ns, BSONObjBuilder().append(<span class="string">"name"</span>, <span class="string">"joe"</span>).obj());</div><div class="line">BSONObj after = BSONObjBuilder().appendElements(res).append(<span class="string">"name2"</span>, <span class="string">"h"</span>).obj();</div><div class="line">conn-&gt;update(ns, BSONObjBuilder().append(<span class="string">"name"</span>, <span class="string">"jeo2"</span>).obj(), after);	<span class="comment">//在原数据上增加属性</span></div></pre></td></tr></table></figure></p>
+<p>这种update方式只是在原数据基础上增加属性，并不会改变指定属性值。<br><strong>(2) 更改指定的某个属性值</strong><br><strong><font color="red">想要update指定属性的值，需要用到”$set”指令</font></strong>，如下代码所示：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">BSONObj res = conn-&gt;findOne(ns, BSONObjBuilder().append(<span class="string">"name"</span>, <span class="string">"joe"</span>).obj());</div><div class="line"><span class="comment">//更改指定的某个属性值</span></div><div class="line">conn-&gt;update(<span class="string">"test.first"</span>, res, BSON(<span class="string">"$set"</span> &lt;&lt; BSON(<span class="string">"age"</span> &lt;&lt; <span class="number">11</span>)));</div></pre></td></tr></table></figure></p>
+<font color="#0000FF">主要想强调下update更改指定的某个属性值的方式，比较常用。</font>
+
+<p>##<strong>6. C++操作例子</strong><br>(1) simple_client_test.cpp<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line">#if defined(_WIN32)</div><div class="line">#include &lt;winsock2.h&gt;</div><div class="line">#include &lt;windows.h&gt;</div><div class="line">#endif*/</div><div class="line"><span class="comment">//g++ simple_client_test.cpp -pthread -lmongoclient -lboost_thread -lboost_system -lboost_regex -o simple_client_test</span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"mongo/client/dbclient.h"</span>  <span class="comment">// the mongo c++ driver</span></span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> verify</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> verify(x) MONGO_verify(x)</span></div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> mongo;</div><div class="line"><span class="comment">//using mongo::BSONObj;</span></div><div class="line"><span class="comment">//using mongo::BSONObjBuilder;</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (argc &gt; <span class="number">2</span>) &#123;</div><div class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"usage: "</span> &lt;&lt; argv[<span class="number">0</span>] &lt;&lt; <span class="string">" [MONGODB_URI]"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line">        <span class="keyword">return</span> EXIT_FAILURE;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    mongo::client::GlobalInstance instance;</div><div class="line">    <span class="keyword">if</span> (!instance.initialized()) &#123;</div><div class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"failed to initialize the client driver: "</span> &lt;&lt; instance.status() &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line">        <span class="keyword">return</span> EXIT_FAILURE;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> uri = argc == <span class="number">2</span> ? argv[<span class="number">1</span>] : <span class="string">"mongodb://127.0.0.1:27017"</span>;</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> errmsg;</div><div class="line"></div><div class="line">    ConnectionString cs = ConnectionString::parse(uri, errmsg);</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (!cs.isValid()) &#123;</div><div class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Error parsing connection string "</span> &lt;&lt; uri &lt;&lt; <span class="string">": "</span> &lt;&lt; errmsg &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line">        <span class="keyword">return</span> EXIT_FAILURE;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    boost::scoped_ptr&lt;DBClientBase&gt; conn(cs.connect(errmsg));</div><div class="line">    <span class="keyword">if</span> (!conn) &#123;</div><div class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"couldn't connect : "</span> &lt;&lt; errmsg &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">        <span class="keyword">return</span> EXIT_FAILURE;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">const</span> <span class="keyword">char</span>* ns = <span class="string">"test.first"</span>;</div><div class="line"></div><div class="line">    conn-&gt;dropCollection(ns);</div><div class="line">    </div><div class="line">    <span class="comment">//clean up old data from any previous tesets</span></div><div class="line">    conn-&gt;remove(ns, BSONObj());</div><div class="line">    verify(conn-&gt;findOne(ns, BSONObj()).isEmpty()); <span class="comment">//verify逻辑表达式，判断是否还存在test.first，是否clenn up成功</span></div><div class="line">    </div><div class="line">    <span class="comment">//test insert</span></div><div class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"(1) test insert----"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">    conn-&gt;insert(ns, </div><div class="line">                 BSON(<span class="string">"name"</span> &lt;&lt; <span class="string">"joe"</span> </div><div class="line">                      &lt;&lt; <span class="string">"pwd"</span> &lt;&lt; <span class="string">"123456"</span> </div><div class="line">                      &lt;&lt; <span class="string">"age"</span> &lt;&lt; <span class="number">20</span>));</div><div class="line">    verify(!conn-&gt;findOne(ns, BSONObj()).isEmpty());     <span class="comment">//判断是否添加成功</span></div><div class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"insert data : "</span> &lt;&lt; conn-&gt;findOne(ns, BSONObj()) &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"insert success!"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line"></div><div class="line">    <span class="comment">// test remove</span></div><div class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"(2) test remove----"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">    conn-&gt;remove(ns, BSONObj());</div><div class="line">    verify(conn-&gt;findOne(ns, BSONObj()).isEmpty());</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"remove success!"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">    </div><div class="line">    <span class="comment">// insert, findOne testing</span></div><div class="line">    conn-&gt;insert(ns, </div><div class="line">                 BSON(<span class="string">"name"</span> &lt;&lt; <span class="string">"joe"</span> </div><div class="line">                      &lt;&lt; <span class="string">"pwd"</span> &lt;&lt; <span class="string">"234567"</span> </div><div class="line">                      &lt;&lt; <span class="string">"age"</span> &lt;&lt; <span class="number">21</span>));</div><div class="line">    &#123;</div><div class="line">        BSONObj res = conn-&gt;findOne(ns, BSONObj());</div><div class="line">        verify(<span class="built_in">strstr</span>(res.getStringField(<span class="string">"name"</span>), <span class="string">"joe"</span>));</div><div class="line">        verify(!<span class="built_in">strstr</span>(res.getStringField(<span class="string">"name2"</span>), <span class="string">"joe"</span>));</div><div class="line">        verify(<span class="number">21</span> == res.getIntField(<span class="string">"age"</span>));</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"insert data : "</span> &lt;&lt; conn-&gt;findOne(ns, BSONObj()) &lt;&lt;<span class="built_in">endl</span>;</div><div class="line"></div><div class="line">    <span class="comment">// test update</span></div><div class="line">    &#123;</div><div class="line">        BSONObj res = conn-&gt;findOne(ns, BSONObjBuilder().append(<span class="string">"name"</span>, <span class="string">"joe"</span>).obj());</div><div class="line">        verify(!<span class="built_in">strstr</span>(res.getStringField(<span class="string">"name2"</span>), <span class="string">"jeo"</span>));</div><div class="line">        </div><div class="line">        BSONObj after = BSONObjBuilder().appendElements(res).append(<span class="string">"name2"</span>, <span class="string">"w"</span>).obj();</div><div class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"(3) test update name joe add name2 name3----"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">        <span class="comment">//upsert type1 update method</span></div><div class="line">        conn-&gt;update(ns, BSONObjBuilder().append(<span class="string">"name"</span>, <span class="string">"joe"</span>).obj(), after);</div><div class="line">        <span class="comment">//res = conn-&gt;findOne(ns, BSONObjBuilder().append("name2", "w").obj());</span></div><div class="line">        verify(!<span class="built_in">strstr</span>(res.getStringField(<span class="string">"name2"</span>), <span class="string">"joe"</span>));</div><div class="line">        verify(conn-&gt;findOne(ns, BSONObjBuilder().append(<span class="string">"name"</span>, <span class="string">"joe2"</span>).obj()).isEmpty());</div><div class="line">        <span class="comment">//cout &lt;&lt; " update1 data: " &lt;&lt; conn-&gt;findOne(ns, BSONObj()) &lt;&lt; endl;</span></div><div class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">" update1 data : "</span> &lt;&lt; conn-&gt;findOne(ns, Query(<span class="string">"&#123;name2:'w'&#125;"</span>)) &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">        </div><div class="line">        <span class="comment">//upsert type2 update method 更改指定的某个属性值 </span></div><div class="line">        <span class="keyword">const</span> <span class="built_in">string</span> TEST_NS = <span class="string">"test.first"</span>;</div><div class="line">        conn-&gt;update(<span class="string">"test.first"</span>, res, BSON(<span class="string">"$set"</span> &lt;&lt; BSON(<span class="string">"age"</span> &lt;&lt; <span class="number">11</span>)));</div><div class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">" update2 data : "</span> &lt;&lt; conn-&gt;findOne(ns, BSONObj()) &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">        res = conn-&gt;findOne(ns, BSONObjBuilder().append(<span class="string">"name"</span>, <span class="string">"joe"</span>).obj());</div><div class="line"></div><div class="line">        <span class="comment">//upsert type3 update method</span></div><div class="line">        <span class="keyword">try</span></div><div class="line">        &#123;</div><div class="line">            after = BSONObjBuilder().appendElements(res).append(<span class="string">"name3"</span>, <span class="string">"h"</span>).obj();</div><div class="line">            conn-&gt;update(ns, BSONObjBuilder().append(<span class="string">"name"</span>, <span class="string">"joe"</span>).obj(), after);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">catch</span> (OperationException&amp;)</div><div class="line">        &#123;</div><div class="line">            <span class="built_in">cout</span> &lt;&lt; <span class="string">" update error: "</span> &lt;&lt; conn-&gt;getLastErrorDetailed().toString() &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">        &#125;</div><div class="line">        verify(!conn-&gt;findOne(ns, BSONObjBuilder().append(<span class="string">"name"</span>, <span class="string">"joe"</span>).obj()).isEmpty());</div><div class="line">        <span class="comment">//cout &lt;&lt; " update3 data: " &lt;&lt; conn-&gt;findOne(ns, BSONObj()) &lt;&lt; endl;</span></div><div class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">" update3 data : "</span> &lt;&lt; conn-&gt;findOne(ns, Query(<span class="string">"&#123;name3:'h'&#125;"</span>)) &lt;&lt; <span class="built_in">endl</span>;</div><div class="line"></div><div class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"(4) test query-----"</span> &lt;&lt; <span class="string">"\n query data : "</span> </div><div class="line">            &lt;&lt; conn-&gt;findOne(ns, BSONObjBuilder().append(<span class="string">"name"</span>, <span class="string">"joe"</span>).obj()) &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">" Query data : "</span> &lt;&lt; conn-&gt;findOne(ns, Query(<span class="string">"&#123;name:'joe'&#125;"</span>)) &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>(2) makefile文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">CC = g++</div><div class="line">TEST = simple_client_test</div><div class="line"></div><div class="line">$(TEST):</div><div class="line">	$(CC) $@.cpp -pthread -lmongoclient -lboost_thread -lboost_system -lboost_regex -o $@</div><div class="line">	./$(TEST)</div><div class="line">	rm -f $(TEST)</div><div class="line">run:</div><div class="line">	./$(TEST)</div><div class="line"></div><div class="line">clean:</div><div class="line">	rm -f $(TEST)</div></pre></td></tr></table></figure></p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2016/12/10/mongodb学习笔记--C++操作mongodb/" data-id="cj2ou4aw20008mchgkduaz534" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yoursite.com/2016/12/10/mongodb学习笔记--C++操作mongodb/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2016/12/10/mongodb学习笔记--C++操作mongodb/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2017/02/21/mongodb学习笔记--$elemMatch操作符的使用/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    mongodb学习笔记--$elemMatch操作符的使用
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2016/10/21/C++中sprintf函数的用法/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">C++中sprintf函数的用法</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+</section>
             
                 <aside id="sidebar">
    
@@ -217,6 +409,25 @@
         <h3 class="widget-title">最新文章</h3>
         <div class="widget">
             <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/05/14/hello/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/05/14/hello/" class="title">hello</a></p>
+                            <p class="item-date"><time datetime="2017-05-14T15:07:00.000Z" itemprop="datePublished">2017-05-14</time></p>
+                        </div>
+                    </li>
                 
                     <li>
                         
@@ -293,7 +504,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">1</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">1</span></li></ul>
         </div>
     </div>
 
