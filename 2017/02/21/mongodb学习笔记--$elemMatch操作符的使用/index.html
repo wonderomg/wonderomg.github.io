@@ -208,7 +208,217 @@
 </aside>
 
             
-            <section id="main"></section>
+            <section id="main"><article id="post-mongodb学习笔记--$elemMatch操作符的使用" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            
+	
+		<img src="http://www.bigdata-research.org/uploadfile/2014/1113/20141113053033429.jpg?1437154270828" class="article-banner" />
+	
+
+
+
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            mongodb学习笔记--$elemMatch操作符的使用
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2017/02/21/mongodb学习笔记--$elemMatch操作符的使用/">
+            <time datetime="2017-02-20T16:00:00.000Z" itemprop="datePublished">2017-02-21</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/mongodb/">mongodb</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/mongodb/">mongodb</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>　　mongodb提供了很多操作符以便更加方便快捷地操作数据，下面我们来认识一下查询操作符<code>$elemMatch</code>，<code>$elemMatch</code>投影操作符将限制查询返回的数组字段的内容只包含匹配<code>$elemMatch</code>条件的数组元素。</p>
+<a id="more"></a>
+<blockquote>
+<p>注意：</p>
+<ul>
+<li>数组中元素是内嵌文档。</li>
+<li>如果多个元素匹配<code>$elemMatch</code>条件，操作符返回数组中第一个匹配条件的元素。</li>
+</ul>
+</blockquote>
+<h2 id="1-首先创建一个简单文档"><a href="#1-首先创建一个简单文档" class="headerlink" title="1.首先创建一个简单文档"></a><strong>1.首先创建一个简单文档</strong></h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.test.insert(&#123;<span class="string">"id"</span>:<span class="number">1</span>, <span class="string">"members"</span>:[&#123;<span class="string">"name"</span>:<span class="string">"BuleRiver1"</span>, <span class="string">"age"</span>:<span class="number">27</span>, <span class="string">"gender"</span>:<span class="string">"M"</span>&#125;, &#123;<span class="string">"name"</span>:<span class="string">"BuleRiver2"</span>, <span class="string">"age"</span>:<span class="number">23</span>, <span class="string">"gender"</span>:<span class="string">"F"</span>&#125;, &#123;<span class="string">"name"</span>:<span class="string">"BuleRiver3"</span>, <span class="string">"age"</span>:<span class="number">21</span>, <span class="string">"gender"</span>:<span class="string">"M"</span>&#125;]&#125;);</div></pre></td></tr></table></figure>
+<h2 id="2-使用多种方式尝试查询"><a href="#2-使用多种方式尝试查询" class="headerlink" title="2.使用多种方式尝试查询"></a><strong>2.使用多种方式尝试查询</strong></h2><p>(1) 使用<code>db.test.find({&quot;members&quot;:{&quot;name&quot;:&quot;BuleRiver1&quot;}});</code>进行查询：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.test.find(&#123;<span class="string">"members"</span>:&#123;<span class="string">"name"</span>:<span class="string">"BuleRiver1"</span>&#125;&#125;);</div></pre></td></tr></table></figure>
+<p>查询的结果是空集。</p>
+<p>(2) 只有完全匹配一个的时候才能获取到结果，因此：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.test.find(&#123;<span class="string">"members"</span>:&#123;<span class="string">"name"</span>:<span class="string">"BuleRiver1"</span>, <span class="string">"age"</span>:<span class="number">27</span>, <span class="string">"gender"</span>:<span class="string">"M"</span>&#125;&#125;);</div></pre></td></tr></table></figure>
+<p>可以得到结果。</p>
+<p>(3) 如果把键值进行颠倒,也得不到结果：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.test.find(&#123;<span class="string">"members"</span>:&#123;<span class="string">"age"</span>:<span class="number">27</span>, <span class="string">"name"</span>:<span class="string">"BuleRiver1"</span>, <span class="string">"gender"</span>:<span class="string">"M"</span>&#125;&#125;);</div></pre></td></tr></table></figure>
+<p>得到的结果是空集。</p>
+<p>(4) 我们这样查询：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.test.find(&#123;<span class="string">"members.name"</span>:<span class="string">"BuleRiver1"</span>&#125;);</div></pre></td></tr></table></figure>
+<p>是可以查询出结果的。</p>
+<p>(5) 如果需要两个属性：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.test.find(&#123;<span class="string">"members.name"</span>:<span class="string">"BuleRiver1"</span>, <span class="string">"members.age"</span>:<span class="number">27</span>&#125;);</div></pre></td></tr></table></figure>
+<p>也可以查询出结果。</p>
+<p>(6) 我们再进行破坏性尝试：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.test.find(&#123;<span class="string">"members.name"</span>:<span class="string">"BuleRiver1"</span>, <span class="string">"members.age"</span>:<span class="number">23</span>&#125;);</div></pre></td></tr></table></figure>
+<p>也可以查询出结果。</p>
+<p>不过我们应该注意到：<code>BuleRiver1</code>是数组中第一个元素的键值，而23是数组中第二个元素的键值，这样也可以查询出结果。</p>
+<h2 id="3-使用-elemMatch操作符查询"><a href="#3-使用-elemMatch操作符查询" class="headerlink" title="3.使用$elemMatch操作符查询"></a><strong>3.使用$elemMatch操作符查询</strong></h2><p>　　对于我们的一些应用来说，以上结果显然不是我们想要的结果。所以我们应该使用<code>$elemMatch</code>操作符:</p>
+<p>(1)``$elemMatch+同一个元素中的键值组合</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.test.find(&#123;<span class="string">"members"</span>:&#123;<span class="string">"$elemMatch"</span>:&#123;<span class="string">"name"</span>:<span class="string">"BuleRiver1"</span>, <span class="string">"age"</span>:<span class="number">27</span>&#125;&#125;&#125;);</div></pre></td></tr></table></figure>
+<p>可以查询出结果；</p>
+<p>(2)<code>$elemMatch</code>+不同元素的键值组合</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.test.find(&#123;<span class="string">"members"</span>:&#123;<span class="string">"$elemMatch"</span>:&#123;<span class="string">"name"</span>:<span class="string">"BuleRiver1"</span>, <span class="string">"age"</span>:<span class="number">23</span>&#125;&#125;&#125;);</div></pre></td></tr></table></figure>
+<p>查询不出结果。</p>
+<p>因此，(1)展示的嵌套查询正是我们想要的查询方式。</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://wonderomg.github.io/2017/02/21/mongodb学习笔记--$elemMatch操作符的使用/" data-id="cj3lq0sv8000jw4hgnbp785zz" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="https://wonderomg.github.io/2017/02/21/mongodb学习笔记--$elemMatch操作符的使用/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://wonderomg.github.io/2017/02/21/mongodb学习笔记--$elemMatch操作符的使用/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2017/02/28/前后端分离，前端跨域访问后台的两种方式/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    前后端分离，前端跨域访问后台的两种方式
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2017/02/20/TCP长连接与短连接的区别/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">TCP长连接与短连接的区别</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+</section>
             
                 <aside id="sidebar">
    

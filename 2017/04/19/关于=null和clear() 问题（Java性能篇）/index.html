@@ -208,7 +208,190 @@
 </aside>
 
             
-            <section id="main"></section>
+            <section id="main"><article id="post-关于=null和clear() 问题（Java性能篇）" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            
+	
+		<img src="http://pic1.win4000.com/wallpaper/a/54535d25dfe79.jpg" class="article-banner" />
+	
+
+
+
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            关于=null和clear()问题（Java性能优化）
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2017/04/19/关于=null和clear() 问题（Java性能篇）/">
+            <time datetime="2017-04-18T16:00:00.000Z" itemprop="datePublished">2017-04-19</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/Java/">Java</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Java/性能优化/">性能优化</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Java/">Java</a>, <a class="tag-link" href="/tags/性能优化/">性能优化</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>　　以ArrayList为例，根据情况来看吧，<strong>ArrayList内部维护的是一个数组</strong>。<a id="more"></a></p>
+<p>##<strong>1. list = null</strong></p>
+<blockquote>
+<p>那么你<strong>list = null; </strong> 就是<strong>释放这个数组对象，当然里面所引用的对象也就释放了</strong>。</p>
+<p>##<strong>2. list.clear()</strong><br>如果<strong>list.clear();</strong> 看看源代码就知道了，是<strong>把list里面对象遍历赋值为null</strong>，意思就是<strong>释放list里面所有对象</strong>。</p>
+</blockquote>
+<p>　　这样就很清楚了，如果你这个list还需要使用，那么你可以使用clear去释放掉list里面所有的数据，GC在回收的时候就有可能回收掉原list里面的这些数据了。如果你都不需要了，那么你就用=null这样GC就有可能把list以及里面关联的一些数据也都回收了。</p>
+<p>##<strong>3. 咱们来看下clear()源码</strong></p>
+<p><code>clear()</code>源码解析：<br>If we take an <code>ArrayList</code> as an example, the <code>clear()</code> method does this:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">clear</span><span class="params">()</span> </span>&#123; </div><div class="line">    modCount++;  </div><div class="line">    </div><div class="line">    <span class="comment">// Let gc do its work </span></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; i++)  </div><div class="line">        elementData[i] = <span class="keyword">null</span>;  </div><div class="line">        </div><div class="line">    size = <span class="number">0</span>;  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>　　Basically, if elements of a List are not referenced anywhere else in the code there is really no need (or at least you do not gain anything) to call <code>clear()</code>. You also do not need to assign <code>null</code> to the List because it will be garbage collected as soon as it falls out of scope.<br><strong>译文：</strong><br>　　基本上，如果List中的元素没有被引用到代码中的其他地方，那么确实没有必要（或至少你没有获得任何东西）来调用<code>clear()</code>。 您也不需要为List指定<code>null</code>，因为它会在超出范围的情况下被垃圾回收。</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://wonderomg.github.io/2017/04/19/关于=null和clear() 问题（Java性能篇）/" data-id="cj3lq0sur000ew4hg97f21y2d" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="https://wonderomg.github.io/2017/04/19/关于=null和clear() 问题（Java性能篇）/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://wonderomg.github.io/2017/04/19/关于=null和clear() 问题（Java性能篇）/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2017/04/20/mybatis中的#和$的区别/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    mybatis中的#和$的区别
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2017/02/28/前后端分离，前端跨域访问后台的两种方式/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">前后端分离，前端跨域访问后台的两种方式</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+</section>
             
                 <aside id="sidebar">
    
