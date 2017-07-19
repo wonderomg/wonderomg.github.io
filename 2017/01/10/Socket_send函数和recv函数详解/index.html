@@ -3,25 +3,25 @@
 <head>
     <meta charset="utf-8">
     
-    <title>C++中sprintf函数的用法 | wonderomg</title>
+    <title>Socket send函数和recv函数详解 | 刘斩仙</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="1.常用方式　　 sprintf函数的功能与printf函数的功能基本一样，只是它把结果输出到指定的字符串中了，看个例子就明白了：">
-<meta name="keywords" content="sprintf">
+    <meta name="description" content="##1. send 函数  int send( SOCKET s, const char FAR *buf, int len, int flags );">
+<meta name="keywords" content="socket,C++">
 <meta property="og:type" content="article">
-<meta property="og:title" content="C++中sprintf函数的用法">
-<meta property="og:url" content="https://wonderomg.github.io/2016/10/21/C++中sprintf函数的用法/index.html">
-<meta property="og:site_name" content="wonderomg">
-<meta property="og:description" content="1.常用方式　　 sprintf函数的功能与printf函数的功能基本一样，只是它把结果输出到指定的字符串中了，看个例子就明白了：">
-<meta property="og:image" content="http://pic1.win4000.com/wallpaper/5/56eb942607643.jpg">
-<meta property="og:updated_time" content="2017-07-13T14:35:11.236Z">
+<meta property="og:title" content="Socket send函数和recv函数详解">
+<meta property="og:url" content="https://wonderomg.github.io/2017/01/10/Socket_send函数和recv函数详解/index.html">
+<meta property="og:site_name" content="刘斩仙">
+<meta property="og:description" content="##1. send 函数  int send( SOCKET s, const char FAR *buf, int len, int flags );">
+<meta property="og:image" content="http://img2.91.com/uploads/allimg/140623/705-1406231J408-52.jpg">
+<meta property="og:updated_time" content="2017-07-19T13:46:56.198Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="C++中sprintf函数的用法">
-<meta name="twitter:description" content="1.常用方式　　 sprintf函数的功能与printf函数的功能基本一样，只是它把结果输出到指定的字符串中了，看个例子就明白了：">
-<meta name="twitter:image" content="http://pic1.win4000.com/wallpaper/5/56eb942607643.jpg">
+<meta name="twitter:title" content="Socket send函数和recv函数详解">
+<meta name="twitter:description" content="##1. send 函数  int send( SOCKET s, const char FAR *buf, int len, int flags );">
+<meta name="twitter:image" content="http://img2.91.com/uploads/allimg/140623/705-1406231J408-52.jpg">
     
 
     
-        <link rel="alternate" href="http://blog.csdn.net/u012406177/rss/list" title="wonderomg" type="application/atom+xml" />
+        <link rel="alternate" href="http://blog.csdn.net/u012406177/rss/list" title="刘斩仙" type="application/atom+xml" />
     
 
     
@@ -56,19 +56,19 @@
         <div class="outer">
             <a href="/" id="logo">
                 <i class="logo"></i>
-                <span class="site-title">wonderomg</span>
+                <span class="site-title">刘斩仙</span>
             </a>
             <nav id="main-nav">
                 
-                    <a class="main-nav-link" href="/.">Home</a>
+                    <a class="main-nav-link" href="/.">首页</a>
                 
-                    <a class="main-nav-link" href="/archives">Archives</a>
+                    <a class="main-nav-link" href="/archives">归档</a>
                 
-                    <a class="main-nav-link" href="/categories">Categories</a>
+                    <a class="main-nav-link" href="/categories">分类</a>
                 
-                    <a class="main-nav-link" href="/tags">Tags</a>
+                    <a class="main-nav-link" href="/tags">标签</a>
                 
-                    <a class="main-nav-link" href="/about">About</a>
+                    <a class="main-nav-link" href="/about">关于</a>
                 
             </nav>
             
@@ -125,15 +125,15 @@
         <table class="menu outer">
             <tr>
                 
-                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                    <td><a class="main-nav-link" href="/.">首页</a></td>
                 
-                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
                 
-                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
                 
-                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
                 
-                    <td><a class="main-nav-link" href="/about">About</a></td>
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
                 
                 <td>
                     
@@ -208,7 +208,7 @@
 </aside>
 
             
-            <section id="main"><article id="post-C++中sprintf函数的用法" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-Socket_send函数和recv函数详解" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -216,7 +216,7 @@
                 
     
         <h1 class="article-title" itemprop="name">
-            C++中sprintf函数的用法
+            Socket send函数和recv函数详解
         </h1>
     
 
@@ -225,8 +225,8 @@
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2016/10/21/C++中sprintf函数的用法/">
-            <time datetime="2016-10-20T16:00:00.000Z" itemprop="datePublished">2016-10-21</time>
+        <a href="/2017/01/10/Socket_send函数和recv函数详解/">
+            <time datetime="2017-01-09T16:00:00.000Z" itemprop="datePublished">2017-01-10</time>
         </a>
     </div>
 
@@ -234,13 +234,13 @@
                         
     <div class="article-category">
     	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/C/">C++</a>
+        <a class="article-category-link" href="/categories/C/">C++</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/C/Socket/">Socket</a>
     </div>
 
                         
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/sprintf/">sprintf</a>
+        <a class="tag-link" href="/tags/C/">C++</a>, <a class="tag-link" href="/tags/socket/">socket</a>
     </div>
 
                     </div>
@@ -251,28 +251,43 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <h2 id="1-常用方式"><a href="#1-常用方式" class="headerlink" title="1.常用方式"></a><strong>1.常用方式</strong></h2><p>　　 <code>sprintf</code>函数的功能与<code>printf</code>函数的功能基本一样，只是它把结果输出到指定的字符串中了，看个例子就明白了：</p>
+            <hr>
+<p>##<strong>1. send 函数</strong></p>
+<blockquote>
+<p><strong>int send( SOCKET s, const char FAR *buf, int len, int flags ); </strong> </p>
+</blockquote>
 <a id="more"></a>
-<p>例：将<code>&quot;test,1,2&quot;</code>写入数组s中</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *avgv[])</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">char</span> s[<span class="number">40</span>];</div><div class="line">    <span class="built_in">sprintf</span>(s,<span class="string">"%s%d%c"</span>,<span class="string">"test"</span>,<span class="number">1</span>,<span class="string">'2'</span>);</div><div class="line">    <span class="comment">/*第一个参数就是指向要写入的那个字符串的指针，剩下的就和printf()一样了</span></div><div class="line">    你可以比较一下，这是向屏幕输入*/</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"%s%d%c"</span>,<span class="string">"test"</span>,<span class="number">1</span>,<span class="string">'2'</span>);</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>编译：</p>
+<p>不论是客户还是服务器应用程序都用send函数来向TCP连接的另一端发送数据。客户程序一般用send函数向服务器发送请求，而服务器则通常用send函数来向客户程序发送应答。</p>
+<p>​    该函数的第一个参数指定发送端套接字描述符；</p>
+<p>​    第二个参数指明一个存放应用程序要发送数据的缓冲区；</p>
+<p>​    第三个参数指明实际要发送的数据的字节数；</p>
+<p>​    第四个参数一般置0。 </p>
+<p>​    这里只描述<strong>同步Socket的send函数的执行流程</strong>。当调用该函数时，</p>
+<p>   （1）send先比较待发送数据的长度len和套接字s的发送缓冲的长度， 如果len大于s的发送缓冲区的长度，该函数返回<code>SOCKET_ERROR</code>；</p>
+<p>   （2）如果len小于或者等于s的发送缓冲区的长度，那么send先检查协议是否正在发送s的发送缓冲中的数据，如果是就等待协议把数据发送完，如果协议还没有开始发送s的发送缓冲中的数据或者s的发送缓冲中没有数据，那么send就比较s的发送缓冲区的剩余空间和len</p>
+<p>   （3）如果len大于剩余空间大小，send就一直等待协议把s的发送缓冲中的数据发送完</p>
+<p>   （4）如果len小于剩余 空间大小，send就仅仅把buf中的数据copy到剩余空间里（<strong>注意并不是send把s的发送缓冲中的数据传到连接的另一端的，而是协议传的，send仅仅是把buf中的数据copy到s的发送缓冲区的剩余空间里</strong>）。</p>
+<p>​        如果send函数copy数据成功，就返回实际copy的字节数，如果send在copy数据时出现错误，那么send就返回SOCKET_ERROR；如果send在等待协议传送数据时网络断开的话，那么send函数也返回SOCKET_ERROR。</p>
+<p>​       <strong>要注意send函数把buf中的数据成功copy到s的发送缓冲的剩余空间里后它就返回了，但是此时这些数据并不一定马上被传到连接的另一端</strong>。如果协议在后续的传送过程中出现网络错误的话，那么下一个Socket函数就会返回SOCKET_ERROR。（每一个除send外的Socket函数在执 行的最开始总要先等待套接字的发送缓冲中的数据被协议传送完毕才能继续，如果在等待时出现网络错误，那么该Socket函数就返回 SOCKET_ERROR）</p>
 <blockquote>
-<p>g++ sprinftest.cpp -o sprinftest &amp;&amp; ./sprinftest</p>
+<p><strong>注意：在Unix系统下，如果send在等待协议传送数据时网络断开的话，调用send的进程会接收到一个SIGPIPE信号，进程对该信号的默认处理是进程终止。</strong></p>
 </blockquote>
-<p>输出结果：</p>
+<p>通过测试发现，异步socket的send函数在网络刚刚断开时还能发送返回相应的字节数，同时使用select检测也是可写的，但是过几秒钟之后，再send就会出错了，返回-1。select也不能检测出可写了。</p>
+<p>##<strong>2. recv函数</strong></p>
 <blockquote>
-<p>sprintftest12<br>sprintftest12</p>
+<p><strong>int recv( SOCKET s, char FAR *buf, int len, int flags);</strong></p>
 </blockquote>
-<h2 id="2-若”-s”等输出符在字符串中"><a href="#2-若”-s”等输出符在字符串中" class="headerlink" title="2.若”%s”等输出符在字符串中"></a><strong>2.若”%s”等输出符在字符串中</strong></h2><p>例：补全字符串str的缺省内容<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *avgv[])</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">char</span> str[] = <span class="string">"hel%co wo%sd! sp%stf test%d"</span>;</div><div class="line">    <span class="keyword">char</span> buf[<span class="built_in">strlen</span>(str)];</div><div class="line">    <span class="built_in">sprintf</span>(buf, str, <span class="string">'l'</span>, <span class="string">"rl"</span>, <span class="string">"rin"</span>, <span class="number">1</span>);</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"str = "</span>&lt;&lt; buf &lt;&lt; <span class="string">"\nlen = "</span> &lt;&lt;  <span class="built_in">strlen</span>(buf) &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>编译：</p>
+<p>不论是客户还是服务器应用程序都用recv函数从TCP连接的另一端接收数据。该函数的第一个参数指定接收端套接字描述符；</p>
+<p>​    第二个参数指明一个缓冲区，该缓冲区用来存放recv函数接收到的数据；</p>
+<p>​    第三个参数指明buf的长度；</p>
+<p>​    第四个参数一般置0。</p>
+<p>​    这里只描述<strong>同步Socket的recv函数的执行流程</strong>。当应用程序调用recv函数时，</p>
+<p>​    （1）recv先等待s的发送缓冲中的数据被协议传送完毕，如果协议在传送s的发送缓冲中的数据时出现网络错误，那么recv函数返回<code>SOCKET_ERROR</code> ；</p>
+<p>​    （2）如果s的发送缓冲中没有数据或者数据被协议成功发送完毕后，recv先检查套接字s的接收缓冲区，如果s接收缓冲区中没有数据或者协议正在接收数据，那么recv就一直等待，直到协议把数据接收完毕。当协议把数据接收完毕，recv函数就把s的接收缓冲中的数据copy到buf中（<strong>注意协议接收到的数据可能大于buf的长度，所以 在这种情况下要调用几次recv函数才能把s的接收缓冲中的数据copy完。recv函数仅仅是copy数据，真正的接收数据是协议来完成的</strong>）；</p>
+<p>​    recv函数返回其实际copy的字节数。如果recv在copy时出错，那么它返回<code>SOCKET_ERROR</code>；如果recv函数在等待协议接收数据时网络中断了，那么它返回0。</p>
 <blockquote>
-<p>g++ sprinftest.cpp -o sprinftest &amp;&amp; ./sprinftest</p>
+<p><strong>注意：在Unix系统下，如果recv函数在等待协议接收数据时网络断开了，那么调用recv的进程会接收到一个SIGPIPE信号，进程对该信号的默认处理是进程终止。</strong></p>
 </blockquote>
-<p>输出结果：</p>
-<blockquote>
-<p>str = hello world! sprintf test1<br>len = 27</p>
-</blockquote>
-<p>这种形式也可以将多个字符值或字符串值赋值到字符串str中，有多少个输出符就后面就加多少个参数。</p>
 
         
         </div>
@@ -283,7 +298,7 @@
 
 </div>
 
-    <a data-url="https://wonderomg.github.io/2016/10/21/C++中sprintf函数的用法/" data-id="cj3yioak100007ohgz47ps2us" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="https://wonderomg.github.io/2017/01/10/Socket_send函数和recv函数详解/" data-id="cj52k0mv40000yghgwcxrlrs6" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -351,7 +366,7 @@
 
             
     
-        <a href="https://wonderomg.github.io/2016/10/21/C++中sprintf函数的用法/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://wonderomg.github.io/2016/10/21/C++中sprintf函数的用法/">评论</a>
+        <a href="https://wonderomg.github.io/2017/01/10/Socket_send函数和recv函数详解/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://wonderomg.github.io/2017/01/10/Socket_send函数和recv函数详解/">评论</a>
     
 
         </footer>
@@ -360,15 +375,20 @@
         
 <nav id="article-nav">
     
-        <a href="/2016/12/10/mongodb学习笔记--C++操作mongodb/" id="article-nav-newer" class="article-nav-link-wrap">
+        <a href="/2017/02/21/mongodb学习笔记--$elemMatch操作符的使用/" id="article-nav-newer" class="article-nav-link-wrap">
             <strong class="article-nav-caption">上一篇</strong>
             <div class="article-nav-title">
                 
-                    mongodb学习笔记--C++操作mongodb
+                    mongodb学习笔记--$elemMatch操作符的使用
                 
             </div>
         </a>
     
+    
+        <a href="/2016/11/10/mongodb学习笔记--C++操作mongodb/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">mongodb学习笔记--C++操作mongodb</div>
+        </a>
     
 </nav>
 
@@ -420,25 +440,6 @@
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2017/05/10/Socket_send函数和recv函数详解/" class="thumbnail">
-    
-    
-        <span style="background-image:url(http://img2.91.com/uploads/allimg/140623/705-1406231J408-52.jpg)" alt="Socket send函数和recv函数详解" class="thumbnail-image"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/C/">C++</a></p>
-                            <p class="item-title"><a href="/2017/05/10/Socket_send函数和recv函数详解/" class="title">Socket send函数和recv函数详解</a></p>
-                            <p class="item-date"><time datetime="2017-05-09T16:00:00.000Z" itemprop="datePublished">2017-05-10</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
                             <a href="/2017/04/20/mybatis_operator/" class="thumbnail">
     
     
@@ -452,25 +453,6 @@
                             <p class="item-category"><a class="article-category-link" href="/categories/mybatis/">mybatis</a></p>
                             <p class="item-title"><a href="/2017/04/20/mybatis_operator/" class="title">mybatis中的#{}和${}的区别</a></p>
                             <p class="item-date"><time datetime="2017-04-19T16:00:00.000Z" itemprop="datePublished">2017-04-20</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2017/04/19/关于=null和clear()问题(Java性能篇)/" class="thumbnail">
-    
-    
-        <span style="background-image:url(http://pic1.win4000.com/wallpaper/a/54535d25dfe79.jpg)" alt="关于=null和clear()问题（Java性能优化）" class="thumbnail-image"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Java/">Java</a></p>
-                            <p class="item-title"><a href="/2017/04/19/关于=null和clear()问题(Java性能篇)/" class="title">关于=null和clear()问题（Java性能优化）</a></p>
-                            <p class="item-date"><time datetime="2017-04-18T16:00:00.000Z" itemprop="datePublished">2017-04-19</time></p>
                         </div>
                     </li>
                 
@@ -493,6 +475,44 @@
                         </div>
                     </li>
                 
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/02/21/mongodb学习笔记--$elemMatch操作符的使用/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://www.bigdata-research.org/uploadfile/2014/1113/20141113053033429.jpg?1437154270828)" alt="mongodb学习笔记--$elemMatch操作符的使用" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/mongodb/">mongodb</a></p>
+                            <p class="item-title"><a href="/2017/02/21/mongodb学习笔记--$elemMatch操作符的使用/" class="title">mongodb学习笔记--$elemMatch操作符的使用</a></p>
+                            <p class="item-date"><time datetime="2017-02-20T16:00:00.000Z" itemprop="datePublished">2017-02-21</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/01/10/Socket_send函数和recv函数详解/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://img2.91.com/uploads/allimg/140623/705-1406231J408-52.jpg)" alt="Socket send函数和recv函数详解" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/C/">C++</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/C/Socket/">Socket</a></p>
+                            <p class="item-title"><a href="/2017/01/10/Socket_send函数和recv函数详解/" class="title">Socket send函数和recv函数详解</a></p>
+                            <p class="item-date"><time datetime="2017-01-09T16:00:00.000Z" itemprop="datePublished">2017-01-10</time></p>
+                        </div>
+                    </li>
+                
             </ul>
         </div>
     </div>
@@ -502,7 +522,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C++</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/TCP/">TCP</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web/">Web</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mongodb/">mongodb</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mybatis/">mybatis</a><span class="category-list-count">1</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C++</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/C/MongoDB/">MongoDB</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C/Socket/">Socket</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/TCP/">TCP</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web/">Web</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mongodb/">mongodb</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mybatis/">mybatis</a><span class="category-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -511,7 +531,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">1</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -571,9 +591,9 @@
     <script>
     var disqus_config = function () {
         
-            this.page.url = 'https://wonderomg.github.io/2016/10/21/C++中sprintf函数的用法/';
+            this.page.url = 'https://wonderomg.github.io/2017/01/10/Socket_send函数和recv函数详解/';
         
-        this.page.identifier = 'C++中sprintf函数的用法';
+        this.page.identifier = 'Socket_send函数和recv函数详解';
     };
     (function() { 
         var d = document, s = d.createElement('script');  

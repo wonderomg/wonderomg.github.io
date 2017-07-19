@@ -3,25 +3,25 @@
 <head>
     <meta charset="utf-8">
     
-    <title>关于=null和clear()问题（Java性能优化） | wonderomg</title>
+    <title>TCP长连接与短连接的区别 | 刘斩仙</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="以ArrayList为例，根据情况来看吧，ArrayList内部维护的是一个数组。">
-<meta name="keywords" content="Java,性能优化">
+    <meta name="description" content="##1. TCP连接 ​        当网络通信时采用TCP协议时，在真正的读写操作之前，server与client之间必须建立一个连接，当读写操作完成后，双方不再需要这个连接时它们可以释放这个连接，连接的建立是需要三次握手的，而释放则需要4次握手，所以说每个连接的建立都是需要资源消耗和时间消耗的。">
+<meta name="keywords" content="TCP">
 <meta property="og:type" content="article">
-<meta property="og:title" content="关于=null和clear()问题（Java性能优化）">
-<meta property="og:url" content="https://wonderomg.github.io/2017/04/19/关于=null和clear()问题(Java性能篇)/index.html">
-<meta property="og:site_name" content="wonderomg">
-<meta property="og:description" content="以ArrayList为例，根据情况来看吧，ArrayList内部维护的是一个数组。">
-<meta property="og:image" content="http://pic1.win4000.com/wallpaper/a/54535d25dfe79.jpg">
-<meta property="og:updated_time" content="2017-07-13T14:33:25.535Z">
+<meta property="og:title" content="TCP长连接与短连接的区别">
+<meta property="og:url" content="https://wonderomg.github.io/2015/02/20/TCP长连接与短连接的区别/index.html">
+<meta property="og:site_name" content="刘斩仙">
+<meta property="og:description" content="##1. TCP连接 ​        当网络通信时采用TCP协议时，在真正的读写操作之前，server与client之间必须建立一个连接，当读写操作完成后，双方不再需要这个连接时它们可以释放这个连接，连接的建立是需要三次握手的，而释放则需要4次握手，所以说每个连接的建立都是需要资源消耗和时间消耗的。">
+<meta property="og:image" content="http://dl.bizhi.sogou.com/images/2014/01/07/482848.jpg">
+<meta property="og:updated_time" content="2017-07-19T13:55:21.975Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于=null和clear()问题（Java性能优化）">
-<meta name="twitter:description" content="以ArrayList为例，根据情况来看吧，ArrayList内部维护的是一个数组。">
-<meta name="twitter:image" content="http://pic1.win4000.com/wallpaper/a/54535d25dfe79.jpg">
+<meta name="twitter:title" content="TCP长连接与短连接的区别">
+<meta name="twitter:description" content="##1. TCP连接 ​        当网络通信时采用TCP协议时，在真正的读写操作之前，server与client之间必须建立一个连接，当读写操作完成后，双方不再需要这个连接时它们可以释放这个连接，连接的建立是需要三次握手的，而释放则需要4次握手，所以说每个连接的建立都是需要资源消耗和时间消耗的。">
+<meta name="twitter:image" content="http://dl.bizhi.sogou.com/images/2014/01/07/482848.jpg">
     
 
     
-        <link rel="alternate" href="http://blog.csdn.net/u012406177/rss/list" title="wonderomg" type="application/atom+xml" />
+        <link rel="alternate" href="http://blog.csdn.net/u012406177/rss/list" title="刘斩仙" type="application/atom+xml" />
     
 
     
@@ -56,19 +56,19 @@
         <div class="outer">
             <a href="/" id="logo">
                 <i class="logo"></i>
-                <span class="site-title">wonderomg</span>
+                <span class="site-title">刘斩仙</span>
             </a>
             <nav id="main-nav">
                 
-                    <a class="main-nav-link" href="/.">Home</a>
+                    <a class="main-nav-link" href="/.">首页</a>
                 
-                    <a class="main-nav-link" href="/archives">Archives</a>
+                    <a class="main-nav-link" href="/archives">归档</a>
                 
-                    <a class="main-nav-link" href="/categories">Categories</a>
+                    <a class="main-nav-link" href="/categories">分类</a>
                 
-                    <a class="main-nav-link" href="/tags">Tags</a>
+                    <a class="main-nav-link" href="/tags">标签</a>
                 
-                    <a class="main-nav-link" href="/about">About</a>
+                    <a class="main-nav-link" href="/about">关于</a>
                 
             </nav>
             
@@ -125,15 +125,15 @@
         <table class="menu outer">
             <tr>
                 
-                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                    <td><a class="main-nav-link" href="/.">首页</a></td>
                 
-                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
                 
-                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
                 
-                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
                 
-                    <td><a class="main-nav-link" href="/about">About</a></td>
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
                 
                 <td>
                     
@@ -208,7 +208,7 @@
 </aside>
 
             
-            <section id="main"><article id="post-关于=null和clear()问题(Java性能篇)" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-TCP长连接与短连接的区别" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -216,7 +216,7 @@
                 
     
         <h1 class="article-title" itemprop="name">
-            关于=null和clear()问题（Java性能优化）
+            TCP长连接与短连接的区别
         </h1>
     
 
@@ -225,8 +225,8 @@
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2017/04/19/关于=null和clear()问题(Java性能篇)/">
-            <time datetime="2017-04-18T16:00:00.000Z" itemprop="datePublished">2017-04-19</time>
+        <a href="/2015/02/20/TCP长连接与短连接的区别/">
+            <time datetime="2015-02-19T16:00:00.000Z" itemprop="datePublished">2015-02-20</time>
         </a>
     </div>
 
@@ -234,13 +234,13 @@
                         
     <div class="article-category">
     	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/Java/">Java</a>
+        <a class="article-category-link" href="/categories/TCP/">TCP</a>
     </div>
 
                         
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Java/">Java</a>, <a class="tag-link" href="/tags/性能优化/">性能优化</a>
+        <a class="tag-link" href="/tags/TCP/">TCP</a>
     </div>
 
                     </div>
@@ -251,16 +251,40 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <p>　　以ArrayList为例，根据情况来看吧，<strong>ArrayList内部维护的是一个数组</strong>。<a id="more"></a></p>
-<p>##<strong>1. list = null</strong></p>
+            <p>##<strong>1. TCP连接</strong></p>
+<p>​        当网络通信时采用TCP协议时，在真正的读写操作之前，<code>server</code>与<code>client</code>之间必须建立一个连接，当读写操作完成后，双方不再需要这个连接时它们可以释放这个连接，连接的建立是需要三次握手的，而释放则需要4次握手，所以说每个连接的建立都是需要资源消耗和时间消耗的。</p>
+<a id="more"></a>
+<p>经典的三次握手示意图：</p>
+<p><img src="http://pic002.cnblogs.com/images/2011/305779/2011062613192683.jpg" alt="三次握手"></p>
+<p>经典的四次握手关闭图：</p>
+<p><img src="http://pic002.cnblogs.com/images/2011/305779/2011062613210341.jpg" alt="四次握手"></p>
+<p>##<strong>2. TCP短连接</strong><br>​        我们模拟一下TCP短连接的情况，<strong>client向server发起连接请求，server接到请求，然后双方建立连接。client向server发送消息，server回应client，然后一次读写就完成了，这时候双方任何一个都可以发起close操作，不过一般都是client先发起close操作。</strong></p>
+<p><strong>为什么呢，一般的server不会回复完client后立即关闭连接的，当然不排除有特殊的情况。</strong></p>
+<p>从上面的描述看，短连接一般只会在<code>client/server</code>间传递一次读写操作。</p>
 <blockquote>
-<p>那么你<strong>list = null; </strong> 就是<strong>释放这个数组对象，当然里面所引用的对象也就释放了</strong>。</p>
-<p>##<strong>2. list.clear()</strong><br>如果<strong>list.clear();</strong> 看看源代码就知道了，是<strong>把list里面对象遍历赋值为null</strong>，意思就是<strong>释放list里面所有对象</strong>。</p>
+<p><strong>短连接的优点是：管理起来比较简单，存在的连接都是有用的连接，不需要额外的控制手段。</strong></p>
 </blockquote>
-<p>　　这样就很清楚了，如果你这个list还需要使用，那么你可以使用clear去释放掉list里面所有的数据，GC在回收的时候就有可能回收掉原list里面的这些数据了。如果你都不需要了，那么你就用=null这样GC就有可能把list以及里面关联的一些数据也都回收了。</p>
-<p>##<strong>3. 咱们来看下clear()源码</strong></p>
-<p><code>clear()</code>源码解析：<br>If we take an <code>ArrayList</code> as an example, the <code>clear()</code> method does this:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">clear</span><span class="params">()</span> </span>&#123; </div><div class="line">    modCount++;  </div><div class="line">    </div><div class="line">    <span class="comment">// Let gc do its work </span></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; i++)  </div><div class="line">        elementData[i] = <span class="keyword">null</span>;  </div><div class="line">        </div><div class="line">    size = <span class="number">0</span>;  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>　　Basically, if elements of a List are not referenced anywhere else in the code there is really no need (or at least you do not gain anything) to call <code>clear()</code>. You also do not need to assign <code>null</code> to the List because it will be garbage collected as soon as it falls out of scope.<br><strong>译文：</strong><br>　　基本上，如果List中的元素没有被引用到代码中的其他地方，那么确实没有必要（或至少你没有获得任何东西）来调用<code>clear()</code>。 您也不需要为List指定<code>null</code>，因为它会在超出范围的情况下被垃圾回收。</p>
+<p>##<strong>3. TCP长连接</strong></p>
+<p>​       接下来我们再模拟一下长连接的情况，<strong>client向server发起连接，server接受client连接，双方建立连接。Client与server完成一次读写之后，它们之间的连接并不会主动关闭，后续的读写操作会继续使用这个连接。</strong></p>
+<p>​       首先说一下TCP/IP详解上讲到的TCP保活功能，保活功能主要为服务器应用提供，服务器应用希望知道客户主机是否崩溃，从而可以代表客户使用资源。如果客户已经消失，使得服务器上保留一个半开放的连接，而服务器又在等待来自客户端的数据，则服务器将应远等待客户端的数据，保活功能就是试图在服务器端检测到这种半开放的连接。</p>
+<blockquote>
+<p>如果一个给定的连接在两小时内没有任何的动作，则服务器就向客户发一个探测报文段，客户主机必须处于以下4个状态之一：</p>
+<ol>
+<li>客户主机依然正常运行，并从服务器可达。客户的TCP响应正常，而服务器也知道对方是正常的，服务器在两小时后将保活定时器复位。</li>
+<li>客户主机已经崩溃，并且关闭或者正在重新启动。在任何一种情况下，客户的TCP都没有响应。服务端将不能收到对探测的响应，并在75秒后超时。服务器总共发送10个这样的探测 ，每个间隔75秒。如果服务器没有收到一个响应，它就认为客户主机已经关闭并终止连接。</li>
+<li>客户主机崩溃并已经重新启动。服务器将收到一个对其保活探测的响应，这个响应是一个复位，使得服务器终止这个连接。</li>
+<li>客户机正常运行，但是服务器不可达，这种情况与2类似，TCP能发现的就是没有收到探查的响应。</li>
+</ol>
+</blockquote>
+<p>​        从上面可以看出，TCP保活功能主要为探测长连接的存活状况，不过这里存在一个问题，存活功能的探测周期太长，还有就是它只是探测TCP连接的存活，属于比较斯文的做法，遇到恶意的连接时，保活功能就不够使了。</p>
+<blockquote>
+<p><strong>在长连接的应用场景下，client端一般不会主动关闭它们之间的连接，client与server之间的连接如果一直不关闭的话，会存在一个问题，随着客户端连接越来越多，server早晚有扛不住的时候，这时候server端需要采取一些策略，</strong></p>
+<ol>
+<li>如关闭一些长时间没有读写事件发生的连接，这样可以避免一些恶意连接导致server端服务受损；</li>
+<li>如果条件再允许就可以以客户端机器为颗粒度，限制每个客户端的最大长连接数，这样可以完全避免某个蛋疼的客户端连累后端服。</li>
+</ol>
+<p>长连接和短连接的产生在于client和server采取的关闭策略，具体的应用场景采用具体的策略，没有十全十美的选择，只有合适的选择。</p>
+</blockquote>
 
         
         </div>
@@ -271,7 +295,7 @@
 
 </div>
 
-    <a data-url="https://wonderomg.github.io/2017/04/19/关于=null和clear()问题(Java性能篇)/" data-id="cj52k0mxi0004yghgzy1q1lrn" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="https://wonderomg.github.io/2015/02/20/TCP长连接与短连接的区别/" data-id="cj3yioam600067ohg4moch7nh" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -339,7 +363,7 @@
 
             
     
-        <a href="https://wonderomg.github.io/2017/04/19/关于=null和clear()问题(Java性能篇)/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://wonderomg.github.io/2017/04/19/关于=null和clear()问题(Java性能篇)/">评论</a>
+        <a href="https://wonderomg.github.io/2015/02/20/TCP长连接与短连接的区别/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://wonderomg.github.io/2015/02/20/TCP长连接与短连接的区别/">评论</a>
     
 
         </footer>
@@ -348,20 +372,15 @@
         
 <nav id="article-nav">
     
-        <a href="/2017/04/20/mybatis_operator/" id="article-nav-newer" class="article-nav-link-wrap">
+        <a href="/2015/07/21/C++中sprintf函数的用法/" id="article-nav-newer" class="article-nav-link-wrap">
             <strong class="article-nav-caption">上一篇</strong>
             <div class="article-nav-title">
                 
-                    mybatis中的#{}和${}的区别
+                    C++中sprintf函数的用法
                 
             </div>
         </a>
     
-    
-        <a href="/2017/02/28/前后端分离，前端跨域访问后台的两种方式/" id="article-nav-older" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">前后端分离，前端跨域访问后台的两种方式</div>
-        </a>
     
 </nav>
 
@@ -413,25 +432,6 @@
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2017/05/10/Socket_send函数和recv函数详解/" class="thumbnail">
-    
-    
-        <span style="background-image:url(http://img2.91.com/uploads/allimg/140623/705-1406231J408-52.jpg)" alt="Socket send函数和recv函数详解" class="thumbnail-image"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/C/">C++</a></p>
-                            <p class="item-title"><a href="/2017/05/10/Socket_send函数和recv函数详解/" class="title">Socket send函数和recv函数详解</a></p>
-                            <p class="item-date"><time datetime="2017-05-09T16:00:00.000Z" itemprop="datePublished">2017-05-10</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
                             <a href="/2017/04/20/mybatis_operator/" class="thumbnail">
     
     
@@ -445,25 +445,6 @@
                             <p class="item-category"><a class="article-category-link" href="/categories/mybatis/">mybatis</a></p>
                             <p class="item-title"><a href="/2017/04/20/mybatis_operator/" class="title">mybatis中的#{}和${}的区别</a></p>
                             <p class="item-date"><time datetime="2017-04-19T16:00:00.000Z" itemprop="datePublished">2017-04-20</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2017/04/19/关于=null和clear()问题(Java性能篇)/" class="thumbnail">
-    
-    
-        <span style="background-image:url(http://pic1.win4000.com/wallpaper/a/54535d25dfe79.jpg)" alt="关于=null和clear()问题（Java性能优化）" class="thumbnail-image"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Java/">Java</a></p>
-                            <p class="item-title"><a href="/2017/04/19/关于=null和clear()问题(Java性能篇)/" class="title">关于=null和clear()问题（Java性能优化）</a></p>
-                            <p class="item-date"><time datetime="2017-04-18T16:00:00.000Z" itemprop="datePublished">2017-04-19</time></p>
                         </div>
                     </li>
                 
@@ -486,6 +467,44 @@
                         </div>
                     </li>
                 
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/02/21/mongodb学习笔记--$elemMatch操作符的使用/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://www.bigdata-research.org/uploadfile/2014/1113/20141113053033429.jpg?1437154270828)" alt="mongodb学习笔记--$elemMatch操作符的使用" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/mongodb/">mongodb</a></p>
+                            <p class="item-title"><a href="/2017/02/21/mongodb学习笔记--$elemMatch操作符的使用/" class="title">mongodb学习笔记--$elemMatch操作符的使用</a></p>
+                            <p class="item-date"><time datetime="2017-02-20T16:00:00.000Z" itemprop="datePublished">2017-02-21</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/01/10/Socket_send函数和recv函数详解/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://img2.91.com/uploads/allimg/140623/705-1406231J408-52.jpg)" alt="Socket send函数和recv函数详解" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/C/">C++</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/C/Socket/">Socket</a></p>
+                            <p class="item-title"><a href="/2017/01/10/Socket_send函数和recv函数详解/" class="title">Socket send函数和recv函数详解</a></p>
+                            <p class="item-date"><time datetime="2017-01-09T16:00:00.000Z" itemprop="datePublished">2017-01-10</time></p>
+                        </div>
+                    </li>
+                
             </ul>
         </div>
     </div>
@@ -495,7 +514,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C++</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/TCP/">TCP</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web/">Web</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mongodb/">mongodb</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mybatis/">mybatis</a><span class="category-list-count">1</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C++</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/C/MongoDB/">MongoDB</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C/Socket/">Socket</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/TCP/">TCP</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web/">Web</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mongodb/">mongodb</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mybatis/">mybatis</a><span class="category-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -504,7 +523,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">1</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -564,9 +583,9 @@
     <script>
     var disqus_config = function () {
         
-            this.page.url = 'https://wonderomg.github.io/2017/04/19/关于=null和clear()问题(Java性能篇)/';
+            this.page.url = 'https://wonderomg.github.io/2015/02/20/TCP长连接与短连接的区别/';
         
-        this.page.identifier = '关于=null和clear()问题(Java性能篇)';
+        this.page.identifier = 'TCP长连接与短连接的区别';
     };
     (function() { 
         var d = document, s = d.createElement('script');  
