@@ -3,17 +3,21 @@
 <head>
     <meta charset="utf-8">
     
-    <title>归档: 2015/7 | wonderomg</title>
+    <title>linux-crontab定时执行任务 | wonderomg</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="wonderomg&apos;s blog">
-<meta property="og:type" content="website">
-<meta property="og:title" content="wonderomg">
-<meta property="og:url" content="https://wonderomg.github.io/archives/2015/07/index.html">
+    <meta name="description" content="最近碰到一个关于crontab的问题。">
+<meta name="keywords" content="crontab">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux-crontab定时执行任务">
+<meta property="og:url" content="https://wonderomg.github.io/2017/07/25/linux-crontab定时执行任务/index.html">
 <meta property="og:site_name" content="wonderomg">
-<meta property="og:description" content="wonderomg&apos;s blog">
+<meta property="og:description" content="最近碰到一个关于crontab的问题。">
+<meta property="og:image" content="http://www.cloudcomputingintelligence.com/media/k2/items/cache/22145411287b10e3ad16760f641601b6_L.jpg">
+<meta property="og:updated_time" content="2017-08-01T14:25:29.059Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="wonderomg">
-<meta name="twitter:description" content="wonderomg&apos;s blog">
+<meta name="twitter:title" content="linux-crontab定时执行任务">
+<meta name="twitter:description" content="最近碰到一个关于crontab的问题。">
+<meta name="twitter:image" content="http://www.cloudcomputingintelligence.com/media/k2/items/cache/22145411287b10e3ad16760f641601b6_L.jpg">
     
 
     
@@ -204,50 +208,185 @@
 </aside>
 
             
-            <section id="main"><div class="timeline timeline-wrap">
-    
-            <div class="timeline-row timeline-row-major">
-                <span class="node"><i class="fa fa-calendar"></i></span>
-                <h1 class="title">2015</h1>
-            </div>
+            <section id="main"><article id="post-linux-crontab定时执行任务" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
         
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+        
+            <header class="article-header">
                 
     
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2015/07/21/C++中sprintf函数的用法/">C++中sprintf函数的用法</a>
+        <h1 class="article-title" itemprop="name">
+            linux-crontab定时执行任务
         </h1>
     
 
-                <div class="article-meta">
-                    
+                
+                    <div class="article-meta">
+                        
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2015/07/21/C++中sprintf函数的用法/">
-            <time datetime="2015-07-20T16:00:00.000Z" itemprop="datePublished">2015-07-21</time>
+        <a href="/2017/07/25/linux-crontab定时执行任务/">
+            <time datetime="2017-07-24T16:00:00.000Z" itemprop="datePublished">2017-07-25</time>
         </a>
     </div>
 
 
-                    
+                        
     <div class="article-category">
     	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/C/">C++</a>
+        <a class="article-category-link" href="/categories/linux/">linux</a>
     </div>
 
-                    
+                        
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/sprintf/">sprintf</a>
+        <a class="tag-link" href="/tags/crontab/">crontab</a>
     </div>
 
-                </div>
-            </div>
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>　　最近碰到一个关于<code>crontab</code>的问题。</p>
+<a id="more"></a>
+<h2 id="1-事因"><a href="#1-事因" class="headerlink" title="1. 事因"></a><strong>1. 事因</strong></h2><p>服务器部署了一个<code>C++</code>查询数据库词库的服务，以及<code>Java</code>发送目标词的服务，<code>Java</code>服务通过<code>soket</code>长连接向<code>C++</code>服务发送目标单词，然后<code>C++</code>服务返回数据库中是否存在的结果。</p>
+<p>期间，由于数据库有时增加单词需要重启服务，手写了个定时脚本来重启该<code>C++</code>服务。</p>
+<p>某一次为了调试，把改定时脚本关了，通过<code>ps -ef |grep xxx</code>命令查看服务父子进程情况，发现父进程还是每隔十分钟退出，服务会重启，想了许久不知道哪出了问题。</p>
+<p>最后询问运维才想起，之前还用了<code>linux</code>自带的<code>crontab</code>设置过每隔十分钟重启服务，没有删除<code>crontab</code>里面的那条设置。</p>
+<p>所以我们就来学习一下<code>linux</code>自带的可设置定时指定任务的<code>crontab</code>。</p>
+<h2 id="2-初识crontab"><a href="#2-初识crontab" class="headerlink" title="2. 初识crontab"></a><strong>2. 初识crontab</strong></h2><p><code>cron</code>是一个服务进程，<code>cron</code>服务提供<code>crontab</code>命令来设定<code>cron</code>服务的，以下是这个命令的一些参数与说明：</p>
+<ul>
+<li><code>crontab -u  //设定某个用户的cron服务，一般root用户在执行这个命令的时候需要此参数</code></li>
+<li><code>crontab -l  //列出某个用户cron服务的详细内容</code></li>
+<li><code>crontab -r  //删除某个用户的cron服务</code></li>
+<li><code>crontab -e  //编辑某个用户的cron服务</code></li>
+</ul>
+<h2 id="3-基本用法"><a href="#3-基本用法" class="headerlink" title="3. 基本用法"></a><strong>3. 基本用法</strong></h2><p>基本格式 :</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">*   *   *   *   *   command</div></pre></td></tr></table></figure>
+<p>​    <strong>分　时　日　月　周　命令 </strong></p>
+<p>第1列表示分钟1～59 每分钟用<em>或者 </em>/1表示 ；<br>第2列表示小时1～23（0表示0点） ；<br>第3列表示日期1～31 ；<br>第4列表示月份1～12 ；<br>第5列标识号星期0～6（0表示星期天） ；<br>第6列要运行的命令 。</p>
+<p><code>crontab</code>的一些使用例子:</p>
+<p><code>*/10 * * * * (cd /opt/resin/bin; ./resin.sh restart)</code></p>
+<p>表示每隔10分重启<code>resin</code>服务；</p>
+<p><code>30 1 * * * (cd /opt/resin/bin; ./resin.sh restart)</code></p>
+<p>表示每天1点30分重启<code>resin</code>服务；</p>
+<p><code>* 23-5/1 * * * (cd /opt/resin/bin; ./resin.sh restart)</code></p>
+<p>表示每天23点到次日5点之间每隔1小时重启<code>resin</code>服务；</p>
+
+        
         </div>
-    
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
 </div>
+
+    <a data-url="https://wonderomg.github.io/2017/07/25/linux-crontab定时执行任务/" data-id="cj5tn0osh0000yohgwuud0x9o" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="https://wonderomg.github.io/2017/07/25/linux-crontab定时执行任务/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://wonderomg.github.io/2017/07/25/linux-crontab定时执行任务/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2017/06/06/idea搭建springdata+mongodb+maven+springmvc/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">idea搭建springdata+mongodb+maven+springmvc</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
 </section>
             
                 <aside id="sidebar">
@@ -431,11 +570,13 @@
     <script>
     var disqus_config = function () {
         
-        this.page.identifier = 'undefined';
+            this.page.url = 'https://wonderomg.github.io/2017/07/25/linux-crontab定时执行任务/';
+        
+        this.page.identifier = 'linux-crontab定时执行任务';
     };
     (function() { 
         var d = document, s = d.createElement('script');  
-        s.src = '//' + 'wonderomg' + '.disqus.com/count.js';
+        s.src = '//' + 'wonderomg' + '.disqus.com/embed.js';
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();

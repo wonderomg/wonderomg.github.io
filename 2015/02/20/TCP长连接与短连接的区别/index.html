@@ -5,18 +5,18 @@
     
     <title>TCP长连接与短连接的区别 | wonderomg</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="##1. TCP连接 ​        当网络通信时采用TCP协议时，在真正的读写操作之前，server与client之间必须建立一个连接，当读写操作完成后，双方不再需要这个连接时它们可以释放这个连接，连接的建立是需要三次握手的，而释放则需要4次握手，所以说每个连接的建立都是需要资源消耗和时间消耗的。">
+    <meta name="description" content="1. TCP连接​        当网络通信时采用TCP协议时，在真正的读写操作之前，server与client之间必须建立一个连接，当读写操作完成后，双方不再需要这个连接时它们可以释放这个连接，连接的建立是需要三次握手的，而释放则需要4次握手，所以说每个连接的建立都是需要资源消耗和时间消耗的。">
 <meta name="keywords" content="TCP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="TCP长连接与短连接的区别">
 <meta property="og:url" content="https://wonderomg.github.io/2015/02/20/TCP长连接与短连接的区别/index.html">
 <meta property="og:site_name" content="wonderomg">
-<meta property="og:description" content="##1. TCP连接 ​        当网络通信时采用TCP协议时，在真正的读写操作之前，server与client之间必须建立一个连接，当读写操作完成后，双方不再需要这个连接时它们可以释放这个连接，连接的建立是需要三次握手的，而释放则需要4次握手，所以说每个连接的建立都是需要资源消耗和时间消耗的。">
+<meta property="og:description" content="1. TCP连接​        当网络通信时采用TCP协议时，在真正的读写操作之前，server与client之间必须建立一个连接，当读写操作完成后，双方不再需要这个连接时它们可以释放这个连接，连接的建立是需要三次握手的，而释放则需要4次握手，所以说每个连接的建立都是需要资源消耗和时间消耗的。">
 <meta property="og:image" content="http://dl.bizhi.sogou.com/images/2014/01/07/482848.jpg">
-<meta property="og:updated_time" content="2017-07-19T13:55:21.975Z">
+<meta property="og:updated_time" content="2017-08-01T14:00:15.331Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TCP长连接与短连接的区别">
-<meta name="twitter:description" content="##1. TCP连接 ​        当网络通信时采用TCP协议时，在真正的读写操作之前，server与client之间必须建立一个连接，当读写操作完成后，双方不再需要这个连接时它们可以释放这个连接，连接的建立是需要三次握手的，而释放则需要4次握手，所以说每个连接的建立都是需要资源消耗和时间消耗的。">
+<meta name="twitter:description" content="1. TCP连接​        当网络通信时采用TCP协议时，在真正的读写操作之前，server与client之间必须建立一个连接，当读写操作完成后，双方不再需要这个连接时它们可以释放这个连接，连接的建立是需要三次握手的，而释放则需要4次握手，所以说每个连接的建立都是需要资源消耗和时间消耗的。">
 <meta name="twitter:image" content="http://dl.bizhi.sogou.com/images/2014/01/07/482848.jpg">
     
 
@@ -162,11 +162,11 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                9
+                10
                 <span>文章</span>
             </div>
             <div class="article-info-block">
-                16
+                17
                 <span>标签</span>
             </div>
         </div>
@@ -251,21 +251,19 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <p>##<strong>1. TCP连接</strong></p>
-<p>​        当网络通信时采用TCP协议时，在真正的读写操作之前，<code>server</code>与<code>client</code>之间必须建立一个连接，当读写操作完成后，双方不再需要这个连接时它们可以释放这个连接，连接的建立是需要三次握手的，而释放则需要4次握手，所以说每个连接的建立都是需要资源消耗和时间消耗的。</p>
+            <h2 id="1-TCP连接"><a href="#1-TCP连接" class="headerlink" title="1. TCP连接"></a><strong>1. TCP连接</strong></h2><p>​        当网络通信时采用TCP协议时，在真正的读写操作之前，<code>server</code>与<code>client</code>之间必须建立一个连接，当读写操作完成后，双方不再需要这个连接时它们可以释放这个连接，连接的建立是需要三次握手的，而释放则需要4次握手，所以说每个连接的建立都是需要资源消耗和时间消耗的。</p>
 <a id="more"></a>
 <p>经典的三次握手示意图：</p>
 <p><img src="http://pic002.cnblogs.com/images/2011/305779/2011062613192683.jpg" alt="三次握手"></p>
 <p>经典的四次握手关闭图：</p>
 <p><img src="http://pic002.cnblogs.com/images/2011/305779/2011062613210341.jpg" alt="四次握手"></p>
-<p>##<strong>2. TCP短连接</strong><br>​        我们模拟一下TCP短连接的情况，<strong>client向server发起连接请求，server接到请求，然后双方建立连接。client向server发送消息，server回应client，然后一次读写就完成了，这时候双方任何一个都可以发起close操作，不过一般都是client先发起close操作。</strong></p>
+<h2 id="2-TCP短连接"><a href="#2-TCP短连接" class="headerlink" title="2. TCP短连接"></a><strong>2. TCP短连接</strong></h2><p>​        我们模拟一下TCP短连接的情况，<strong>client向server发起连接请求，server接到请求，然后双方建立连接。client向server发送消息，server回应client，然后一次读写就完成了，这时候双方任何一个都可以发起close操作，不过一般都是client先发起close操作。</strong></p>
 <p><strong>为什么呢，一般的server不会回复完client后立即关闭连接的，当然不排除有特殊的情况。</strong></p>
 <p>从上面的描述看，短连接一般只会在<code>client/server</code>间传递一次读写操作。</p>
 <blockquote>
 <p><strong>短连接的优点是：管理起来比较简单，存在的连接都是有用的连接，不需要额外的控制手段。</strong></p>
 </blockquote>
-<p>##<strong>3. TCP长连接</strong></p>
-<p>​       接下来我们再模拟一下长连接的情况，<strong>client向server发起连接，server接受client连接，双方建立连接。Client与server完成一次读写之后，它们之间的连接并不会主动关闭，后续的读写操作会继续使用这个连接。</strong></p>
+<h2 id="3-TCP长连接"><a href="#3-TCP长连接" class="headerlink" title="3. TCP长连接"></a><strong>3. TCP长连接</strong></h2><p>​       接下来我们再模拟一下长连接的情况，<strong>client向server发起连接，server接受client连接，双方建立连接。Client与server完成一次读写之后，它们之间的连接并不会主动关闭，后续的读写操作会继续使用这个连接。</strong></p>
 <p>​       首先说一下TCP/IP详解上讲到的TCP保活功能，保活功能主要为服务器应用提供，服务器应用希望知道客户主机是否崩溃，从而可以代表客户使用资源。如果客户已经消失，使得服务器上保留一个半开放的连接，而服务器又在等待来自客户端的数据，则服务器将应远等待客户端的数据，保活功能就是试图在服务器端检测到这种半开放的连接。</p>
 <blockquote>
 <p>如果一个给定的连接在两小时内没有任何的动作，则服务器就向客户发一个探测报文段，客户主机必须处于以下4个状态之一：</p>
@@ -413,6 +411,25 @@
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/2017/07/25/linux-crontab定时执行任务/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://www.cloudcomputingintelligence.com/media/k2/items/cache/22145411287b10e3ad16760f641601b6_L.jpg)" alt="linux-crontab定时执行任务" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/linux/">linux</a></p>
+                            <p class="item-title"><a href="/2017/07/25/linux-crontab定时执行任务/" class="title">linux-crontab定时执行任务</a></p>
+                            <p class="item-date"><time datetime="2017-07-24T16:00:00.000Z" itemprop="datePublished">2017-07-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/2017/06/06/idea搭建springdata+mongodb+maven+springmvc/" class="thumbnail">
     
     
@@ -486,25 +503,6 @@
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2017/01/10/Socket_send函数和recv函数详解/" class="thumbnail">
-    
-    
-        <span style="background-image:url(http://img2.91.com/uploads/allimg/140623/705-1406231J408-52.jpg)" alt="Socket send函数和recv函数详解" class="thumbnail-image"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/C/">C++</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/C/Socket/">Socket</a></p>
-                            <p class="item-title"><a href="/2017/01/10/Socket_send函数和recv函数详解/" class="title">Socket send函数和recv函数详解</a></p>
-                            <p class="item-date"><time datetime="2017-01-09T16:00:00.000Z" itemprop="datePublished">2017-01-10</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -514,7 +512,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C++</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/C/MongoDB/">MongoDB</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C/Socket/">Socket</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/TCP/">TCP</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web/">Web</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mongodb/">mongodb</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mybatis/">mybatis</a><span class="category-list-count">1</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C++</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/C/MongoDB/">MongoDB</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C/Socket/">Socket</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/TCP/">TCP</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web/">Web</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mongodb/">mongodb</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mybatis/">mybatis</a><span class="category-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -523,7 +521,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">1</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -532,7 +530,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">标签</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB/">MongoDB</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpingMvc/">SpingMvc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringData/">SpringData</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TCP/">TCP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/">Web</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elemMatch条件操作符/">elemMatch条件操作符</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/idea/">idea</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/maven/">maven</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mongodb/">mongodb</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/">socket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sprintf/">sprintf</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能优化/">性能优化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/跨域/">跨域</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB/">MongoDB</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpingMvc/">SpingMvc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringData/">SpringData</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TCP/">TCP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/">Web</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/crontab/">crontab</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elemMatch条件操作符/">elemMatch条件操作符</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/idea/">idea</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/maven/">maven</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mongodb/">mongodb</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/">socket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sprintf/">sprintf</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能优化/">性能优化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/跨域/">跨域</a><span class="tag-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -541,7 +539,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/C/" style="font-size: 20px;">C++</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/SpingMvc/" style="font-size: 10px;">SpingMvc</a> <a href="/tags/SpringData/" style="font-size: 10px;">SpringData</a> <a href="/tags/TCP/" style="font-size: 10px;">TCP</a> <a href="/tags/Web/" style="font-size: 10px;">Web</a> <a href="/tags/elemMatch条件操作符/" style="font-size: 10px;">elemMatch条件操作符</a> <a href="/tags/idea/" style="font-size: 10px;">idea</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mongodb/" style="font-size: 10px;">mongodb</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/sprintf/" style="font-size: 10px;">sprintf</a> <a href="/tags/性能优化/" style="font-size: 10px;">性能优化</a> <a href="/tags/跨域/" style="font-size: 10px;">跨域</a>
+            <a href="/tags/C/" style="font-size: 20px;">C++</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/SpingMvc/" style="font-size: 10px;">SpingMvc</a> <a href="/tags/SpringData/" style="font-size: 10px;">SpringData</a> <a href="/tags/TCP/" style="font-size: 10px;">TCP</a> <a href="/tags/Web/" style="font-size: 10px;">Web</a> <a href="/tags/crontab/" style="font-size: 10px;">crontab</a> <a href="/tags/elemMatch条件操作符/" style="font-size: 10px;">elemMatch条件操作符</a> <a href="/tags/idea/" style="font-size: 10px;">idea</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mongodb/" style="font-size: 10px;">mongodb</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/sprintf/" style="font-size: 10px;">sprintf</a> <a href="/tags/性能优化/" style="font-size: 10px;">性能优化</a> <a href="/tags/跨域/" style="font-size: 10px;">跨域</a>
         </div>
     </div>
 
