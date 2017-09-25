@@ -3,21 +3,17 @@
 <head>
     <meta charset="utf-8">
     
-    <title>C++中sprintf函数的用法 | wonderomg</title>
+    <title>归档: 2017/9 | wonderomg</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="1.常用方式　　 sprintf函数的功能与printf函数的功能基本一样，只是它把结果输出到指定的字符串中了，看个例子就明白了：">
-<meta name="keywords" content="sprintf">
-<meta property="og:type" content="article">
-<meta property="og:title" content="C++中sprintf函数的用法">
-<meta property="og:url" content="https://wonderomg.github.io/2015/07/21/C++中sprintf函数的用法/index.html">
+    <meta name="description" content="wonderomg&apos;s blog">
+<meta property="og:type" content="website">
+<meta property="og:title" content="wonderomg">
+<meta property="og:url" content="https://wonderomg.github.io/archives/2017/09/index.html">
 <meta property="og:site_name" content="wonderomg">
-<meta property="og:description" content="1.常用方式　　 sprintf函数的功能与printf函数的功能基本一样，只是它把结果输出到指定的字符串中了，看个例子就明白了：">
-<meta property="og:image" content="http://pic1.win4000.com/wallpaper/5/56eb942607643.jpg">
-<meta property="og:updated_time" content="2017-07-19T13:51:59.644Z">
+<meta property="og:description" content="wonderomg&apos;s blog">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="C++中sprintf函数的用法">
-<meta name="twitter:description" content="1.常用方式　　 sprintf函数的功能与printf函数的功能基本一样，只是它把结果输出到指定的字符串中了，看个例子就明白了：">
-<meta name="twitter:image" content="http://pic1.win4000.com/wallpaper/5/56eb942607643.jpg">
+<meta name="twitter:title" content="wonderomg">
+<meta name="twitter:description" content="wonderomg&apos;s blog">
     
 
     
@@ -208,191 +204,50 @@
 </aside>
 
             
-            <section id="main"><article id="post-C++中sprintf函数的用法" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
+            <section id="main"><div class="timeline timeline-wrap">
+    
+            <div class="timeline-row timeline-row-major">
+                <span class="node"><i class="fa fa-calendar"></i></span>
+                <h1 class="title">2017</h1>
+            </div>
         
-        
-            <header class="article-header">
+        <div class="timeline-row">
+            <span class="node"></span>
+            <div class="content">
                 
     
-        <h1 class="article-title" itemprop="name">
-            C++中sprintf函数的用法
+        <h1 itemprop="name">
+            <a class="timeline-article-title" href="/2017/09/12/恒大主上港客/">恒大 VS 上港</a>
         </h1>
     
 
-                
-                    <div class="article-meta">
-                        
+                <div class="article-meta">
+                    
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2015/07/21/C++中sprintf函数的用法/">
-            <time datetime="2015-07-20T16:00:00.000Z" itemprop="datePublished">2015-07-21</time>
+        <a href="/2017/09/12/恒大主上港客/">
+            <time datetime="2017-09-11T16:00:00.000Z" itemprop="datePublished">2017-09-12</time>
         </a>
     </div>
 
 
-                        
+                    
     <div class="article-category">
     	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/C/">C++</a>
+        <a class="article-category-link" href="/categories/随记/">随记</a>
     </div>
 
-                        
+                    
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/sprintf/">sprintf</a>
+        <a class="tag-link" href="/tags/随记/">随记</a>
     </div>
 
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <h2 id="1-常用方式"><a href="#1-常用方式" class="headerlink" title="1.常用方式"></a><strong>1.常用方式</strong></h2><p>　　 <code>sprintf</code>函数的功能与<code>printf</code>函数的功能基本一样，只是它把结果输出到指定的字符串中了，看个例子就明白了：</p>
-<a id="more"></a>
-<p>例：将<code>&quot;test,1,2&quot;</code>写入数组s中</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *avgv[])</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">char</span> s[<span class="number">40</span>];</div><div class="line">    <span class="built_in">sprintf</span>(s,<span class="string">"%s%d%c"</span>,<span class="string">"test"</span>,<span class="number">1</span>,<span class="string">'2'</span>);</div><div class="line">    <span class="comment">/*第一个参数就是指向要写入的那个字符串的指针，剩下的就和printf()一样了</span></div><div class="line">    你可以比较一下，这是向屏幕输入*/</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"%s%d%c"</span>,<span class="string">"test"</span>,<span class="number">1</span>,<span class="string">'2'</span>);</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>编译：</p>
-<blockquote>
-<p>g++ sprinftest.cpp -o sprinftest &amp;&amp; ./sprinftest</p>
-</blockquote>
-<p>输出结果：</p>
-<blockquote>
-<p>sprintftest12<br>sprintftest12</p>
-</blockquote>
-<h2 id="2-若”-s”等输出符在字符串中"><a href="#2-若”-s”等输出符在字符串中" class="headerlink" title="2.若”%s”等输出符在字符串中"></a><strong>2.若”%s”等输出符在字符串中</strong></h2><p>例：补全字符串str的缺省内容<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *avgv[])</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">char</span> str[] = <span class="string">"hel%co wo%sd! sp%stf test%d"</span>;</div><div class="line">    <span class="keyword">char</span> buf[<span class="built_in">strlen</span>(str)];</div><div class="line">    <span class="built_in">sprintf</span>(buf, str, <span class="string">'l'</span>, <span class="string">"rl"</span>, <span class="string">"rin"</span>, <span class="number">1</span>);</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"str = "</span>&lt;&lt; buf &lt;&lt; <span class="string">"\nlen = "</span> &lt;&lt;  <span class="built_in">strlen</span>(buf) &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>编译：</p>
-<blockquote>
-<p>g++ sprinftest.cpp -o sprinftest &amp;&amp; ./sprinftest</p>
-</blockquote>
-<p>输出结果：</p>
-<blockquote>
-<p>str = hello world! sprintf test1<br>len = 27</p>
-</blockquote>
-<p>这种形式也可以将多个字符值或字符串值赋值到字符串str中，有多少个输出符就后面就加多少个参数。</p>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="https://wonderomg.github.io/2015/07/21/C++中sprintf函数的用法/" data-id="cj7aml0g40000i8hglowu8kpj" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-        <a href="https://wonderomg.github.io/2015/07/21/C++中sprintf函数的用法/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://wonderomg.github.io/2015/07/21/C++中sprintf函数的用法/">评论</a>
-    
-
-        </footer>
-    </div>
-    
-        
-<nav id="article-nav">
-    
-        <a href="/2016/04/19/关于=null和clear()问题(Java性能篇)/" id="article-nav-newer" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">上一篇</strong>
-            <div class="article-nav-title">
-                
-                    关于=null和clear()问题（Java性能优化）
-                
+                </div>
             </div>
-        </a>
+        </div>
     
-    
-        <a href="/2015/02/20/TCP长连接与短连接的区别/" id="article-nav-older" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">TCP长连接与短连接的区别</div>
-        </a>
-    
-</nav>
-
-
-    
-</article>
-
-
-    
-    <section id="comments">
-    
-        
-    <div id="disqus_thread">
-        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    </div>
-
-    
-    </section>
-
+</div>
 </section>
             
                 <aside id="sidebar">
@@ -576,13 +431,11 @@
     <script>
     var disqus_config = function () {
         
-            this.page.url = 'https://wonderomg.github.io/2015/07/21/C++中sprintf函数的用法/';
-        
-        this.page.identifier = 'C++中sprintf函数的用法';
+        this.page.identifier = 'undefined';
     };
     (function() { 
         var d = document, s = d.createElement('script');  
-        s.src = '//' + 'wonderomg' + '.disqus.com/embed.js';
+        s.src = '//' + 'wonderomg' + '.disqus.com/count.js';
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();
