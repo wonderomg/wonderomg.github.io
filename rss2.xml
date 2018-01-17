@@ -8,8 +8,29 @@
     <atom:link href="/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>wonderomg&#39;s blog</description>
-    <pubDate>Fri, 29 Sep 2017 16:48:47 GMT</pubDate>
+    <pubDate>Wed, 17 Jan 2018 07:53:59 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>zookeeper提示Unable to read additional data from server sessionid 0x</title>
+      <link>https://wonderomg.github.io/2017/09/15/zookeeper%E6%8F%90%E7%A4%BAUnable%20to%20read%20additional%20data%20from%20server%20sessionid%200x/</link>
+      <guid>https://wonderomg.github.io/2017/09/15/zookeeper%E6%8F%90%E7%A4%BAUnable%20to%20read%20additional%20data%20from%20server%20sessionid%200x/</guid>
+      <pubDate>Thu, 14 Sep 2017 16:00:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;配置zookeeper集群，一开始配置了两台机器server.1和server.2。&lt;/p&gt;
+&lt;p&gt;配置参数，在zoo.cfg中指定了整个zookeeper集群的server编号、地址和端口：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;server.1=10.10.16.151:2888:3888&lt;br&gt;server.2=10.10.16.234:2888:3888&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;然后为这两个个节点创建对应的编号文件，在/tmp/zookeeper/data/myid文件中。如下：
+      
+      </description>
+      
+      <content:encoded><![CDATA[<p>配置zookeeper集群，一开始配置了两台机器server.1和server.2。</p><p>配置参数，在zoo.cfg中指定了整个zookeeper集群的server编号、地址和端口：</p><blockquote><p>server.1=10.10.16.151:2888:3888<br>server.2=10.10.16.234:2888:3888</p></blockquote><p>然后为这两个个节点创建对应的编号文件，在/tmp/zookeeper/data/myid文件中。如下：<a id="more"></a></p><p>在server.1=10.10.16.151机器上执行：</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">echo</span> 1 &gt; /tmp/zookeeper/data/myid</div></pre></td></tr></table></figure><p>在server.1=10.10.16.234机器上执行：</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">echo</span> 2 &gt; /tmp/zookeeper/data/myid</div></pre></td></tr></table></figure><p>启动server.1测试dubbo服务，使用<code>zkServer.sh start</code>启动了server.1，然后使用<code>zkServer.sh status</code>查看工作状态，显示<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Error contacting service. It is probably not running.</div></pre></td></tr></table></figure></p><p>通过<code>zkCli.sh -server 10.10.16.151:2181</code>查看服务详细，发现服务提示了下面的错误信息。</p><p>启动时提示：</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">2017-09-15 14:57:27,139 [myid:] - INFO  [main-SendThread(10.10.16.151:2181):ClientCnxn<span class="variable">$SendThread</span>@1035] - Opening socket connection to server 10.10.16.151/10.10.16.151:2181. Will not attempt to authenticate using SASL (java.lang.SecurityException: Ϟ·¨¶¨λµȂ¼Ƥ׃)</div><div class="line">2017-09-15 14:57:27,140 [myid:] - INFO  [main-SendThread(10.10.16.151:2181):ClientCnxn<span class="variable">$SendThread</span>@877] - Socket connection established to 10.10.16.151/10.10.16.151:2181, initiating session</div><div class="line">2017-09-15 14:57:27,143 [myid:] - INFO  [main-SendThread(10.10.16.151:2181):ClientCnxn<span class="variable">$SendThread</span>@1161] - Unable to <span class="built_in">read</span> additional data from server sessionid 0x0, likely server has closed socket, closing socket connection and attempting reconnect</div></pre></td></tr></table></figure><p>后来才搞明白，由于我在zoo.cfg中配置了2台机器，但是只启动了1台，zookeeper就会认为服务处于不可用状态。</p><p><strong>通过zookeeper的选举算法得知，当整个集群超过半数机器宕机，zookeeper会认为集群处于不可用状态。</strong>所以启动2台服务正常。</p><p>然后我又增加了1台<code>server.3=10.10.16.241:2888:3888</code>机器节点，在3台都启动的情况下，关掉其中1台，服务正常，关掉2台，服务不可用。</p><p>所以，zookeeper集群只启动一台无法连接，如果启动机器数为半数及以上就可以连接了。</p>]]></content:encoded>
+      
+      <comments>https://wonderomg.github.io/2017/09/15/zookeeper%E6%8F%90%E7%A4%BAUnable%20to%20read%20additional%20data%20from%20server%20sessionid%200x/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>恒大 VS 上港</title>

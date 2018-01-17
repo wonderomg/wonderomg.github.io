@@ -3,17 +3,21 @@
 <head>
     <meta charset="utf-8">
     
-    <title>标签: 随记 | WONDEROMG</title>
+    <title>zookeeper提示Unable to read additional data from server sessionid 0x | WONDEROMG</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="wonderomg&apos;s blog">
-<meta property="og:type" content="website">
-<meta property="og:title" content="WONDEROMG">
-<meta property="og:url" content="https://wonderomg.github.io/tags/随记/index.html">
+    <meta name="description" content="配置zookeeper集群，一开始配置了两台机器server.1和server.2。 配置参数，在zoo.cfg中指定了整个zookeeper集群的server编号、地址和端口：  server.1=10.10.16.151:2888:3888server.2=10.10.16.234:2888:3888  然后为这两个个节点创建对应的编号文件，在/tmp/zookeeper/data/myid文">
+<meta name="keywords" content="zookeeper,集群">
+<meta property="og:type" content="article">
+<meta property="og:title" content="zookeeper提示Unable to read additional data from server sessionid 0x">
+<meta property="og:url" content="https://wonderomg.github.io/2017/09/15/zookeeper提示Unable to read additional data from server sessionid 0x/index.html">
 <meta property="og:site_name" content="WONDEROMG">
-<meta property="og:description" content="wonderomg&apos;s blog">
+<meta property="og:description" content="配置zookeeper集群，一开始配置了两台机器server.1和server.2。 配置参数，在zoo.cfg中指定了整个zookeeper集群的server编号、地址和端口：  server.1=10.10.16.151:2888:3888server.2=10.10.16.234:2888:3888  然后为这两个个节点创建对应的编号文件，在/tmp/zookeeper/data/myid文">
+<meta property="og:image" content="http://static.oschina.net/uploads/img/201308/08171345_l5K3.jpg">
+<meta property="og:updated_time" content="2018-01-17T07:53:59.369Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="WONDEROMG">
-<meta name="twitter:description" content="wonderomg&apos;s blog">
+<meta name="twitter:title" content="zookeeper提示Unable to read additional data from server sessionid 0x">
+<meta name="twitter:description" content="配置zookeeper集群，一开始配置了两台机器server.1和server.2。 配置参数，在zoo.cfg中指定了整个zookeeper集群的server编号、地址和端口：  server.1=10.10.16.151:2888:3888server.2=10.10.16.234:2888:3888  然后为这两个个节点创建对应的编号文件，在/tmp/zookeeper/data/myid文">
+<meta name="twitter:image" content="http://static.oschina.net/uploads/img/201308/08171345_l5K3.jpg">
     
 
     
@@ -204,50 +208,178 @@
 </aside>
 
             
-            <section id="main">
-<div class="timeline timeline-wrap">
-    <div class="timeline-row timeline-row-major">
-        <span class="node"><i class="fa fa-tag"></i></span>
-        <h1 class="title">#随记</h1>
-    </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+            <section id="main"><article id="post-zookeeper提示Unable to read additional data from server sessionid 0x" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
                 
     
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2017/09/12/恒大主上港客/">恒大 VS 上港</a>
+        <h1 class="article-title" itemprop="name">
+            zookeeper提示Unable to read additional data from server sessionid 0x
         </h1>
     
 
-                <div class="article-meta">
-                    
+                
+                    <div class="article-meta">
+                        
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2017/09/12/恒大主上港客/">
-            <time datetime="2017-09-11T16:00:00.000Z" itemprop="datePublished">2017-09-12</time>
+        <a href="/2017/09/15/zookeeper提示Unable to read additional data from server sessionid 0x/">
+            <time datetime="2017-09-14T16:00:00.000Z" itemprop="datePublished">2017-09-15</time>
         </a>
     </div>
 
 
-                    
+                        
     <div class="article-category">
     	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/随记/">随记</a>
+        <a class="article-category-link" href="/categories/zookeeper/">zookeeper</a>
     </div>
 
-                    
+                        
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/随记/">随记</a>
+        <a class="tag-link" href="/tags/zookeeper/">zookeeper</a>, <a class="tag-link" href="/tags/集群/">集群</a>
     </div>
 
-                </div>
-            </div>
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>配置zookeeper集群，一开始配置了两台机器server.1和server.2。</p>
+<p>配置参数，在zoo.cfg中指定了整个zookeeper集群的server编号、地址和端口：</p>
+<blockquote>
+<p>server.1=10.10.16.151:2888:3888<br>server.2=10.10.16.234:2888:3888</p>
+</blockquote>
+<p>然后为这两个个节点创建对应的编号文件，在/tmp/zookeeper/data/myid文件中。如下：<a id="more"></a></p>
+<p>在server.1=10.10.16.151机器上执行：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">echo</span> 1 &gt; /tmp/zookeeper/data/myid</div></pre></td></tr></table></figure>
+<p>在server.1=10.10.16.234机器上执行：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">echo</span> 2 &gt; /tmp/zookeeper/data/myid</div></pre></td></tr></table></figure>
+<p>启动server.1测试dubbo服务，使用<code>zkServer.sh start</code>启动了server.1，然后使用<code>zkServer.sh status</code>查看工作状态，显示<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Error contacting service. It is probably not running.</div></pre></td></tr></table></figure></p>
+<p>通过<code>zkCli.sh -server 10.10.16.151:2181</code>查看服务详细，发现服务提示了下面的错误信息。</p>
+<p>启动时提示：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">2017-09-15 14:57:27,139 [myid:] - INFO  [main-SendThread(10.10.16.151:2181):ClientCnxn<span class="variable">$SendThread</span>@1035] - Opening socket connection to server 10.10.16.151/10.10.16.151:2181. Will not attempt to authenticate using SASL (java.lang.SecurityException: Ϟ·¨¶¨λµȂ¼Ƥ׃)</div><div class="line">2017-09-15 14:57:27,140 [myid:] - INFO  [main-SendThread(10.10.16.151:2181):ClientCnxn<span class="variable">$SendThread</span>@877] - Socket connection established to 10.10.16.151/10.10.16.151:2181, initiating session</div><div class="line">2017-09-15 14:57:27,143 [myid:] - INFO  [main-SendThread(10.10.16.151:2181):ClientCnxn<span class="variable">$SendThread</span>@1161] - Unable to <span class="built_in">read</span> additional data from server sessionid 0x0, likely server has closed socket, closing socket connection and attempting reconnect</div></pre></td></tr></table></figure>
+<p>后来才搞明白，由于我在zoo.cfg中配置了2台机器，但是只启动了1台，zookeeper就会认为服务处于不可用状态。</p>
+<p><strong>通过zookeeper的选举算法得知，当整个集群超过半数机器宕机，zookeeper会认为集群处于不可用状态。</strong>所以启动2台服务正常。</p>
+<p>然后我又增加了1台<code>server.3=10.10.16.241:2888:3888</code>机器节点，在3台都启动的情况下，关掉其中1台，服务正常，关掉2台，服务不可用。</p>
+<p>所以，zookeeper集群只启动一台无法连接，如果启动机器数为半数及以上就可以连接了。</p>
+
+        
         </div>
-    
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
 </div>
+
+    <a data-url="https://wonderomg.github.io/2017/09/15/zookeeper提示Unable to read additional data from server sessionid 0x/" data-id="cjcirjdnw0000ishg3ulqgas9" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="https://wonderomg.github.io/2017/09/15/zookeeper提示Unable to read additional data from server sessionid 0x/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://wonderomg.github.io/2017/09/15/zookeeper提示Unable to read additional data from server sessionid 0x/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2017/09/12/恒大主上港客/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">恒大 VS 上港</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
 </section>
             
                 <aside id="sidebar">
@@ -431,11 +563,13 @@
     <script>
     var disqus_config = function () {
         
-        this.page.identifier = 'undefined';
+            this.page.url = 'https://wonderomg.github.io/2017/09/15/zookeeper提示Unable to read additional data from server sessionid 0x/';
+        
+        this.page.identifier = 'zookeeper提示Unable to read additional data from server sessionid 0x';
     };
     (function() { 
         var d = document, s = d.createElement('script');  
-        s.src = '//' + 'wonderomg' + '.disqus.com/count.js';
+        s.src = '//' + 'wonderomg' + '.disqus.com/embed.js';
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();
