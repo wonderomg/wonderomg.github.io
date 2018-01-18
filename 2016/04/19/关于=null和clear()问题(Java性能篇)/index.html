@@ -339,8 +339,6 @@
 
             
     
-        <a href="https://wonderomg.github.io/2016/04/19/关于=null和clear()问题(Java性能篇)/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://wonderomg.github.io/2016/04/19/关于=null和clear()问题(Java性能篇)/">评论</a>
-    
 
         </footer>
     </div>
@@ -371,15 +369,11 @@
 
 
     
-    <section id="comments">
     
-        
-    <div id="disqus_thread">
-        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    </div>
-
+        <section id="comments">
+	<div id="commentContainer"></div>
+</section>
     
-    </section>
 
 </section>
             
@@ -561,21 +555,20 @@
 </footer>
         
     
-    <script>
-    var disqus_config = function () {
-        
-            this.page.url = 'https://wonderomg.github.io/2016/04/19/关于=null和clear()问题(Java性能篇)/';
-        
-        this.page.identifier = '关于=null和clear()问题(Java性能篇)';
-    };
-    (function() { 
-        var d = document, s = d.createElement('script');  
-        s.src = '//' + 'wonderomg' + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-
+	<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+	<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+	<script>
+		var gitment = new Gitment({
+			owner: 'wonderomg',
+			repo: 'wonderomg.github.io',
+			oauth: {
+				client_id: '53d83c6b8b2f45aea215',
+				client_secret: '1d052fdd6e22962e3b482dccdf49b99a408dfa01',
+			},
+		})
+		gitment.render('commentContainer')
+	</script>
+	
 
 
 
