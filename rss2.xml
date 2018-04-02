@@ -8,8 +8,28 @@
     <atom:link href="/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>wonderomg&#39;s blog</description>
-    <pubDate>Wed, 17 Jan 2018 13:11:18 GMT</pubDate>
+    <pubDate>Mon, 02 Apr 2018 14:40:15 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>Packet for query is too large (84 &gt; -1).</title>
+      <link>https://wonderomg.github.io/2018/03/15/Packet%20for%20query%20is%20too%20large/</link>
+      <guid>https://wonderomg.github.io/2018/03/15/Packet%20for%20query%20is%20too%20large/</guid>
+      <pubDate>Wed, 14 Mar 2018 16:00:00 GMT</pubDate>
+      <description>
+      
+        
+        
+          &lt;p&gt;ibatis工程使用resin配置mysql出现&lt;code&gt;Packet for query is too large (84 &amp;gt; -1).&lt;/code&gt;错误。&lt;/p&gt;
+&lt;p&gt;windows下的resin配置连接mysql，常用的安全的做法是将数据库信息配置到conf
+        
+      
+      </description>
+      
+      <content:encoded><![CDATA[<p>ibatis工程使用resin配置mysql出现<code>Packet for query is too large (84 &gt; -1).</code>错误。</p><p>windows下的resin配置连接mysql，常用的安全的做法是将数据库信息配置到conf目录下的resin.xml文件中。</p><p>因为resin连接mysql不是必须的，所以resin本身没有提供mysql-connector的jar包，需要自己加到resin目录下的lib里面，我加了个<code>mysql-connector-java-5.1.45-bin.jar</code>进去，然而在运行工程执行数据库查询操作的时候，却出现了问题，报如下错误：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">org.springframework.dao.TransientDataAccessResourceException: SqlMapClient operation; SQL [];   </div><div class="line">--- The error occurred while applying a parameter map.  </div><div class="line">--- Check the T_USER_INFO.selectByMap-InlineParameterMap.  </div><div class="line">--- Check the statement (query failed).  </div><div class="line">--- Cause: com.mysql.jdbc.PacketTooBigException: Packet for query is too large (84 &gt; -1). You can change this value on the server by setting the max_allowed_packet&apos; variable.; nested exception is com.ibatis.common.jdbc.exception.NestedSQLException:   </div><div class="line">--- The error occurred while applying a parameter map.  </div><div class="line">--- Check the T_USER_INFO.selectByMap-InlineParameterMap.  </div><div class="line">--- Check the statement (query failed).  </div><div class="line">--- Cause: com.mysql.jdbc.PacketTooBigException: Packet for query is too large (84 &gt; -1). You can change this value on the server by setting the max_allowed_packet&apos; variable.</div></pre></td></tr></table></figure><p>只进行查询却出现<code>Packet for query is too large</code>，而且查询的条件只有几个字母，网上搜了很多解答，都是说需要把mysql的<code>max_allowed_packet</code>参数调大，但是我通过<code>show VARIABLES like &#39;%max_allowed_packet%&#39;;</code>查询的结果也很大，如果是参数过小，应该是提示大于数据库中设置的packet的值，而不应该报-1。</p><p>最后发现有个帖子说是<code>mysql-connector-java</code>jar包的版本问题，版本不能太高，随后我将<code>mysql-connector-java-5.1.45-bin.jar</code>换成<code>mysql-connector-java-5.1.26-bin.jar</code>，不再出现packet错误，问题解决。</p><p>可能是因为我<strong>用的是<code>ibatis2.0</code>版本的缘故，不支持太高的mysql连接jar版本</strong>，换成<code>mysql-connector-java-5.1.40</code>以下版本即可解决<code>Packet for query is too large (84 &gt; -1)</code>问题。</p>]]></content:encoded>
+      
+      <comments>https://wonderomg.github.io/2018/03/15/Packet%20for%20query%20is%20too%20large/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>zookeeper提示Unable to read additional data from server sessionid 0x</title>

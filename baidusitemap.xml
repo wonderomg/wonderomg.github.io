@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>https://wonderomg.github.io/2018/03/15/Packet%20for%20query%20is%20too%20large/</loc>
+    <lastmod>2018-04-02T14:40:15.958Z</lastmod>
+    <data>
+        <display>
+        <title>Packet for query is too large (84 > -1).</title>
+        <pubTime>2018-03-14T16:00:00.000Z</pubTime>
+        
+        <tag>zookeeper,mysql,ibatis,resin</tag>
+         
+         
+           
+             
+              <breadCrumb title="ibatis,mysql,resin" url="https://wonderomg.github.io/categories/ibatis-mysql-resin/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://wonderomg.github.io/2017/09/15/zookeeper%E6%8F%90%E7%A4%BAUnable%20to%20read%20additional%20data%20from%20server%20sessionid%200x/</loc>
     <lastmod>2018-01-17T13:11:18.649Z</lastmod>
     <data>
