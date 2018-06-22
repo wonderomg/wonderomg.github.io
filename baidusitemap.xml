@@ -4,6 +4,92 @@
 
     
   <url>
+    <loc>https://wonderomg.github.io/2017/07/25/linux-crontab%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/</loc>
+    <lastmod>2018-06-22T14:09:01.940Z</lastmod>
+    <data>
+        <display>
+        <title>linux-crontab定时执行任务</title>
+        <pubTime>2017-07-24T16:00:00.000Z</pubTime>
+        
+        <tag>crontab</tag>
+         
+         
+           
+             
+              <breadCrumb title="linux" url="https://wonderomg.github.io/categories/linux/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://wonderomg.github.io/2018/05/16/Elasticsearch%E5%AE%9E%E8%B7%B5(2)-%E7%B4%A2%E5%BC%95%E5%8F%8A%E7%B4%A2%E5%BC%95%E5%88%AB%E5%90%8Dalias/</loc>
+    <lastmod>2018-06-22T14:07:24.727Z</lastmod>
+    <data>
+        <display>
+        <title>Elasticsearch实践(2)-索引及索引别名alias</title>
+        <pubTime>2018-05-15T16:00:00.000Z</pubTime>
+        
+        <tag>elasticsearch</tag>
+         
+        <tag>ik中文分词</tag>
+         
+        <tag>alias</tag>
+         
+         
+           
+             
+              <breadCrumb title="elasticsearch" url="https://wonderomg.github.io/categories/elasticsearch/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://wonderomg.github.io/2018/05/15/Elasticsearch%E5%AE%9E%E8%B7%B5(1)-%E6%90%AD%E5%BB%BA%E5%8F%8AIK%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D/</loc>
+    <lastmod>2018-06-22T14:05:55.911Z</lastmod>
+    <data>
+        <display>
+        <title>Elasticsearch实践(1)-搭建及IK中文分词</title>
+        <pubTime>2018-05-14T16:00:00.000Z</pubTime>
+        
+        <tag>elasticsearch</tag>
+         
+        <tag>ik中文分词</tag>
+         
+         
+           
+             
+              <breadCrumb title="elasticsearch" url="https://wonderomg.github.io/categories/elasticsearch/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://wonderomg.github.io/2017/09/12/%E6%81%92%E5%A4%A7%E4%B8%BB%E4%B8%8A%E6%B8%AF%E5%AE%A2/</loc>
+    <lastmod>2018-06-22T14:03:56.901Z</lastmod>
+    <data>
+        <display>
+        <title>恒大 VS 上港</title>
+        <pubTime>2017-09-11T16:00:00.000Z</pubTime>
+        
+        <tag>随记</tag>
+         
+         
+           
+             
+              <breadCrumb title="随记" url="https://wonderomg.github.io/categories/%E9%9A%8F%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://wonderomg.github.io/2018/03/15/Packet%20for%20query%20is%20too%20large/</loc>
     <lastmod>2018-04-02T14:49:00.580Z</lastmod>
     <data>
@@ -51,46 +137,6 @@
            
              
               <breadCrumb title="zookeeper" url="https://wonderomg.github.io/categories/zookeeper/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://wonderomg.github.io/2017/09/12/%E6%81%92%E5%A4%A7%E4%B8%BB%E4%B8%8A%E6%B8%AF%E5%AE%A2/</loc>
-    <lastmod>2017-09-29T16:48:47.639Z</lastmod>
-    <data>
-        <display>
-        <title>恒大 VS 上港</title>
-        <pubTime>2017-09-11T16:00:00.000Z</pubTime>
-        
-        <tag>随记</tag>
-         
-         
-           
-             
-              <breadCrumb title="随记" url="https://wonderomg.github.io/categories/%E9%9A%8F%E8%AE%B0/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://wonderomg.github.io/2017/07/25/linux-crontab%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/</loc>
-    <lastmod>2017-09-07T15:06:33.835Z</lastmod>
-    <data>
-        <display>
-        <title>linux-crontab定时执行任务</title>
-        <pubTime>2017-07-24T16:00:00.000Z</pubTime>
-        
-        <tag>crontab</tag>
-         
-         
-           
-             
-              <breadCrumb title="linux" url="https://wonderomg.github.io/categories/linux/"/>
           
         </display>
     </data>
@@ -286,9 +332,9 @@
         <title>前后端分离，前端跨域访问后台的两种方式</title>
         <pubTime>2017-02-27T16:00:00.000Z</pubTime>
         
-        <tag>Java</tag>
-         
         <tag>Web</tag>
+         
+        <tag>Java</tag>
          
         <tag>跨域</tag>
          

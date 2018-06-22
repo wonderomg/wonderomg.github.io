@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Elasticsearch实践(1)-搭建及IK中文分词 | WONDEROMG</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="🔍近期在做商品搜索优化，对比了Solr与Elasticsearch的区别，两者都是基于Lucene实现的封装，但es在数据量越大的情况下实时检索性能优于solr，更适用于实时商品搜索，于是选用了es，下面介绍elasticsearch搜索引擎的搭建及使用，这里使用的是2.2.1的es版本，以及1.8.1的ik分词版本。">
+<meta name="keywords" content="elasticsearch,ik中文分词">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Elasticsearch实践(1)-搭建及IK中文分词">
+<meta property="og:url" content="https://wonderomg.github.io/2018/05/15/Elasticsearch实践(1)-搭建及IK中文分词/index.html">
+<meta property="og:site_name" content="WONDEROMG">
+<meta property="og:description" content="🔍近期在做商品搜索优化，对比了Solr与Elasticsearch的区别，两者都是基于Lucene实现的封装，但es在数据量越大的情况下实时检索性能优于solr，更适用于实时商品搜索，于是选用了es，下面介绍elasticsearch搜索引擎的搭建及使用，这里使用的是2.2.1的es版本，以及1.8.1的ik分词版本。">
+<meta property="og:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1529643264225&di=cb242c448c2a3bab04ce1acab4135689&imgtype=0&src=http%3A%2F%2Fjbcdn2.b0.upaiyun.com%2F2017%2F10%2Fc6cf4b2000277c64f55e00cf6d2f294f.png">
+<meta property="og:updated_time" content="2018-06-22T14:05:55.911Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Elasticsearch实践(1)-搭建及IK中文分词">
+<meta name="twitter:description" content="🔍近期在做商品搜索优化，对比了Solr与Elasticsearch的区别，两者都是基于Lucene实现的封装，但es在数据量越大的情况下实时检索性能优于solr，更适用于实时商品搜索，于是选用了es，下面介绍elasticsearch搜索引擎的搭建及使用，这里使用的是2.2.1的es版本，以及1.8.1的ik分词版本。">
+<meta name="twitter:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1529643264225&di=cb242c448c2a3bab04ce1acab4135689&imgtype=0&src=http%3A%2F%2Fjbcdn2.b0.upaiyun.com%2F2017%2F10%2Fc6cf4b2000277c64f55e00cf6d2f294f.png">
+    
+
+    
+        <link rel="alternate" href="rss2.xml" title="WONDEROMG" type="application/atom+xml" />
+    
+
+    
+        <link rel="icon" href="/css/images/logo.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">WONDEROMG</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/categories">Categories</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/wonderomg.png" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/wonderomg.png" />
+            <h2 id="name">刘易斯</h2>
+            <h3 id="title">Less is More.</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Canton, China.</span>
+            <a id="follow" target="_blank" href="https://www.zhihu.com/people/ou-la-19/activities">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                15
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                26
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/wonderomg" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://twitter.com/liuzhilong1" target="_blank" title="twitter" class=tooltip>
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://www.facebook.com/zhilong.liu.31" target="_blank" title="facebook" class=tooltip>
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/rss2.xml" target="_blank" title="rss" class=tooltip>
+                            <i class="fa fa-rss"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-Elasticsearch实践(1)-搭建及IK中文分词" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Elasticsearch实践(1)-搭建及IK中文分词
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/05/15/Elasticsearch实践(1)-搭建及IK中文分词/">
+            <time datetime="2018-05-14T16:00:00.000Z" itemprop="datePublished">2018-05-15</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/elasticsearch/">elasticsearch</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/elasticsearch/">elasticsearch</a>, <a class="tag-link" href="/tags/ik中文分词/">ik中文分词</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>🔍近期在做商品搜索优化，对比了Solr与Elasticsearch的区别，两者都是基于Lucene实现的封装，但es在数据量越大的情况下实时检索性能优于solr，更适用于实时商品搜索，于是选用了es，下面介绍elasticsearch搜索引擎的搭建及使用，这里使用的是2.2.1的es版本，以及1.8.1的ik分词版本。</p>
+<a id="more"></a>
+<h1 id="安装es及IK中文分词"><a href="#安装es及IK中文分词" class="headerlink" title="安装es及IK中文分词"></a>安装es及IK中文分词</h1><h2 id="1-下载安装包"><a href="#1-下载安装包" class="headerlink" title="1. 下载安装包"></a>1. 下载安装包</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">##我的环境是Redhat6.4，此处使用的是es2.2.1版本</div><div class="line">##（1）可以使用指令安装</div><div class="line">$ yum install https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/rpm/elasticsearch/2.2.1/elasticsearch-2.2.1.rpm</div><div class="line">##（2）也可以直接下载文件，然后上传至linux目录下</div><div class="line">https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/2.2.1/elasticsearch-2.2.1.tar.gz</div></pre></td></tr></table></figure>
+<h2 id="2-上传安装文件到linux目录并解压"><a href="#2-上传安装文件到linux目录并解压" class="headerlink" title="2. 上传安装文件到linux目录并解压"></a>2. 上传安装文件到linux目录并解压</h2><p>我这里将<code>elasticsearch-2.2.1.tar.gz</code>文件放至<code>/opt/elasticsearch</code>目录下。</p>
+<p>解压：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> cd /opt/elasticsearch</div><div class="line"><span class="meta">$</span> tar -zxvf elasticsearch-2.2.1.tar.gz</div></pre></td></tr></table></figure>
+<p><strong>此时切记不能用 <code>./bin/elasticsearch</code>启动，因为在root权限下会提示错误</strong>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Exception in thread "main" java.lang.RuntimeException: don't run elasticsearch as root.</div></pre></td></tr></table></figure>
+<h2 id="3-新添加一个elasticsearch用户"><a href="#3-新添加一个elasticsearch用户" class="headerlink" title="3. 新添加一个elasticsearch用户"></a>3. 新添加一个elasticsearch用户</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#添加elasticsearch用户：</span></div><div class="line">$ useradd elasticsearch</div><div class="line"><span class="comment">#给用户elasticsearch设置密码，连续输入2次：</span></div><div class="line">$ passwd elasticsearch</div><div class="line"><span class="comment">#创建一个用户组es:</span></div><div class="line">$ groupadd es</div><div class="line"><span class="comment">#分配elasticsearch到es组:</span></div><div class="line">$ usermod -G es elasticsearch</div><div class="line"><span class="comment">#在elasticsearch 根目录下，给定用户权限。-R表示逐级（N层目录） ， * 表示 任何文件:</span></div><div class="line">$ chown -R elasticsearch:es *</div><div class="line"><span class="comment">#切换到elasticsearch用户:</span></div><div class="line">$ su elasticsearch</div></pre></td></tr></table></figure>
+<h2 id="4-修改配置文件"><a href="#4-修改配置文件" class="headerlink" title="4. 修改配置文件"></a>4. 修改配置文件</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> vi config/elasticsearch.yml</span></div></pre></td></tr></table></figure>
+<p>修改以下内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">#cluster name</div><div class="line">cluster.name: my-application</div><div class="line">#节点名称</div><div class="line">node.name: node-1</div><div class="line">path.data: /opt/elasticsearch/elasticsearch-2.2.1/data</div><div class="line">path.logs: /opt/elasticsearch/elasticsearch-2.2.1/logs</div><div class="line">#绑定IP和端口</div><div class="line">network.host: 0.0.0.0</div><div class="line">http.port: 9200</div></pre></td></tr></table></figure>
+<h2 id="5-安装head"><a href="#5-安装head" class="headerlink" title="5. 安装head"></a>5. 安装head</h2><p>head是elasticsearch的可视化工具，可以不用安装head，如果不需要安装，跳过此步骤。</p>
+<p>需要注意的是，es2.x的版本head可直接安装，es5.x以上的版本需要先安装nodejs。</p>
+<h3 id="5-1-ES2-x-x版本安装head"><a href="#5-1-ES2-x-x版本安装head" class="headerlink" title="5.1. ES2.x.x版本安装head"></a>5.1. ES2.x.x版本安装head</h3><p>在<code>/opt/elasticsearch/elasticsearch-2.2.1/</code>目录下新建文件夹：plugins</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> /opt/elasticsearch/elasticsearch-2.2.1/</span></div><div class="line"><span class="meta">$</span><span class="bash"> mkdir plugins</span></div><div class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> elasticsearch/bin</span></div><div class="line"><span class="meta">$</span><span class="bash"> ./plugin install mobz/elasticsearch-head</span></div></pre></td></tr></table></figure>
+<p>安装成功即可。启动es之后，访问<code>http://ip:9200/_plugin/head/</code>即可看到可视化界面。</p>
+<h3 id="5-2-ES5-x-x版本安装head"><a href="#5-2-ES5-x-x版本安装head" class="headerlink" title="5.2 ES5.x.x版本安装head"></a>5.2 ES5.x.x版本安装head</h3><p>ES5.x版本暂时不支持直接安装，但是head作者提供了另一种安装方法。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> git://github.com/mobz/elasticsearch-head.git</span></div><div class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> elasticsearch-head</span></div><div class="line"><span class="meta">$</span><span class="bash"> npm install</span></div><div class="line"><span class="meta">$</span><span class="bash"> npm run start</span></div></pre></td></tr></table></figure>
+<p>然后打开<code>http://localhost:9100/</code>访问即可。</p>
+<p>如果提示未安装node.js，先安装node.js，</p>
+<p>node.js官网：<a href="http://nodejs.cn/download/" target="_blank" rel="external">http://nodejs.cn/download/</a></p>
+<p>选择安装包，我这边是64位linux，下载的是<a href="https://nodejs.org/dist/v8.11.3/node-v8.11.3-linux-x64.tar.xz" target="_blank" rel="external">https://nodejs.org/dist/v8.11.3/node-v8.11.3-linux-x64.tar.xz</a></p>
+<p>解压（注：如果是虚拟机，不要在共享文件夹中解压，会报<code>Cannot create symlink to</code>创建软链的错，请放至linux下解压）：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> xz <span class="_">-d</span> node-v8.11.3-linux-x64.tar.xz</span></div><div class="line"><span class="meta">$</span><span class="bash"> tar -xvf node-v8.11.3-linux-x64.tar</span></div><div class="line"><span class="meta">$</span><span class="bash"> mv node-v8.11.3-linux-x64 nodejs</span></div><div class="line"><span class="meta">#</span><span class="bash">确认一下nodejs下bin目录是否有node 和npm文件，如果有执行软连接，如果没有重新下载执行上边步骤；建立软连接，变为全局:</span></div><div class="line"><span class="meta">$</span><span class="bash"> ln <span class="_">-s</span> /opt/nodejs/bin/npm /usr/<span class="built_in">local</span>/bin/</span></div><div class="line"><span class="meta">$</span><span class="bash"> ln <span class="_">-s</span> /opt/nodejs/bin/node /usr/<span class="built_in">local</span>/bin/</span></div><div class="line"><span class="meta">#</span><span class="bash">检查是否安装成功</span></div><div class="line"><span class="meta">$</span><span class="bash"> node -v</span></div></pre></td></tr></table></figure>
+<h2 id="6-启动ES"><a href="#6-启动ES" class="headerlink" title="6. 启动ES"></a>6. 启动ES</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> /opt/elasticsearch/elasticsearch-2.2.1</span></div><div class="line"><span class="meta">$</span><span class="bash"> su elasticsearch</span></div><div class="line"><span class="meta">$</span><span class="bash"> ./bin/elasticsearch</span></div></pre></td></tr></table></figure>
+<p>再访问<code>http://ip:9200/_plugin/head/</code>即可。</p>
+<h2 id="7-安装IK分词器"><a href="#7-安装IK分词器" class="headerlink" title="7. 安装IK分词器"></a>7. 安装IK分词器</h2><p>在<a href="https://github.com/medcl/elasticsearch-analysis-ik" target="_blank" rel="external">https://github.com/medcl/elasticsearch-analysis-ik</a></p>
+<p>此处选择与es版本对应的ik分词版本，我这里下载的是<code>elasticsearch-analysis-ik-1.8.1.zip</code>，在 <code>/opt/elasticsearch/elasticsearch-2.2.1/plugins</code>目录下新建文件夹：<code>ik</code>;将<code>elasticsearch-analysis-ik-1.8.1.zip</code>的解压文件放入<code>ik</code>目录下，并将解压后的<code>config</code>文件放入 <code>/opt/elasticsearch/elasticsearch-2.2.1/config</code>下面，并改名成<code>ik</code>;</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> unzip elasticsearch-analysis-ik-1.8.1.zip</span></div><div class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> /opt/elasticsearch/elasticsearch-2.2.1/plugins</span></div><div class="line"><span class="meta">$</span><span class="bash"> mkdir ik</span></div><div class="line"><span class="meta">$</span><span class="bash"> cp -rf /opt/elasticsearch/elasticsearch-analysis-ik-1.8.1/ ik/</span></div><div class="line"><span class="meta">$</span><span class="bash"> mv /opt/elasticsearch/elasticsearch-analysis-ik-1.8.1/config /opt/elasticsearch/elasticsearch-2.2.1/config</span></div><div class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> /opt/elasticsearch/elasticsearch-2.2.1/config</span></div><div class="line"><span class="meta">$</span><span class="bash"> mv config ik</span></div></pre></td></tr></table></figure>
+<p>在<code>/config/elasticsearch.yml</code>文件的最后加上一句话：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">index.analysis.analyzer.ik.type : &quot;ik&quot;</div></pre></td></tr></table></figure>
+<p>然后启动es，测试分词效果：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">curl '10.10.13.234:9200/index/_analyze?analyzer=ik&amp;pretty=true' -d '</div><div class="line">&#123;</div><div class="line">"text":"世界如此之大 进口水果"</div><div class="line">&#125;'</div></pre></td></tr></table></figure>
+<p>或者浏览器访问<code>http://ip:9200/_analyze?analyzer=ik&amp;pretty=true&amp;text=sojson在线工具测试分词</code>，即可看到中文分词效果。</p>
+<p>至此，elasticsearch搭建完成，下一篇我们来说下<strong>索引的创建</strong>。</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://wonderomg.github.io/2018/05/15/Elasticsearch实践(1)-搭建及IK中文分词/" data-id="cjiq0vu9n0000fchgx24hv0g4" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/05/16/Elasticsearch实践(2)-索引及索引别名alias/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    Elasticsearch实践(2)-索引及索引别名alias
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2018/03/15/Packet for query is too large/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">Packet for query is too large (84 &gt; -1).</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+	<div id="commentContainer"></div>
+</section>
+    
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/05/16/Elasticsearch实践(2)-索引及索引别名alias/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1529643264225&amp;di=cb242c448c2a3bab04ce1acab4135689&amp;imgtype=0&amp;src=http%3A%2F%2Fjbcdn2.b0.upaiyun.com%2F2017%2F10%2Fc6cf4b2000277c64f55e00cf6d2f294f.png)" alt="Elasticsearch实践(2)-索引及索引别名alias" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/elasticsearch/">elasticsearch</a></p>
+                            <p class="item-title"><a href="/2018/05/16/Elasticsearch实践(2)-索引及索引别名alias/" class="title">Elasticsearch实践(2)-索引及索引别名alias</a></p>
+                            <p class="item-date"><time datetime="2018-05-15T16:00:00.000Z" itemprop="datePublished">2018-05-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/05/15/Elasticsearch实践(1)-搭建及IK中文分词/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1529643264225&amp;di=cb242c448c2a3bab04ce1acab4135689&amp;imgtype=0&amp;src=http%3A%2F%2Fjbcdn2.b0.upaiyun.com%2F2017%2F10%2Fc6cf4b2000277c64f55e00cf6d2f294f.png)" alt="Elasticsearch实践(1)-搭建及IK中文分词" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/elasticsearch/">elasticsearch</a></p>
+                            <p class="item-title"><a href="/2018/05/15/Elasticsearch实践(1)-搭建及IK中文分词/" class="title">Elasticsearch实践(1)-搭建及IK中文分词</a></p>
+                            <p class="item-date"><time datetime="2018-05-14T16:00:00.000Z" itemprop="datePublished">2018-05-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/15/Packet for query is too large/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1522683004066&amp;di=e2500c85d9aa9d7c8b6c1329e31d50b0&amp;imgtype=0&amp;src=http%3A%2F%2Fmedia.fashiongroup.com%2Ffashionmag%2Fnewsletters%2Fimages%2F20110928%2Fefu_12386fac-2e69-4d75-83b6-486dc6c0600e.jpg)" alt="Packet for query is too large (84 &gt; -1)." class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ibatis/">ibatis</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/ibatis/mysql/">mysql</a></p>
+                            <p class="item-title"><a href="/2018/03/15/Packet for query is too large/" class="title">Packet for query is too large (84 &gt; -1).</a></p>
+                            <p class="item-date"><time datetime="2018-03-14T16:00:00.000Z" itemprop="datePublished">2018-03-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/09/15/zookeeper提示Unable to read additional data from server sessionid 0x/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://static.oschina.net/uploads/img/201308/08171345_l5K3.jpg)" alt="zookeeper提示Unable to read additional data from server sessionid 0x" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/zookeeper/">zookeeper</a></p>
+                            <p class="item-title"><a href="/2017/09/15/zookeeper提示Unable to read additional data from server sessionid 0x/" class="title">zookeeper提示Unable to read additional data from server sessionid 0x</a></p>
+                            <p class="item-date"><time datetime="2017-09-14T16:00:00.000Z" itemprop="datePublished">2017-09-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/09/12/恒大主上港客/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://raw.githubusercontent.com/wonderomg/wonderomg.github.io/master/img/start.jpg)" alt="恒大 VS 上港" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/随记/">随记</a></p>
+                            <p class="item-title"><a href="/2017/09/12/恒大主上港客/" class="title">恒大 VS 上港</a></p>
+                            <p class="item-date"><time datetime="2017-09-11T16:00:00.000Z" itemprop="datePublished">2017-09-12</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C++</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/C/MongoDB/">MongoDB</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C/Socket/">Socket</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web/">Web</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/elasticsearch/">elasticsearch</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ibatis/">ibatis</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/ibatis/mysql/">mysql</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/ibatis/mysql/resin/">resin</a><span class="category-list-count">1</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mongodb/">mongodb</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mybatis/">mybatis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tcp/">tcp</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/zookeeper/">zookeeper</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随记/">随记</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB/">MongoDB</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpingMvc/">SpingMvc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringData/">SpringData</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/">Web</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/alias/">alias</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/crontab/">crontab</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch/">elasticsearch</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elemMatch条件操作符/">elemMatch条件操作符</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ibatis/">ibatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/idea/">idea</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ik中文分词/">ik中文分词</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/maven/">maven</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mongodb/">mongodb</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/resin/">resin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/">socket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sprintf/">sprintf</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tcp/">tcp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zookeeper/">zookeeper</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能优化/">性能优化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/跨域/">跨域</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随记/">随记</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/集群/">集群</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/C/" style="font-size: 20px;">C++</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/SpingMvc/" style="font-size: 10px;">SpingMvc</a> <a href="/tags/SpringData/" style="font-size: 10px;">SpringData</a> <a href="/tags/Web/" style="font-size: 10px;">Web</a> <a href="/tags/alias/" style="font-size: 10px;">alias</a> <a href="/tags/crontab/" style="font-size: 10px;">crontab</a> <a href="/tags/elasticsearch/" style="font-size: 20px;">elasticsearch</a> <a href="/tags/elemMatch条件操作符/" style="font-size: 10px;">elemMatch条件操作符</a> <a href="/tags/ibatis/" style="font-size: 10px;">ibatis</a> <a href="/tags/idea/" style="font-size: 10px;">idea</a> <a href="/tags/ik中文分词/" style="font-size: 20px;">ik中文分词</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mongodb/" style="font-size: 10px;">mongodb</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/resin/" style="font-size: 10px;">resin</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/sprintf/" style="font-size: 10px;">sprintf</a> <a href="/tags/tcp/" style="font-size: 10px;">tcp</a> <a href="/tags/zookeeper/" style="font-size: 20px;">zookeeper</a> <a href="/tags/性能优化/" style="font-size: 10px;">性能优化</a> <a href="/tags/跨域/" style="font-size: 10px;">跨域</a> <a href="/tags/随记/" style="font-size: 10px;">随记</a> <a href="/tags/集群/" style="font-size: 10px;">集群</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://blog.csdn.net/u012406177">CSDN</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://www.cnblogs.com/liuzhilong/">cnblogs</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 wonderomg<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+	<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+	<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+	<script>
+		var gitment = new Gitment({
+			owner: 'wonderomg',
+			repo: 'wonderomg.github.io',
+			oauth: {
+				client_id: '53d83c6b8b2f45aea215',
+				client_secret: '1d052fdd6e22962e3b482dccdf49b99a408dfa01',
+			},
+		})
+		gitment.render('commentContainer')
+	</script>
+	
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

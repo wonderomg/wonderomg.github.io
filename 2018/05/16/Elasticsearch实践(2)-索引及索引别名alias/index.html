@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Elasticsearch实践(2)-索引及索引别名alias | WONDEROMG</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="我们都知道es效率如此高主要和索引是分不开的，需要将每一条数据建立索引，创建索引时数据字段也是你插入时的样子，索引中包含了数据的属性字段。而且创建索引也比较耗时（当然了，肯定比插入关系型数据库中更快😁），但是毕竟每一条数据都要建一次，数据量到达千万级亿级时，时间不是很乐观。🤔 💡想像这样一个场景，产品上线一段时间后，由于产品需要，要将某个字段类型改变，比如需要将某个long型字段改成stri">
+<meta name="keywords" content="elasticsearch,ik中文分词,alias">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Elasticsearch实践(2)-索引及索引别名alias">
+<meta property="og:url" content="https://wonderomg.github.io/2018/05/16/Elasticsearch实践(2)-索引及索引别名alias/index.html">
+<meta property="og:site_name" content="WONDEROMG">
+<meta property="og:description" content="我们都知道es效率如此高主要和索引是分不开的，需要将每一条数据建立索引，创建索引时数据字段也是你插入时的样子，索引中包含了数据的属性字段。而且创建索引也比较耗时（当然了，肯定比插入关系型数据库中更快😁），但是毕竟每一条数据都要建一次，数据量到达千万级亿级时，时间不是很乐观。🤔 💡想像这样一个场景，产品上线一段时间后，由于产品需要，要将某个字段类型改变，比如需要将某个long型字段改成stri">
+<meta property="og:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1529643264225&di=cb242c448c2a3bab04ce1acab4135689&imgtype=0&src=http%3A%2F%2Fjbcdn2.b0.upaiyun.com%2F2017%2F10%2Fc6cf4b2000277c64f55e00cf6d2f294f.png">
+<meta property="og:updated_time" content="2018-06-22T14:07:24.727Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Elasticsearch实践(2)-索引及索引别名alias">
+<meta name="twitter:description" content="我们都知道es效率如此高主要和索引是分不开的，需要将每一条数据建立索引，创建索引时数据字段也是你插入时的样子，索引中包含了数据的属性字段。而且创建索引也比较耗时（当然了，肯定比插入关系型数据库中更快😁），但是毕竟每一条数据都要建一次，数据量到达千万级亿级时，时间不是很乐观。🤔 💡想像这样一个场景，产品上线一段时间后，由于产品需要，要将某个字段类型改变，比如需要将某个long型字段改成stri">
+<meta name="twitter:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1529643264225&di=cb242c448c2a3bab04ce1acab4135689&imgtype=0&src=http%3A%2F%2Fjbcdn2.b0.upaiyun.com%2F2017%2F10%2Fc6cf4b2000277c64f55e00cf6d2f294f.png">
+    
+
+    
+        <link rel="alternate" href="rss2.xml" title="WONDEROMG" type="application/atom+xml" />
+    
+
+    
+        <link rel="icon" href="/css/images/logo.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">WONDEROMG</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/categories">Categories</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/wonderomg.png" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/wonderomg.png" />
+            <h2 id="name">刘易斯</h2>
+            <h3 id="title">Less is More.</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Canton, China.</span>
+            <a id="follow" target="_blank" href="https://www.zhihu.com/people/ou-la-19/activities">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                15
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                26
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/wonderomg" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://twitter.com/liuzhilong1" target="_blank" title="twitter" class=tooltip>
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://www.facebook.com/zhilong.liu.31" target="_blank" title="facebook" class=tooltip>
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/rss2.xml" target="_blank" title="rss" class=tooltip>
+                            <i class="fa fa-rss"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-Elasticsearch实践(2)-索引及索引别名alias" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Elasticsearch实践(2)-索引及索引别名alias
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/05/16/Elasticsearch实践(2)-索引及索引别名alias/">
+            <time datetime="2018-05-15T16:00:00.000Z" itemprop="datePublished">2018-05-16</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/elasticsearch/">elasticsearch</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/alias/">alias</a>, <a class="tag-link" href="/tags/elasticsearch/">elasticsearch</a>, <a class="tag-link" href="/tags/ik中文分词/">ik中文分词</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>我们都知道es效率如此高主要和索引是分不开的，需要将每一条数据建立索引，创建索引时数据字段也是你插入时的样子，索引中包含了数据的属性字段。而且创建索引也比较耗时（当然了，肯定比插入关系型数据库中更快😁），但是毕竟每一条数据都要建一次，数据量到达千万级亿级时，时间不是很乐观。🤔</p>
+<p>💡想像这样一个场景，产品上线一段时间后，由于产品需要，要将某个字段类型改变，比如需要将某个long型字段改成string类型，直接改会类型报错，查阅官方文档可知，es是不支持索引的更新操作的，需要对所有已有数据的所有field进行reindex，这意味着，需要停止服务进行重建索引操作，停服是最不想看到🤔，这时如果你当初建了索引别名，你会感谢你当初使用别名的决定，为何要用别名alias？🤷</p>
+<a id="more"></a>
+<p>Elasticsearch的索引别名alias，类似于数据库的视图。因为索引别名alias是映射到之前已创建的索引上的，对你要创建新的索引毫无影响。在创建好新索引之后，我们只需将这别名alias映射到新创建的别名上即可，这些操作只需要在服务器上通过指令操作即可，完全不影响线上服务，实现无缝切换索引。然后再将老的索引删掉即可，以节省空间。</p>
+<h2 id="1-创建一个索引"><a href="#1-创建一个索引" class="headerlink" title="1. 创建一个索引"></a>1. 创建一个索引</h2><p>创建一个索引，名为<code>goods</code>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> curl -XPUT 10.10.13.234:9200/goods</span></div></pre></td></tr></table></figure>
+<h2 id="2-为索引创建mapping"><a href="#2-为索引创建mapping" class="headerlink" title="2. 为索引创建mapping"></a>2. 为索引创建mapping</h2><p>为索引<code>goods</code>创建<code>mapping</code>，这里制定<code>content</code>字段属性使用ik中文分词器，只要制定搜索<code>content</code>内容就会查询出分词之后的关联结果：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> curl -XPOST 10.10.13.234:9200/goods/fulltext/_mapping <span class="_">-d</span><span class="string">'</span></span></div><div class="line">&#123;</div><div class="line">    "fulltext": &#123;</div><div class="line">             "_all": &#123;</div><div class="line">            "analyzer": "ik"</div><div class="line">        &#125;,</div><div class="line">        "properties": &#123;</div><div class="line">            "content": &#123;</div><div class="line">                "type" : "string",</div><div class="line">                "boost" : 8.0,</div><div class="line">                "term_vector" : "with_positions_offsets",</div><div class="line">                "analyzer" : "ik",</div><div class="line">                "include_in_all" : true</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;'</div></pre></td></tr></table></figure>
+<p>这里创建的索引<code>goods</code>，如果未使用别名，程序中也是用<code>goods</code>这个索引名，如果建了新的索引，那么程序也要用新的索引名称，这是不友好的，如果用了索引别名alias就可以解决这个问题，继续看后面的操作。</p>
+<h2 id="3-插入数据"><a href="#3-插入数据" class="headerlink" title="3. 插入数据"></a>3. 插入数据</h2><p>插入一些测试数据：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> curl -XPOST 10.10.13.234:9200/goods/fulltext/1 -H <span class="string">'Content-Type:application/json'</span> <span class="_">-d</span><span class="string">'</span></span></div><div class="line">&#123; "content": "进口华盛顿红蛇果 苹果4个装 单果重约180g 新鲜水果" &#125;'</div><div class="line"><span class="meta"></span></div><div class="line">$<span class="bash"><span class="string"> curl -XPOST 10.10.13.234:9200/goods/fulltext/2 -H '</span>Content-Type:application/json<span class="string">' -d'</span></span></div><div class="line">&#123; "content": "华盛顿苹果礼盒 8个装（4个红蛇果+4个青苹果）单果重约145g-180g 新鲜水果礼盒" &#125;'</div><div class="line"><span class="meta"></span></div><div class="line">$<span class="bash"> curl -XPOST 10.10.13.234:9200/goods/fulltext/4 -H <span class="string">'Content-Type:application/json'</span> <span class="_">-d</span><span class="string">'</span></span></div><div class="line">&#123; "content": "新疆阿克苏冰糖心 约5kg 单果200-250g（7Fresh 专供）" &#125;'</div><div class="line"><span class="meta"></span></div><div class="line">$<span class="bash"><span class="string"> curl -XPOST 10.10.13.234:9200/goods/fulltext/5 -H '</span>Content-Type:application/json<span class="string">' -d'</span></span></div><div class="line">&#123; "content": "果花 珍珠岩 无土栽培基质 颗粒状 保温性能好 园艺用品" &#125;'</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash">查看goods的mpping，后面需要与索引别名的mapping对比</span></div><div class="line"><span class="meta">$</span><span class="bash"> curl -XGET <span class="string">"10.10.13.234:9200/goods/_mapping?pretty"</span></span></div></pre></td></tr></table></figure>
+<h2 id="4-测试分词高亮"><a href="#4-测试分词高亮" class="headerlink" title="4. 测试分词高亮"></a>4. 测试分词高亮</h2><p>测试命中分词高亮：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> curl -XPOST 10.10.13.234:9200/goods/fulltext/_search -H <span class="string">'Content-Type:application/json'</span> <span class="_">-d</span><span class="string">'</span></span></div><div class="line">&#123; "query" : &#123; "match" : &#123; "content" : "进口水果" &#125;&#125;,</div><div class="line">    "highlight" : &#123;</div><div class="line">        "pre_tags" : ["&lt;tag1&gt;", "&lt;tag2&gt;"],</div><div class="line">        "post_tags" : ["&lt;/tag1&gt;", "&lt;/tag2&gt;"],</div><div class="line">        "fields" : &#123;</div><div class="line">            "content" : &#123;&#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;'</div></pre></td></tr></table></figure>
+<h2 id="5-创建索引别名"><a href="#5-创建索引别名" class="headerlink" title="5. 创建索引别名"></a>5. 创建索引别名</h2><p>新建同义词mapping：</p>
+<p>(1) 创建一个索引，这个索引的名称最好带上版本号，比如my_index_v1,my_index_v2等;</p>
+<p>(2) 创建一个指向本索引的同义词。为的是以后不停服更新mapping。</p>
+<p>步骤(1)的索引我们以刚刚创建的<code>goods</code>所以为例，创建别名映射到<code>goods</code>所以上：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> curl -XPOST 10.10.13.234:9200/_aliases <span class="_">-d</span> <span class="string">'  </span></span></div><div class="line">&#123;  </div><div class="line">    "actions": [  </div><div class="line">        &#123; "add": &#123;  </div><div class="line">            "alias": "my_index",  </div><div class="line">            "index": "goods"  </div><div class="line">        &#125;&#125;  </div><div class="line">    ]  </div><div class="line">&#125;'</div></pre></td></tr></table></figure>
+<p>然后查看索引<code>my_index</code>的mapping：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> curl -XGET <span class="string">"10.10.13.234:9200/my_index/_mapping?pretty"</span></span></div></pre></td></tr></table></figure>
+<p>索引<code>my_index</code>与<code>goods</code>的<code>mapping</code>一致。</p>
+<h2 id="6-切换索引"><a href="#6-切换索引" class="headerlink" title="6. 切换索引"></a>6. 切换索引</h2><p>再创建一个索引<code>goods_v2</code>，重复步骤1、2，名称换成<code>goods_v2</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> curl -XPUT 10.10.13.234:9200/goods_v2</span></div><div class="line"><span class="meta">$</span><span class="bash"> curl -XPOST 10.10.13.234:9200/goods_v2/fulltext/_mapping <span class="_">-d</span><span class="string">'</span></span></div><div class="line">&#123;</div><div class="line">    "fulltext": &#123;</div><div class="line">             "_all": &#123;</div><div class="line">            "analyzer": "ik"</div><div class="line">        &#125;,</div><div class="line">        "properties": &#123;</div><div class="line">            "content": &#123;</div><div class="line">                "type" : "string",</div><div class="line">                "boost" : 8.0,</div><div class="line">                "term_vector" : "with_positions_offsets",</div><div class="line">                "analyzer" : "ik",</div><div class="line">                "include_in_all" : true</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;'</div></pre></td></tr></table></figure>
+<p>插入测试数：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> curl -XPOST 10.10.13.234:9200/goods_v2/fulltext/1 -H <span class="string">'Content-Type:application/json'</span> <span class="_">-d</span><span class="string">'</span></span></div><div class="line">&#123; "content": "进口华盛顿红蛇果 苹果4个装 单果重约180g 新鲜水果",</div><div class="line">"number": 21&#125;'</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"><span class="string">查看goods_v2的mpping，后面需要与索引别名的mapping对比</span></span></div><div class="line"><span class="meta">$</span><span class="bash"><span class="string"> curl -XGET "10.10.13.234:9200/goods_v2/_mapping?pretty"</span></span></div></pre></td></tr></table></figure>
+<p><strong>重点是更换索引的操作</strong>，将<code>my_index</code>别名切换映射到<code>goods_v2</code>上：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> curl -XPOST 10.10.13.234:9200/_aliases <span class="_">-d</span> <span class="string">'</span></span></div><div class="line">&#123;</div><div class="line">    "actions": [</div><div class="line">        &#123; "remove": &#123;</div><div class="line">            "alias": "my_index",</div><div class="line">            "index": "goods"</div><div class="line">        &#125;&#125;,</div><div class="line">        &#123; "add": &#123;</div><div class="line">            "alias": "my_index",</div><div class="line">            "index": "goods_v2"</div><div class="line">        &#125;&#125;</div><div class="line">    ]</div><div class="line">&#125;'</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"><span class="string">查看my_index的mpping，与前面goods_v2的mapping对比</span></span></div><div class="line"><span class="meta">$</span><span class="bash"><span class="string"> curl -XGET "10.10.13.234:9200/my_index/_mapping?pretty"</span></span></div></pre></td></tr></table></figure>
+<p>我们可以对比索引<code>my_index</code>与<code>goods_v2</code>的<code>mapping</code>是一致的，索引切换成功。</p>
+<p>创建了索引别名alias的话，程序中制定这个<code>my_index</code>这个别名即可，后需要创建新索引，只需切换索引映射到新索引上即可，实现不停服更新mapping。</p>
+<p>下一篇我们来说下通过<strong>创建spring boot工程，通过es的java api操作es，实现分页查询和中文分词检索</strong>的功能。</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://wonderomg.github.io/2018/05/16/Elasticsearch实践(2)-索引及索引别名alias/" data-id="cjiq0vua20001fchgmpjtcyos" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/05/15/Elasticsearch实践(1)-搭建及IK中文分词/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">Elasticsearch实践(1)-搭建及IK中文分词</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+	<div id="commentContainer"></div>
+</section>
+    
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/05/16/Elasticsearch实践(2)-索引及索引别名alias/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1529643264225&amp;di=cb242c448c2a3bab04ce1acab4135689&amp;imgtype=0&amp;src=http%3A%2F%2Fjbcdn2.b0.upaiyun.com%2F2017%2F10%2Fc6cf4b2000277c64f55e00cf6d2f294f.png)" alt="Elasticsearch实践(2)-索引及索引别名alias" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/elasticsearch/">elasticsearch</a></p>
+                            <p class="item-title"><a href="/2018/05/16/Elasticsearch实践(2)-索引及索引别名alias/" class="title">Elasticsearch实践(2)-索引及索引别名alias</a></p>
+                            <p class="item-date"><time datetime="2018-05-15T16:00:00.000Z" itemprop="datePublished">2018-05-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/05/15/Elasticsearch实践(1)-搭建及IK中文分词/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1529643264225&amp;di=cb242c448c2a3bab04ce1acab4135689&amp;imgtype=0&amp;src=http%3A%2F%2Fjbcdn2.b0.upaiyun.com%2F2017%2F10%2Fc6cf4b2000277c64f55e00cf6d2f294f.png)" alt="Elasticsearch实践(1)-搭建及IK中文分词" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/elasticsearch/">elasticsearch</a></p>
+                            <p class="item-title"><a href="/2018/05/15/Elasticsearch实践(1)-搭建及IK中文分词/" class="title">Elasticsearch实践(1)-搭建及IK中文分词</a></p>
+                            <p class="item-date"><time datetime="2018-05-14T16:00:00.000Z" itemprop="datePublished">2018-05-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/15/Packet for query is too large/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1522683004066&amp;di=e2500c85d9aa9d7c8b6c1329e31d50b0&amp;imgtype=0&amp;src=http%3A%2F%2Fmedia.fashiongroup.com%2Ffashionmag%2Fnewsletters%2Fimages%2F20110928%2Fefu_12386fac-2e69-4d75-83b6-486dc6c0600e.jpg)" alt="Packet for query is too large (84 &gt; -1)." class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ibatis/">ibatis</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/ibatis/mysql/">mysql</a></p>
+                            <p class="item-title"><a href="/2018/03/15/Packet for query is too large/" class="title">Packet for query is too large (84 &gt; -1).</a></p>
+                            <p class="item-date"><time datetime="2018-03-14T16:00:00.000Z" itemprop="datePublished">2018-03-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/09/15/zookeeper提示Unable to read additional data from server sessionid 0x/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://static.oschina.net/uploads/img/201308/08171345_l5K3.jpg)" alt="zookeeper提示Unable to read additional data from server sessionid 0x" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/zookeeper/">zookeeper</a></p>
+                            <p class="item-title"><a href="/2017/09/15/zookeeper提示Unable to read additional data from server sessionid 0x/" class="title">zookeeper提示Unable to read additional data from server sessionid 0x</a></p>
+                            <p class="item-date"><time datetime="2017-09-14T16:00:00.000Z" itemprop="datePublished">2017-09-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/09/12/恒大主上港客/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://raw.githubusercontent.com/wonderomg/wonderomg.github.io/master/img/start.jpg)" alt="恒大 VS 上港" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/随记/">随记</a></p>
+                            <p class="item-title"><a href="/2017/09/12/恒大主上港客/" class="title">恒大 VS 上港</a></p>
+                            <p class="item-date"><time datetime="2017-09-11T16:00:00.000Z" itemprop="datePublished">2017-09-12</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C++</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/C/MongoDB/">MongoDB</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C/Socket/">Socket</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web/">Web</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/elasticsearch/">elasticsearch</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ibatis/">ibatis</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/ibatis/mysql/">mysql</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/ibatis/mysql/resin/">resin</a><span class="category-list-count">1</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mongodb/">mongodb</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mybatis/">mybatis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tcp/">tcp</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/zookeeper/">zookeeper</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随记/">随记</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB/">MongoDB</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpingMvc/">SpingMvc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringData/">SpringData</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/">Web</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/alias/">alias</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/crontab/">crontab</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch/">elasticsearch</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elemMatch条件操作符/">elemMatch条件操作符</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ibatis/">ibatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/idea/">idea</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ik中文分词/">ik中文分词</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/maven/">maven</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mongodb/">mongodb</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/resin/">resin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/">socket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sprintf/">sprintf</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tcp/">tcp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zookeeper/">zookeeper</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能优化/">性能优化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/跨域/">跨域</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随记/">随记</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/集群/">集群</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/C/" style="font-size: 20px;">C++</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/SpingMvc/" style="font-size: 10px;">SpingMvc</a> <a href="/tags/SpringData/" style="font-size: 10px;">SpringData</a> <a href="/tags/Web/" style="font-size: 10px;">Web</a> <a href="/tags/alias/" style="font-size: 10px;">alias</a> <a href="/tags/crontab/" style="font-size: 10px;">crontab</a> <a href="/tags/elasticsearch/" style="font-size: 20px;">elasticsearch</a> <a href="/tags/elemMatch条件操作符/" style="font-size: 10px;">elemMatch条件操作符</a> <a href="/tags/ibatis/" style="font-size: 10px;">ibatis</a> <a href="/tags/idea/" style="font-size: 10px;">idea</a> <a href="/tags/ik中文分词/" style="font-size: 20px;">ik中文分词</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mongodb/" style="font-size: 10px;">mongodb</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/resin/" style="font-size: 10px;">resin</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/sprintf/" style="font-size: 10px;">sprintf</a> <a href="/tags/tcp/" style="font-size: 10px;">tcp</a> <a href="/tags/zookeeper/" style="font-size: 20px;">zookeeper</a> <a href="/tags/性能优化/" style="font-size: 10px;">性能优化</a> <a href="/tags/跨域/" style="font-size: 10px;">跨域</a> <a href="/tags/随记/" style="font-size: 10px;">随记</a> <a href="/tags/集群/" style="font-size: 10px;">集群</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://blog.csdn.net/u012406177">CSDN</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://www.cnblogs.com/liuzhilong/">cnblogs</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 wonderomg<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+	<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+	<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+	<script>
+		var gitment = new Gitment({
+			owner: 'wonderomg',
+			repo: 'wonderomg.github.io',
+			oauth: {
+				client_id: '53d83c6b8b2f45aea215',
+				client_secret: '1d052fdd6e22962e3b482dccdf49b99a408dfa01',
+			},
+		})
+		gitment.render('commentContainer')
+	</script>
+	
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
