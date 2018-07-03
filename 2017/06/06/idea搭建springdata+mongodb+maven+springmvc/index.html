@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="WONDEROMG">
 <meta property="og:description" content="今天我们来学习一下SpringData操作MongoDB。项目环境：IntelliJ IDEA2017+maven3.5.0+MongoDB 3.2+JDK1.7+spring4.3.8">
 <meta property="og:image" content="http://pic1.win4000.com/wallpaper/5/5486631edd8b3.jpg">
-<meta property="og:updated_time" content="2017-07-13T14:34:56.988Z">
+<meta property="og:updated_time" content="2018-07-03T14:12:04.322Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="idea搭建springdata+mongodb+maven+springmvc">
 <meta name="twitter:description" content="今天我们来学习一下SpringData操作MongoDB。项目环境：IntelliJ IDEA2017+maven3.5.0+MongoDB 3.2+JDK1.7+spring4.3.8">
@@ -254,16 +254,16 @@
             <p>今天我们来学习一下SpringData操作MongoDB。<br>项目环境：IntelliJ IDEA2017+maven3.5.0+MongoDB 3.2+JDK1.7+spring4.3.8 <a id="more"></a></p>
 <p>推荐网站（适合学习各种知识的基础）：<a href="http://www.runoob.com/" target="_blank" rel="external">http://www.runoob.com/</a></p>
 <p>mongo安装请参考：<a href="http://www.runoob.com/mongodb/mongodb-window-install.html" target="_blank" rel="external">http://www.runoob.com/mongodb/mongodb-window-install.html</a></p>
-<h2 id="1-创建maven工程"><a href="#1-创建maven工程" class="headerlink" title="1. 创建maven工程"></a><strong>1. 创建maven工程</strong></h2><p>首相创建maven工程，New project:<br><img src="http://img.blog.csdn.net/20170611224733012?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjQwNjE3Nw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="创建maven工程"></p>
-<p><img src="http://img.blog.csdn.net/20170611224811981?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjQwNjE3Nw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="自行填写"></p>
+<h2 id="1-创建maven工程"><a href="#1-创建maven工程" class="headerlink" title="1. 创建maven工程"></a><strong>1. 创建maven工程</strong></h2><p>首相创建maven工程，New project:<br><img src="https://raw.githubusercontent.com/wonderomg/SpringData-mongdb/master/images/create-1.png" alt="创建maven工程"></p>
+<p><img src="https://raw.githubusercontent.com/wonderomg/SpringData-mongdb/master/images/create-2.png" alt="自行填写"></p>
 <p>这里不使用idea自带maven插件，改用下载好的3.5.0版maven；</p>
 <p>由于最近osChina的maven仓库挂掉，推荐大家使用阿里的镜像，速度快的飞起<br><code>maven</code>配置：<code>D:\apache-maven-3.5.0\conf\setting.xml</code>中找到<code>mirrors</code>:</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">mirrors</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">mirror</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">id</span>&gt;</span>alimaven<span class="tag">&lt;/<span class="name">id</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">name</span>&gt;</span>aliyun maven<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://maven.aliyun.com/nexus/content/groups/public/<span class="tag">&lt;/<span class="name">url</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">mirrorOf</span>&gt;</span>central<span class="tag">&lt;/<span class="name">mirrorOf</span>&gt;</span>        </div><div class="line">    <span class="tag">&lt;/<span class="name">mirror</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">mirrors</span>&gt;</span></div></pre></td></tr></table></figure>
-<p><img src="http://img.blog.csdn.net/20170611224920836?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjQwNjE3Nw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="选择下好的本地maven3.5.0"></p>
-<p><img src="http://img.blog.csdn.net/20170611225003415?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjQwNjE3Nw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="next"></p>
+<p><img src="https://raw.githubusercontent.com/wonderomg/SpringData-mongdb/master/images/create-3.png" alt="选择下好的本地maven3.5.0"></p>
+<p><img src="https://raw.githubusercontent.com/wonderomg/SpringData-mongdb/master/images/create-4.png" alt="next"></p>
 <p>项目结构如下图，手动创建相关文件夹及文件，并设置文件夹的对应属性：</p>
-<p><img src="http://img.blog.csdn.net/20170611225032343?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjQwNjE3Nw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="工程目录"></p>
-<p><img src="http://img.blog.csdn.net/20170611225052415?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMjQwNjE3Nw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="目录结构"></p>
+<p><img src="https://raw.githubusercontent.com/wonderomg/SpringData-mongdb/master/images/create-5.png" alt="工程目录"></p>
+<p><img src="https://raw.githubusercontent.com/wonderomg/SpringData-mongdb/master/images/create-6.png" alt="目录结构"></p>
 <p>至此，maven工程创建完毕。</p>
 <h2 id="2-访问mongodb数据方式"><a href="#2-访问mongodb数据方式" class="headerlink" title="2. 访问mongodb数据方式"></a><strong>2. 访问mongodb数据方式</strong></h2><p>这里<code>dao</code>与<code>mongoDao</code>分别为<code>mongoDB</code>的两种查询方式：</p>
 <blockquote>
