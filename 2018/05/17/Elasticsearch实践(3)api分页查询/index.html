@@ -5,18 +5,18 @@
     
     <title>Elasticsearch实践(3)-api分页查询 | WONDEROMG</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="elasticsearch系列： Elasticsearch实践(1)-搭建及IK中文分词-%E6%90%AD%E5%BB%BA%E5%8F%8AIK%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D/) Elasticsearch实践(2)-索引及索引别名alias-%E7%B4%A2%E5%BC%95%E5%8F%8A%E7%B4%A2%E5%BC%95%E5%88%AB">
+    <meta name="description" content="elasticsearch系列： (1)Elasticsearch实践(1)-搭建及IK中文分词 (2)Elasticsearch实践(2)-索引及索引别名alias (3)Elasticsearch实践(3)-api分页查询 es分页有两种，from size浅分页和scroll深分页，这里对这两种分页都做了实现，使用的是es的java api。from size类似于mysql的limit分页">
 <meta name="keywords" content="elasticsearch,ik中文分词,分页查询">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Elasticsearch实践(3)-api分页查询">
-<meta property="og:url" content="https://wonderomg.github.io/2018/05/17/Elasticsearch实践(3)-api分页查询/index.html">
+<meta property="og:url" content="https://wonderomg.github.io/2018/05/17/Elasticsearch实践(3)api分页查询/index.html">
 <meta property="og:site_name" content="WONDEROMG">
-<meta property="og:description" content="elasticsearch系列： Elasticsearch实践(1)-搭建及IK中文分词-%E6%90%AD%E5%BB%BA%E5%8F%8AIK%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D/) Elasticsearch实践(2)-索引及索引别名alias-%E7%B4%A2%E5%BC%95%E5%8F%8A%E7%B4%A2%E5%BC%95%E5%88%AB">
+<meta property="og:description" content="elasticsearch系列： (1)Elasticsearch实践(1)-搭建及IK中文分词 (2)Elasticsearch实践(2)-索引及索引别名alias (3)Elasticsearch实践(3)-api分页查询 es分页有两种，from size浅分页和scroll深分页，这里对这两种分页都做了实现，使用的是es的java api。from size类似于mysql的limit分页">
 <meta property="og:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1529643264225&di=cb242c448c2a3bab04ce1acab4135689&imgtype=0&src=http%3A%2F%2Fjbcdn2.b0.upaiyun.com%2F2017%2F10%2Fc6cf4b2000277c64f55e00cf6d2f294f.png">
-<meta property="og:updated_time" content="2018-07-04T13:41:31.671Z">
+<meta property="og:updated_time" content="2018-07-04T14:05:23.631Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Elasticsearch实践(3)-api分页查询">
-<meta name="twitter:description" content="elasticsearch系列： Elasticsearch实践(1)-搭建及IK中文分词-%E6%90%AD%E5%BB%BA%E5%8F%8AIK%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D/) Elasticsearch实践(2)-索引及索引别名alias-%E7%B4%A2%E5%BC%95%E5%8F%8A%E7%B4%A2%E5%BC%95%E5%88%AB">
+<meta name="twitter:description" content="elasticsearch系列： (1)Elasticsearch实践(1)-搭建及IK中文分词 (2)Elasticsearch实践(2)-索引及索引别名alias (3)Elasticsearch实践(3)-api分页查询 es分页有两种，from size浅分页和scroll深分页，这里对这两种分页都做了实现，使用的是es的java api。from size类似于mysql的limit分页">
 <meta name="twitter:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1529643264225&di=cb242c448c2a3bab04ce1acab4135689&imgtype=0&src=http%3A%2F%2Fjbcdn2.b0.upaiyun.com%2F2017%2F10%2Fc6cf4b2000277c64f55e00cf6d2f294f.png">
     
 
@@ -208,7 +208,7 @@
 </aside>
 
             
-            <section id="main"><article id="post-Elasticsearch实践(3)-api分页查询" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-Elasticsearch实践(3)api分页查询" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -225,7 +225,7 @@
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/05/17/Elasticsearch实践(3)-api分页查询/">
+        <a href="/2018/05/17/Elasticsearch实践(3)api分页查询/">
             <time datetime="2018-05-16T16:00:00.000Z" itemprop="datePublished">2018-05-17</time>
         </a>
     </div>
@@ -252,9 +252,9 @@
         
             
             <p>elasticsearch系列：</p>
-<p><a href="https://wonderomg.github.io/2018/05/15/Elasticsearch%E5%AE%9E%E8%B7%B5(1">Elasticsearch实践(1)-搭建及IK中文分词</a>-%E6%90%AD%E5%BB%BA%E5%8F%8AIK%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D/)</p>
-<p><a href="https://wonderomg.github.io/2018/05/16/Elasticsearch%E5%AE%9E%E8%B7%B5(2">Elasticsearch实践(2)-索引及索引别名alias</a>-%E7%B4%A2%E5%BC%95%E5%8F%8A%E7%B4%A2%E5%BC%95%E5%88%AB%E5%90%8Dalias/)</p>
-<p><a href="https://wonderomg.github.io/">Elasticsearch实践(3)-api分页查询</a></p>
+<p>(1)<a href="https://wonderomg.github.io/2018/05/15/Elasticsearch%E5%AE%9E%E8%B7%B5%E6%90%AD%E5%BB%BA%E5%8F%8AIK%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D/">Elasticsearch实践(1)-搭建及IK中文分词</a></p>
+<p>(2)<a href="https://wonderomg.github.io/2018/05/16/Elasticsearch%E5%AE%9E%E8%B7%B5%E7%B4%A2%E5%BC%95%E5%8F%8A%E7%B4%A2%E5%BC%95%E5%88%AB%E5%90%8Dalias/">Elasticsearch实践(2)-索引及索引别名alias</a></p>
+<p>(3)<a href="https://wonderomg.github.io/2018/05/17/Elasticsearch%E5%AE%9E%E8%B7%B5api%E5%88%86%E9%A1%B5%E6%9F%A5%E8%AF%A2/">Elasticsearch实践(3)-api分页查询</a></p>
 <p>es分页有两种，from size浅分页和scroll深分页，这里对这两种分页都做了实现，使用的是es的java api。from size类似于mysql的limit分页，from偏移，默认为0，size为返回的结果数量，默认为10。在数据量不大的情况下一般会使用from size，数据量大的时候效率比较低，而且很费内存，每次会把from*size条记录全部加载到内存中，对结果返回前进行全局排序，然后丢弃掉范围外的结果，重复这样的操作会导致内存占用过大而使es挂掉，并且受数据条数限制，10000条，需修改索引限制。🤔</p>
 <a id="more"></a>
 <p>scroll分页通俗来说就是滚屏翻页，设置每页查询数量之后，每次查询会返回一个scroll_id，即当前文档的位置，下次查询再传这个scroll_id给es返回下一页的数据以及一个新的scroll_id，类似于按书页码顺序翻书和游标，遗憾的是不支持跳页。🤔适用于不需要跳页持续批量拉取结果、对所有数据分页或一次性查询大量数据的场景，这种记录文档位置的查询方式效率非常高，也就是常说的倒排索引。下面使用java api实现这两种分页效果。</p>
@@ -304,7 +304,7 @@
 
 </div>
 
-    <a data-url="https://wonderomg.github.io/2018/05/17/Elasticsearch实践(3)-api分页查询/" data-id="cjj76bbos00002ghg5d9fdy4y" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="https://wonderomg.github.io/2018/05/17/Elasticsearch实践(3)api分页查询/" data-id="cjj76v20i0003lwhgtl7bztaa" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -380,7 +380,7 @@
 <nav id="article-nav">
     
     
-        <a href="/2018/05/16/Elasticsearch实践(2)-索引及索引别名alias/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2018/05/16/Elasticsearch实践(2)索引及索引别名alias/" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">下一篇</strong>
             <div class="article-nav-title">Elasticsearch实践(2)-索引及索引别名alias</div>
         </a>
@@ -412,7 +412,7 @@
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/05/17/Elasticsearch实践(3)-api分页查询/" class="thumbnail">
+                            <a href="/2018/05/17/Elasticsearch实践(3)api分页查询/" class="thumbnail">
     
     
         <span style="background-image:url(https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1529643264225&amp;di=cb242c448c2a3bab04ce1acab4135689&amp;imgtype=0&amp;src=http%3A%2F%2Fjbcdn2.b0.upaiyun.com%2F2017%2F10%2Fc6cf4b2000277c64f55e00cf6d2f294f.png)" alt="Elasticsearch实践(3)-api分页查询" class="thumbnail-image"></span>
@@ -423,7 +423,7 @@
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/elasticsearch/">elasticsearch</a></p>
-                            <p class="item-title"><a href="/2018/05/17/Elasticsearch实践(3)-api分页查询/" class="title">Elasticsearch实践(3)-api分页查询</a></p>
+                            <p class="item-title"><a href="/2018/05/17/Elasticsearch实践(3)api分页查询/" class="title">Elasticsearch实践(3)-api分页查询</a></p>
                             <p class="item-date"><time datetime="2018-05-16T16:00:00.000Z" itemprop="datePublished">2018-05-17</time></p>
                         </div>
                     </li>
@@ -431,7 +431,7 @@
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/05/16/Elasticsearch实践(2)-索引及索引别名alias/" class="thumbnail">
+                            <a href="/2018/05/16/Elasticsearch实践(2)索引及索引别名alias/" class="thumbnail">
     
     
         <span style="background-image:url(https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1529643264225&amp;di=cb242c448c2a3bab04ce1acab4135689&amp;imgtype=0&amp;src=http%3A%2F%2Fjbcdn2.b0.upaiyun.com%2F2017%2F10%2Fc6cf4b2000277c64f55e00cf6d2f294f.png)" alt="Elasticsearch实践(2)-索引及索引别名alias" class="thumbnail-image"></span>
@@ -442,7 +442,7 @@
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/elasticsearch/">elasticsearch</a></p>
-                            <p class="item-title"><a href="/2018/05/16/Elasticsearch实践(2)-索引及索引别名alias/" class="title">Elasticsearch实践(2)-索引及索引别名alias</a></p>
+                            <p class="item-title"><a href="/2018/05/16/Elasticsearch实践(2)索引及索引别名alias/" class="title">Elasticsearch实践(2)-索引及索引别名alias</a></p>
                             <p class="item-date"><time datetime="2018-05-15T16:00:00.000Z" itemprop="datePublished">2018-05-16</time></p>
                         </div>
                     </li>
@@ -450,7 +450,7 @@
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/05/15/Elasticsearch实践(1)-搭建及IK中文分词/" class="thumbnail">
+                            <a href="/2018/05/15/Elasticsearch实践(1)搭建及IK中文分词/" class="thumbnail">
     
     
         <span style="background-image:url(https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1529643264225&amp;di=cb242c448c2a3bab04ce1acab4135689&amp;imgtype=0&amp;src=http%3A%2F%2Fjbcdn2.b0.upaiyun.com%2F2017%2F10%2Fc6cf4b2000277c64f55e00cf6d2f294f.png)" alt="Elasticsearch实践(1)-搭建及IK中文分词" class="thumbnail-image"></span>
@@ -461,7 +461,7 @@
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/elasticsearch/">elasticsearch</a></p>
-                            <p class="item-title"><a href="/2018/05/15/Elasticsearch实践(1)-搭建及IK中文分词/" class="title">Elasticsearch实践(1)-搭建及IK中文分词</a></p>
+                            <p class="item-title"><a href="/2018/05/15/Elasticsearch实践(1)搭建及IK中文分词/" class="title">Elasticsearch实践(1)-搭建及IK中文分词</a></p>
                             <p class="item-date"><time datetime="2018-05-14T16:00:00.000Z" itemprop="datePublished">2018-05-15</time></p>
                         </div>
                     </li>
