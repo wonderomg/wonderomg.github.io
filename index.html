@@ -205,7 +205,7 @@
 
             
             <section id="main">
-    <article id="post-Elasticsearch实践(3)api分页查询" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Elasticsearch实践api分页查询" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -213,7 +213,7 @@
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/05/17/Elasticsearch实践(3)api分页查询/">Elasticsearch实践(3)-api分页查询</a>
+            <a class="article-title" href="/2018/05/17/Elasticsearch实践api分页查询/">Elasticsearch实践(3)-api分页查询</a>
         </h1>
     
 
@@ -222,7 +222,7 @@
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/05/17/Elasticsearch实践(3)api分页查询/">
+        <a href="/2018/05/17/Elasticsearch实践api分页查询/">
             <time datetime="2018-05-16T16:00:00.000Z" itemprop="datePublished">2018-05-17</time>
         </a>
     </div>
@@ -253,7 +253,7 @@
 <p>(3)<a href="https://wonderomg.github.io/2018/05/17/Elasticsearch%E5%AE%9E%E8%B7%B5api%E5%88%86%E9%A1%B5%E6%9F%A5%E8%AF%A2/">Elasticsearch实践(3)-api分页查询</a></p>
 <p>es分页有两种，from size浅分页和scroll深分页，这里对这两种分页都做了实现，使用的是es的java api。from size类似于mysql的limit分页，from偏移，默认为0，size为返回的结果数量，默认为10。在数据量不大的情况下一般会使用from size，数据量大的时候效率比较低，而且很费内存，每次会把from*size条记录全部加载到内存中，对结果返回前进行全局排序，然后丢弃掉范围外的结果，重复这样的操作会导致内存占用过大而使es挂掉，并且受数据条数限制，10000条，需修改索引限制。🤔</p></p>
             <p class="article-more-link">
-                <a href="/2018/05/17/Elasticsearch实践(3)api分页查询/#more">查看更多</a>
+                <a href="/2018/05/17/Elasticsearch实践api分页查询/#more">查看更多</a>
             </p>
         
         </div>
@@ -264,7 +264,7 @@
 
 </div>
 
-    <a data-url="https://wonderomg.github.io/2018/05/17/Elasticsearch实践(3)api分页查询/" data-id="cjj76v20i0003lwhgtl7bztaa" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="https://wonderomg.github.io/2018/05/17/Elasticsearch实践api分页查询/" data-id="cjj778gp40000j8hg8xy80r31" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -340,7 +340,7 @@
 
 
 
-    <article id="post-Elasticsearch实践(2)索引及索引别名alias" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Elasticsearch实践索引及索引别名alias" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -348,7 +348,7 @@
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/05/16/Elasticsearch实践(2)索引及索引别名alias/">Elasticsearch实践(2)-索引及索引别名alias</a>
+            <a class="article-title" href="/2018/05/16/Elasticsearch实践索引及索引别名alias/">Elasticsearch实践(2)-索引及索引别名alias</a>
         </h1>
     
 
@@ -357,7 +357,7 @@
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/05/16/Elasticsearch实践(2)索引及索引别名alias/">
+        <a href="/2018/05/16/Elasticsearch实践索引及索引别名alias/">
             <time datetime="2018-05-15T16:00:00.000Z" itemprop="datePublished">2018-05-16</time>
         </a>
     </div>
@@ -385,7 +385,7 @@
             <p><p>我们都知道es效率如此高主要和索引是分不开的，需要将每一条数据建立索引，创建索引时数据字段也是你插入时的样子，索引中包含了数据的属性字段。而且创建索引也比较耗时（当然了，肯定比插入关系型数据库中更快😁），但是毕竟每一条数据都要建一次，数据量到达千万级亿级时，时间不是很乐观。🤔</p>
 <p>💡想像这样一个场景，产品上线一段时间后，由于产品需要，要将某个字段类型改变，比如需要将某个long型字段改成string类型，直接改会类型报错，查阅官方文档可知，es是不支持索引的更新操作的，需要对所有已有数据的所有field进行reindex，这意味着，需要停止服务进行重建索引操作，停服是最不想看到😭，这时如果你当初建了索引别名，你会感谢你当初使用别名的决定，为何要用别名alias？🤷</p></p>
             <p class="article-more-link">
-                <a href="/2018/05/16/Elasticsearch实践(2)索引及索引别名alias/#more">查看更多</a>
+                <a href="/2018/05/16/Elasticsearch实践索引及索引别名alias/#more">查看更多</a>
             </p>
         
         </div>
@@ -396,7 +396,7 @@
 
 </div>
 
-    <a data-url="https://wonderomg.github.io/2018/05/16/Elasticsearch实践(2)索引及索引别名alias/" data-id="cjj76v20e0001lwhgjyso6jcp" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="https://wonderomg.github.io/2018/05/16/Elasticsearch实践索引及索引别名alias/" data-id="cjj778grg0009j8hgrb7pw0o4" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -472,7 +472,7 @@
 
 
 
-    <article id="post-Elasticsearch实践(1)搭建及IK中文分词" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Elasticsearch实践搭建及IK中文分词" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -480,7 +480,7 @@
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/05/15/Elasticsearch实践(1)搭建及IK中文分词/">Elasticsearch实践(1)-搭建及IK中文分词</a>
+            <a class="article-title" href="/2018/05/15/Elasticsearch实践搭建及IK中文分词/">Elasticsearch实践(1)-搭建及IK中文分词</a>
         </h1>
     
 
@@ -489,7 +489,7 @@
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/05/15/Elasticsearch实践(1)搭建及IK中文分词/">
+        <a href="/2018/05/15/Elasticsearch实践搭建及IK中文分词/">
             <time datetime="2018-05-14T16:00:00.000Z" itemprop="datePublished">2018-05-15</time>
         </a>
     </div>
@@ -516,7 +516,7 @@
         
             <p><p>🔍近期在做商品搜索优化，对比了Solr与Elasticsearch的区别，两者都是基于Lucene实现的封装，但es在数据量越大的情况下实时检索性能优于solr，更适用于实时商品搜索，于是选用了es，下面介绍elasticsearch搜索引擎的搭建及使用，这里使用的是2.2.1的es版本，以及1.8.1的ik分词版本。</p></p>
             <p class="article-more-link">
-                <a href="/2018/05/15/Elasticsearch实践(1)搭建及IK中文分词/#more">查看更多</a>
+                <a href="/2018/05/15/Elasticsearch实践搭建及IK中文分词/#more">查看更多</a>
             </p>
         
         </div>
@@ -527,7 +527,7 @@
 
 </div>
 
-    <a data-url="https://wonderomg.github.io/2018/05/15/Elasticsearch实践(1)搭建及IK中文分词/" data-id="cjj76v2030000lwhgqxok1is1" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="https://wonderomg.github.io/2018/05/15/Elasticsearch实践搭建及IK中文分词/" data-id="cjj778gpj0001j8hg4204dx7i" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1544,7 +1544,7 @@
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/05/17/Elasticsearch实践(3)api分页查询/" class="thumbnail">
+                            <a href="/2018/05/17/Elasticsearch实践api分页查询/" class="thumbnail">
     
     
         <span style="background-image:url(https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1529643264225&amp;di=cb242c448c2a3bab04ce1acab4135689&amp;imgtype=0&amp;src=http%3A%2F%2Fjbcdn2.b0.upaiyun.com%2F2017%2F10%2Fc6cf4b2000277c64f55e00cf6d2f294f.png)" alt="Elasticsearch实践(3)-api分页查询" class="thumbnail-image"></span>
@@ -1555,7 +1555,7 @@
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/elasticsearch/">elasticsearch</a></p>
-                            <p class="item-title"><a href="/2018/05/17/Elasticsearch实践(3)api分页查询/" class="title">Elasticsearch实践(3)-api分页查询</a></p>
+                            <p class="item-title"><a href="/2018/05/17/Elasticsearch实践api分页查询/" class="title">Elasticsearch实践(3)-api分页查询</a></p>
                             <p class="item-date"><time datetime="2018-05-16T16:00:00.000Z" itemprop="datePublished">2018-05-17</time></p>
                         </div>
                     </li>
@@ -1563,7 +1563,7 @@
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/05/16/Elasticsearch实践(2)索引及索引别名alias/" class="thumbnail">
+                            <a href="/2018/05/16/Elasticsearch实践索引及索引别名alias/" class="thumbnail">
     
     
         <span style="background-image:url(https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1529643264225&amp;di=cb242c448c2a3bab04ce1acab4135689&amp;imgtype=0&amp;src=http%3A%2F%2Fjbcdn2.b0.upaiyun.com%2F2017%2F10%2Fc6cf4b2000277c64f55e00cf6d2f294f.png)" alt="Elasticsearch实践(2)-索引及索引别名alias" class="thumbnail-image"></span>
@@ -1574,7 +1574,7 @@
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/elasticsearch/">elasticsearch</a></p>
-                            <p class="item-title"><a href="/2018/05/16/Elasticsearch实践(2)索引及索引别名alias/" class="title">Elasticsearch实践(2)-索引及索引别名alias</a></p>
+                            <p class="item-title"><a href="/2018/05/16/Elasticsearch实践索引及索引别名alias/" class="title">Elasticsearch实践(2)-索引及索引别名alias</a></p>
                             <p class="item-date"><time datetime="2018-05-15T16:00:00.000Z" itemprop="datePublished">2018-05-16</time></p>
                         </div>
                     </li>
@@ -1582,7 +1582,7 @@
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/05/15/Elasticsearch实践(1)搭建及IK中文分词/" class="thumbnail">
+                            <a href="/2018/05/15/Elasticsearch实践搭建及IK中文分词/" class="thumbnail">
     
     
         <span style="background-image:url(https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1529643264225&amp;di=cb242c448c2a3bab04ce1acab4135689&amp;imgtype=0&amp;src=http%3A%2F%2Fjbcdn2.b0.upaiyun.com%2F2017%2F10%2Fc6cf4b2000277c64f55e00cf6d2f294f.png)" alt="Elasticsearch实践(1)-搭建及IK中文分词" class="thumbnail-image"></span>
@@ -1593,7 +1593,7 @@
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/elasticsearch/">elasticsearch</a></p>
-                            <p class="item-title"><a href="/2018/05/15/Elasticsearch实践(1)搭建及IK中文分词/" class="title">Elasticsearch实践(1)-搭建及IK中文分词</a></p>
+                            <p class="item-title"><a href="/2018/05/15/Elasticsearch实践搭建及IK中文分词/" class="title">Elasticsearch实践(1)-搭建及IK中文分词</a></p>
                             <p class="item-date"><time datetime="2018-05-14T16:00:00.000Z" itemprop="datePublished">2018-05-15</time></p>
                         </div>
                     </li>

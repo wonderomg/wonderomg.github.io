@@ -3,20 +3,20 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Elasticsearch实践(1)-搭建及IK中文分词 | WONDEROMG</title>
+    <title>Elasticsearch实践(2)-索引及索引别名alias | WONDEROMG</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="🔍近期在做商品搜索优化，对比了Solr与Elasticsearch的区别，两者都是基于Lucene实现的封装，但es在数据量越大的情况下实时检索性能优于solr，更适用于实时商品搜索，于是选用了es，下面介绍elasticsearch搜索引擎的搭建及使用，这里使用的是2.2.1的es版本，以及1.8.1的ik分词版本。">
-<meta name="keywords" content="elasticsearch,ik中文分词">
+    <meta name="description" content="我们都知道es效率如此高主要和索引是分不开的，需要将每一条数据建立索引，创建索引时数据字段也是你插入时的样子，索引中包含了数据的属性字段。而且创建索引也比较耗时（当然了，肯定比插入关系型数据库中更快😁），但是毕竟每一条数据都要建一次，数据量到达千万级亿级时，时间不是很乐观。🤔 💡想像这样一个场景，产品上线一段时间后，由于产品需要，要将某个字段类型改变，比如需要将某个long型字段改成stri">
+<meta name="keywords" content="elasticsearch,ik中文分词,alias">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Elasticsearch实践(1)-搭建及IK中文分词">
-<meta property="og:url" content="https://wonderomg.github.io/2018/05/15/Elasticsearch实践(1)搭建及IK中文分词/index.html">
+<meta property="og:title" content="Elasticsearch实践(2)-索引及索引别名alias">
+<meta property="og:url" content="https://wonderomg.github.io/2018/05/16/Elasticsearch实践索引及索引别名alias/index.html">
 <meta property="og:site_name" content="WONDEROMG">
-<meta property="og:description" content="🔍近期在做商品搜索优化，对比了Solr与Elasticsearch的区别，两者都是基于Lucene实现的封装，但es在数据量越大的情况下实时检索性能优于solr，更适用于实时商品搜索，于是选用了es，下面介绍elasticsearch搜索引擎的搭建及使用，这里使用的是2.2.1的es版本，以及1.8.1的ik分词版本。">
+<meta property="og:description" content="我们都知道es效率如此高主要和索引是分不开的，需要将每一条数据建立索引，创建索引时数据字段也是你插入时的样子，索引中包含了数据的属性字段。而且创建索引也比较耗时（当然了，肯定比插入关系型数据库中更快😁），但是毕竟每一条数据都要建一次，数据量到达千万级亿级时，时间不是很乐观。🤔 💡想像这样一个场景，产品上线一段时间后，由于产品需要，要将某个字段类型改变，比如需要将某个long型字段改成stri">
 <meta property="og:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1529643264225&di=cb242c448c2a3bab04ce1acab4135689&imgtype=0&src=http%3A%2F%2Fjbcdn2.b0.upaiyun.com%2F2017%2F10%2Fc6cf4b2000277c64f55e00cf6d2f294f.png">
-<meta property="og:updated_time" content="2018-06-22T14:05:55.911Z">
+<meta property="og:updated_time" content="2018-06-22T14:18:46.247Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Elasticsearch实践(1)-搭建及IK中文分词">
-<meta name="twitter:description" content="🔍近期在做商品搜索优化，对比了Solr与Elasticsearch的区别，两者都是基于Lucene实现的封装，但es在数据量越大的情况下实时检索性能优于solr，更适用于实时商品搜索，于是选用了es，下面介绍elasticsearch搜索引擎的搭建及使用，这里使用的是2.2.1的es版本，以及1.8.1的ik分词版本。">
+<meta name="twitter:title" content="Elasticsearch实践(2)-索引及索引别名alias">
+<meta name="twitter:description" content="我们都知道es效率如此高主要和索引是分不开的，需要将每一条数据建立索引，创建索引时数据字段也是你插入时的样子，索引中包含了数据的属性字段。而且创建索引也比较耗时（当然了，肯定比插入关系型数据库中更快😁），但是毕竟每一条数据都要建一次，数据量到达千万级亿级时，时间不是很乐观。🤔 💡想像这样一个场景，产品上线一段时间后，由于产品需要，要将某个字段类型改变，比如需要将某个long型字段改成stri">
 <meta name="twitter:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1529643264225&di=cb242c448c2a3bab04ce1acab4135689&imgtype=0&src=http%3A%2F%2Fjbcdn2.b0.upaiyun.com%2F2017%2F10%2Fc6cf4b2000277c64f55e00cf6d2f294f.png">
     
 
@@ -208,7 +208,7 @@
 </aside>
 
             
-            <section id="main"><article id="post-Elasticsearch实践(1)搭建及IK中文分词" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-Elasticsearch实践索引及索引别名alias" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -216,7 +216,7 @@
                 
     
         <h1 class="article-title" itemprop="name">
-            Elasticsearch实践(1)-搭建及IK中文分词
+            Elasticsearch实践(2)-索引及索引别名alias
         </h1>
     
 
@@ -225,8 +225,8 @@
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/05/15/Elasticsearch实践(1)搭建及IK中文分词/">
-            <time datetime="2018-05-14T16:00:00.000Z" itemprop="datePublished">2018-05-15</time>
+        <a href="/2018/05/16/Elasticsearch实践索引及索引别名alias/">
+            <time datetime="2018-05-15T16:00:00.000Z" itemprop="datePublished">2018-05-16</time>
         </a>
     </div>
 
@@ -240,7 +240,7 @@
                         
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/elasticsearch/">elasticsearch</a>, <a class="tag-link" href="/tags/ik中文分词/">ik中文分词</a>
+        <a class="tag-link" href="/tags/alias/">alias</a>, <a class="tag-link" href="/tags/elasticsearch/">elasticsearch</a>, <a class="tag-link" href="/tags/ik中文分词/">ik中文分词</a>
     </div>
 
                     </div>
@@ -251,42 +251,36 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <p>🔍近期在做商品搜索优化，对比了Solr与Elasticsearch的区别，两者都是基于Lucene实现的封装，但es在数据量越大的情况下实时检索性能优于solr，更适用于实时商品搜索，于是选用了es，下面介绍elasticsearch搜索引擎的搭建及使用，这里使用的是2.2.1的es版本，以及1.8.1的ik分词版本。</p>
+            <p>我们都知道es效率如此高主要和索引是分不开的，需要将每一条数据建立索引，创建索引时数据字段也是你插入时的样子，索引中包含了数据的属性字段。而且创建索引也比较耗时（当然了，肯定比插入关系型数据库中更快😁），但是毕竟每一条数据都要建一次，数据量到达千万级亿级时，时间不是很乐观。🤔</p>
+<p>💡想像这样一个场景，产品上线一段时间后，由于产品需要，要将某个字段类型改变，比如需要将某个long型字段改成string类型，直接改会类型报错，查阅官方文档可知，es是不支持索引的更新操作的，需要对所有已有数据的所有field进行reindex，这意味着，需要停止服务进行重建索引操作，停服是最不想看到😭，这时如果你当初建了索引别名，你会感谢你当初使用别名的决定，为何要用别名alias？🤷</p>
 <a id="more"></a>
-<h1 id="安装es及IK中文分词"><a href="#安装es及IK中文分词" class="headerlink" title="安装es及IK中文分词"></a>安装es及IK中文分词</h1><h2 id="1-下载安装包"><a href="#1-下载安装包" class="headerlink" title="1. 下载安装包"></a>1. 下载安装包</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">##我的环境是Redhat6.4，此处使用的是es2.2.1版本</div><div class="line">##（1）可以使用指令安装</div><div class="line">$ yum install https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/rpm/elasticsearch/2.2.1/elasticsearch-2.2.1.rpm</div><div class="line">##（2）也可以直接下载文件，然后上传至linux目录下</div><div class="line">https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/2.2.1/elasticsearch-2.2.1.tar.gz</div></pre></td></tr></table></figure>
-<h2 id="2-上传安装文件到linux目录并解压"><a href="#2-上传安装文件到linux目录并解压" class="headerlink" title="2. 上传安装文件到linux目录并解压"></a>2. 上传安装文件到linux目录并解压</h2><p>我这里将<code>elasticsearch-2.2.1.tar.gz</code>文件放至<code>/opt/elasticsearch</code>目录下。</p>
-<p>解压：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> cd /opt/elasticsearch</div><div class="line"><span class="meta">$</span> tar -zxvf elasticsearch-2.2.1.tar.gz</div></pre></td></tr></table></figure>
-<p><strong>此时切记不能用 <code>./bin/elasticsearch</code>启动，因为在root权限下会提示错误</strong>：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Exception in thread "main" java.lang.RuntimeException: don't run elasticsearch as root.</div></pre></td></tr></table></figure>
-<h2 id="3-新添加一个elasticsearch用户"><a href="#3-新添加一个elasticsearch用户" class="headerlink" title="3. 新添加一个elasticsearch用户"></a>3. 新添加一个elasticsearch用户</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#添加elasticsearch用户：</span></div><div class="line">$ useradd elasticsearch</div><div class="line"><span class="comment">#给用户elasticsearch设置密码，连续输入2次：</span></div><div class="line">$ passwd elasticsearch</div><div class="line"><span class="comment">#创建一个用户组es:</span></div><div class="line">$ groupadd es</div><div class="line"><span class="comment">#分配elasticsearch到es组:</span></div><div class="line">$ usermod -G es elasticsearch</div><div class="line"><span class="comment">#在elasticsearch 根目录下，给定用户权限。-R表示逐级（N层目录） ， * 表示 任何文件:</span></div><div class="line">$ chown -R elasticsearch:es *</div><div class="line"><span class="comment">#切换到elasticsearch用户:</span></div><div class="line">$ su elasticsearch</div></pre></td></tr></table></figure>
-<h2 id="4-修改配置文件"><a href="#4-修改配置文件" class="headerlink" title="4. 修改配置文件"></a>4. 修改配置文件</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> vi config/elasticsearch.yml</span></div></pre></td></tr></table></figure>
-<p>修改以下内容：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">#cluster name</div><div class="line">cluster.name: my-application</div><div class="line">#节点名称</div><div class="line">node.name: node-1</div><div class="line">path.data: /opt/elasticsearch/elasticsearch-2.2.1/data</div><div class="line">path.logs: /opt/elasticsearch/elasticsearch-2.2.1/logs</div><div class="line">#绑定IP和端口</div><div class="line">network.host: 0.0.0.0</div><div class="line">http.port: 9200</div></pre></td></tr></table></figure>
-<h2 id="5-安装head"><a href="#5-安装head" class="headerlink" title="5. 安装head"></a>5. 安装head</h2><p>head是elasticsearch的可视化工具，可以不用安装head，如果不需要安装，跳过此步骤。</p>
-<p>需要注意的是，es2.x的版本head可直接安装，es5.x以上的版本需要先安装nodejs。</p>
-<h3 id="5-1-ES2-x-x版本安装head"><a href="#5-1-ES2-x-x版本安装head" class="headerlink" title="5.1. ES2.x.x版本安装head"></a>5.1. ES2.x.x版本安装head</h3><p>在<code>/opt/elasticsearch/elasticsearch-2.2.1/</code>目录下新建文件夹：plugins</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> /opt/elasticsearch/elasticsearch-2.2.1/</span></div><div class="line"><span class="meta">$</span><span class="bash"> mkdir plugins</span></div><div class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> elasticsearch/bin</span></div><div class="line"><span class="meta">$</span><span class="bash"> ./plugin install mobz/elasticsearch-head</span></div></pre></td></tr></table></figure>
-<p>安装成功即可。启动es之后，访问<code>http://ip:9200/_plugin/head/</code>即可看到可视化界面。</p>
-<h3 id="5-2-ES5-x-x版本安装head"><a href="#5-2-ES5-x-x版本安装head" class="headerlink" title="5.2 ES5.x.x版本安装head"></a>5.2 ES5.x.x版本安装head</h3><p>ES5.x版本暂时不支持直接安装，但是head作者提供了另一种安装方法。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> git://github.com/mobz/elasticsearch-head.git</span></div><div class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> elasticsearch-head</span></div><div class="line"><span class="meta">$</span><span class="bash"> npm install</span></div><div class="line"><span class="meta">$</span><span class="bash"> npm run start</span></div></pre></td></tr></table></figure>
-<p>然后打开<code>http://localhost:9100/</code>访问即可。</p>
-<p>如果提示未安装node.js，先安装node.js，</p>
-<p>node.js官网：<a href="http://nodejs.cn/download/" target="_blank" rel="external">http://nodejs.cn/download/</a></p>
-<p>选择安装包，我这边是64位linux，下载的是<a href="https://nodejs.org/dist/v8.11.3/node-v8.11.3-linux-x64.tar.xz" target="_blank" rel="external">https://nodejs.org/dist/v8.11.3/node-v8.11.3-linux-x64.tar.xz</a></p>
-<p>解压（注：如果是虚拟机，不要在共享文件夹中解压，会报<code>Cannot create symlink to</code>创建软链的错，请放至linux下解压）：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> xz <span class="_">-d</span> node-v8.11.3-linux-x64.tar.xz</span></div><div class="line"><span class="meta">$</span><span class="bash"> tar -xvf node-v8.11.3-linux-x64.tar</span></div><div class="line"><span class="meta">$</span><span class="bash"> mv node-v8.11.3-linux-x64 nodejs</span></div><div class="line"><span class="meta">#</span><span class="bash">确认一下nodejs下bin目录是否有node 和npm文件，如果有执行软连接，如果没有重新下载执行上边步骤；建立软连接，变为全局:</span></div><div class="line"><span class="meta">$</span><span class="bash"> ln <span class="_">-s</span> /opt/nodejs/bin/npm /usr/<span class="built_in">local</span>/bin/</span></div><div class="line"><span class="meta">$</span><span class="bash"> ln <span class="_">-s</span> /opt/nodejs/bin/node /usr/<span class="built_in">local</span>/bin/</span></div><div class="line"><span class="meta">#</span><span class="bash">检查是否安装成功</span></div><div class="line"><span class="meta">$</span><span class="bash"> node -v</span></div></pre></td></tr></table></figure>
-<h2 id="6-启动ES"><a href="#6-启动ES" class="headerlink" title="6. 启动ES"></a>6. 启动ES</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> /opt/elasticsearch/elasticsearch-2.2.1</span></div><div class="line"><span class="meta">$</span><span class="bash"> su elasticsearch</span></div><div class="line"><span class="meta">$</span><span class="bash"> ./bin/elasticsearch</span></div></pre></td></tr></table></figure>
-<p>再访问<code>http://ip:9200/_plugin/head/</code>即可。</p>
-<h2 id="7-安装IK分词器"><a href="#7-安装IK分词器" class="headerlink" title="7. 安装IK分词器"></a>7. 安装IK分词器</h2><p>在<a href="https://github.com/medcl/elasticsearch-analysis-ik" target="_blank" rel="external">https://github.com/medcl/elasticsearch-analysis-ik</a></p>
-<p>此处选择与es版本对应的ik分词版本，我这里下载的是<code>elasticsearch-analysis-ik-1.8.1.zip</code>，在 <code>/opt/elasticsearch/elasticsearch-2.2.1/plugins</code>目录下新建文件夹：<code>ik</code>;将<code>elasticsearch-analysis-ik-1.8.1.zip</code>的解压文件放入<code>ik</code>目录下，并将解压后的<code>config</code>文件放入 <code>/opt/elasticsearch/elasticsearch-2.2.1/config</code>下面，并改名成<code>ik</code>;</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> unzip elasticsearch-analysis-ik-1.8.1.zip</span></div><div class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> /opt/elasticsearch/elasticsearch-2.2.1/plugins</span></div><div class="line"><span class="meta">$</span><span class="bash"> mkdir ik</span></div><div class="line"><span class="meta">$</span><span class="bash"> cp -rf /opt/elasticsearch/elasticsearch-analysis-ik-1.8.1/ ik/</span></div><div class="line"><span class="meta">$</span><span class="bash"> mv /opt/elasticsearch/elasticsearch-analysis-ik-1.8.1/config /opt/elasticsearch/elasticsearch-2.2.1/config</span></div><div class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> /opt/elasticsearch/elasticsearch-2.2.1/config</span></div><div class="line"><span class="meta">$</span><span class="bash"> mv config ik</span></div></pre></td></tr></table></figure>
-<p>在<code>/config/elasticsearch.yml</code>文件的最后加上一句话：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">index.analysis.analyzer.ik.type : &quot;ik&quot;</div></pre></td></tr></table></figure>
-<p>然后启动es，测试分词效果：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">curl '10.10.13.234:9200/index/_analyze?analyzer=ik&amp;pretty=true' -d '</div><div class="line">&#123;</div><div class="line">"text":"世界如此之大 进口水果"</div><div class="line">&#125;'</div></pre></td></tr></table></figure>
-<p>或者浏览器访问<code>http://ip:9200/_analyze?analyzer=ik&amp;pretty=true&amp;text=sojson在线工具测试分词</code>，即可看到中文分词效果。</p>
-<p>至此，elasticsearch搭建完成，下一篇我们来说下<strong>索引的创建</strong>。</p>
+<p>Elasticsearch的索引别名alias，类似于数据库的视图。因为索引别名alias是映射到之前已创建的索引上的，对你要创建新的索引毫无影响。在创建好新索引之后，我们只需将这别名alias映射到新创建的别名上即可，这些操作只需要在服务器上通过指令操作即可，完全不影响线上服务，实现无缝切换索引。然后再将老的索引删掉即可，以节省空间。</p>
+<h2 id="1-创建一个索引"><a href="#1-创建一个索引" class="headerlink" title="1. 创建一个索引"></a>1. 创建一个索引</h2><p>创建一个索引，名为<code>goods</code>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> curl -XPUT 10.10.13.234:9200/goods</span></div></pre></td></tr></table></figure>
+<h2 id="2-为索引创建mapping"><a href="#2-为索引创建mapping" class="headerlink" title="2. 为索引创建mapping"></a>2. 为索引创建mapping</h2><p>为索引<code>goods</code>创建<code>mapping</code>，这里制定<code>content</code>字段属性使用ik中文分词器，只要制定搜索<code>content</code>内容就会查询出分词之后的关联结果：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> curl -XPOST 10.10.13.234:9200/goods/fulltext/_mapping <span class="_">-d</span><span class="string">'</span></span></div><div class="line">&#123;</div><div class="line">    "fulltext": &#123;</div><div class="line">             "_all": &#123;</div><div class="line">            "analyzer": "ik"</div><div class="line">        &#125;,</div><div class="line">        "properties": &#123;</div><div class="line">            "content": &#123;</div><div class="line">                "type" : "string",</div><div class="line">                "boost" : 8.0,</div><div class="line">                "term_vector" : "with_positions_offsets",</div><div class="line">                "analyzer" : "ik",</div><div class="line">                "include_in_all" : true</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;'</div></pre></td></tr></table></figure>
+<p>这里创建的索引<code>goods</code>，如果未使用别名，程序中也是用<code>goods</code>这个索引名，如果建了新的索引，那么程序也要用新的索引名称，这是不友好的，如果用了索引别名alias就可以解决这个问题，继续看后面的操作。</p>
+<h2 id="3-插入数据"><a href="#3-插入数据" class="headerlink" title="3. 插入数据"></a>3. 插入数据</h2><p>插入一些测试数据：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> curl -XPOST 10.10.13.234:9200/goods/fulltext/1 -H <span class="string">'Content-Type:application/json'</span> <span class="_">-d</span><span class="string">'</span></span></div><div class="line">&#123; "content": "进口华盛顿红蛇果 苹果4个装 单果重约180g 新鲜水果" &#125;'</div><div class="line"><span class="meta"></span></div><div class="line">$<span class="bash"><span class="string"> curl -XPOST 10.10.13.234:9200/goods/fulltext/2 -H '</span>Content-Type:application/json<span class="string">' -d'</span></span></div><div class="line">&#123; "content": "华盛顿苹果礼盒 8个装（4个红蛇果+4个青苹果）单果重约145g-180g 新鲜水果礼盒" &#125;'</div><div class="line"><span class="meta"></span></div><div class="line">$<span class="bash"> curl -XPOST 10.10.13.234:9200/goods/fulltext/4 -H <span class="string">'Content-Type:application/json'</span> <span class="_">-d</span><span class="string">'</span></span></div><div class="line">&#123; "content": "新疆阿克苏冰糖心 约5kg 单果200-250g（7Fresh 专供）" &#125;'</div><div class="line"><span class="meta"></span></div><div class="line">$<span class="bash"><span class="string"> curl -XPOST 10.10.13.234:9200/goods/fulltext/5 -H '</span>Content-Type:application/json<span class="string">' -d'</span></span></div><div class="line">&#123; "content": "果花 珍珠岩 无土栽培基质 颗粒状 保温性能好 园艺用品" &#125;'</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash">查看goods的mpping，后面需要与索引别名的mapping对比</span></div><div class="line"><span class="meta">$</span><span class="bash"> curl -XGET <span class="string">"10.10.13.234:9200/goods/_mapping?pretty"</span></span></div></pre></td></tr></table></figure>
+<h2 id="4-测试分词高亮"><a href="#4-测试分词高亮" class="headerlink" title="4. 测试分词高亮"></a>4. 测试分词高亮</h2><p>测试命中分词高亮：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> curl -XPOST 10.10.13.234:9200/goods/fulltext/_search -H <span class="string">'Content-Type:application/json'</span> <span class="_">-d</span><span class="string">'</span></span></div><div class="line">&#123; "query" : &#123; "match" : &#123; "content" : "进口水果" &#125;&#125;,</div><div class="line">    "highlight" : &#123;</div><div class="line">        "pre_tags" : ["&lt;tag1&gt;", "&lt;tag2&gt;"],</div><div class="line">        "post_tags" : ["&lt;/tag1&gt;", "&lt;/tag2&gt;"],</div><div class="line">        "fields" : &#123;</div><div class="line">            "content" : &#123;&#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;'</div></pre></td></tr></table></figure>
+<h2 id="5-创建索引别名"><a href="#5-创建索引别名" class="headerlink" title="5. 创建索引别名"></a>5. 创建索引别名</h2><p>新建同义词mapping：</p>
+<p>(1) 创建一个索引，这个索引的名称最好带上版本号，比如my_index_v1,my_index_v2等;</p>
+<p>(2) 创建一个指向本索引的同义词。为的是以后不停服更新mapping。</p>
+<p>步骤(1)的索引我们以刚刚创建的<code>goods</code>所以为例，创建别名映射到<code>goods</code>所以上：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> curl -XPOST 10.10.13.234:9200/_aliases <span class="_">-d</span> <span class="string">'  </span></span></div><div class="line">&#123;  </div><div class="line">    "actions": [  </div><div class="line">        &#123; "add": &#123;  </div><div class="line">            "alias": "my_index",  </div><div class="line">            "index": "goods"  </div><div class="line">        &#125;&#125;  </div><div class="line">    ]  </div><div class="line">&#125;'</div></pre></td></tr></table></figure>
+<p>然后查看索引<code>my_index</code>的mapping：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> curl -XGET <span class="string">"10.10.13.234:9200/my_index/_mapping?pretty"</span></span></div></pre></td></tr></table></figure>
+<p>索引<code>my_index</code>与<code>goods</code>的<code>mapping</code>一致。</p>
+<h2 id="6-切换索引"><a href="#6-切换索引" class="headerlink" title="6. 切换索引"></a>6. 切换索引</h2><p>再创建一个索引<code>goods_v2</code>，重复步骤1、2，名称换成<code>goods_v2</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> curl -XPUT 10.10.13.234:9200/goods_v2</span></div><div class="line"><span class="meta">$</span><span class="bash"> curl -XPOST 10.10.13.234:9200/goods_v2/fulltext/_mapping <span class="_">-d</span><span class="string">'</span></span></div><div class="line">&#123;</div><div class="line">    "fulltext": &#123;</div><div class="line">             "_all": &#123;</div><div class="line">            "analyzer": "ik"</div><div class="line">        &#125;,</div><div class="line">        "properties": &#123;</div><div class="line">            "content": &#123;</div><div class="line">                "type" : "string",</div><div class="line">                "boost" : 8.0,</div><div class="line">                "term_vector" : "with_positions_offsets",</div><div class="line">                "analyzer" : "ik",</div><div class="line">                "include_in_all" : true</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;'</div></pre></td></tr></table></figure>
+<p>插入测试数：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> curl -XPOST 10.10.13.234:9200/goods_v2/fulltext/1 -H <span class="string">'Content-Type:application/json'</span> <span class="_">-d</span><span class="string">'</span></span></div><div class="line">&#123; "content": "进口华盛顿红蛇果 苹果4个装 单果重约180g 新鲜水果",</div><div class="line">"number": 21&#125;'</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"><span class="string">查看goods_v2的mpping，后面需要与索引别名的mapping对比</span></span></div><div class="line"><span class="meta">$</span><span class="bash"><span class="string"> curl -XGET "10.10.13.234:9200/goods_v2/_mapping?pretty"</span></span></div></pre></td></tr></table></figure>
+<p><strong>重点是更换索引的操作</strong>，将<code>my_index</code>别名切换映射到<code>goods_v2</code>上：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> curl -XPOST 10.10.13.234:9200/_aliases <span class="_">-d</span> <span class="string">'</span></span></div><div class="line">&#123;</div><div class="line">    "actions": [</div><div class="line">        &#123; "remove": &#123;</div><div class="line">            "alias": "my_index",</div><div class="line">            "index": "goods"</div><div class="line">        &#125;&#125;,</div><div class="line">        &#123; "add": &#123;</div><div class="line">            "alias": "my_index",</div><div class="line">            "index": "goods_v2"</div><div class="line">        &#125;&#125;</div><div class="line">    ]</div><div class="line">&#125;'</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"><span class="string">查看my_index的mpping，与前面goods_v2的mapping对比</span></span></div><div class="line"><span class="meta">$</span><span class="bash"><span class="string"> curl -XGET "10.10.13.234:9200/my_index/_mapping?pretty"</span></span></div></pre></td></tr></table></figure>
+<p>我们可以对比索引<code>my_index</code>与<code>goods_v2</code>的<code>mapping</code>是一致的，索引切换成功。</p>
+<p>创建了索引别名alias的话，程序中制定这个<code>my_index</code>这个别名即可，后需要创建新索引，只需切换索引映射到新索引上即可，实现不停服更新mapping。</p>
+<p>下一篇我们来说下通过<strong>创建spring boot工程，通过es的java api操作es，实现分页查询和中文分词检索</strong>的功能。</p>
 
         
         </div>
@@ -297,7 +291,7 @@
 
 </div>
 
-    <a data-url="https://wonderomg.github.io/2018/05/15/Elasticsearch实践(1)搭建及IK中文分词/" data-id="cjj76v2030000lwhgqxok1is1" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="https://wonderomg.github.io/2018/05/16/Elasticsearch实践索引及索引别名alias/" data-id="cjj778grg0009j8hgrb7pw0o4" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -372,19 +366,19 @@
         
 <nav id="article-nav">
     
-        <a href="/2018/05/16/Elasticsearch实践(2)索引及索引别名alias/" id="article-nav-newer" class="article-nav-link-wrap">
+        <a href="/2018/05/17/Elasticsearch实践api分页查询/" id="article-nav-newer" class="article-nav-link-wrap">
             <strong class="article-nav-caption">上一篇</strong>
             <div class="article-nav-title">
                 
-                    Elasticsearch实践(2)-索引及索引别名alias
+                    Elasticsearch实践(3)-api分页查询
                 
             </div>
         </a>
     
     
-        <a href="/2018/03/15/Packet for query is too large/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2018/05/15/Elasticsearch实践搭建及IK中文分词/" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">Packet for query is too large (84 &gt; -1).</div>
+            <div class="article-nav-title">Elasticsearch实践(1)-搭建及IK中文分词</div>
         </a>
     
 </nav>
@@ -414,7 +408,7 @@
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/05/17/Elasticsearch实践(3)api分页查询/" class="thumbnail">
+                            <a href="/2018/05/17/Elasticsearch实践api分页查询/" class="thumbnail">
     
     
         <span style="background-image:url(https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1529643264225&amp;di=cb242c448c2a3bab04ce1acab4135689&amp;imgtype=0&amp;src=http%3A%2F%2Fjbcdn2.b0.upaiyun.com%2F2017%2F10%2Fc6cf4b2000277c64f55e00cf6d2f294f.png)" alt="Elasticsearch实践(3)-api分页查询" class="thumbnail-image"></span>
@@ -425,7 +419,7 @@
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/elasticsearch/">elasticsearch</a></p>
-                            <p class="item-title"><a href="/2018/05/17/Elasticsearch实践(3)api分页查询/" class="title">Elasticsearch实践(3)-api分页查询</a></p>
+                            <p class="item-title"><a href="/2018/05/17/Elasticsearch实践api分页查询/" class="title">Elasticsearch实践(3)-api分页查询</a></p>
                             <p class="item-date"><time datetime="2018-05-16T16:00:00.000Z" itemprop="datePublished">2018-05-17</time></p>
                         </div>
                     </li>
@@ -433,7 +427,7 @@
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/05/16/Elasticsearch实践(2)索引及索引别名alias/" class="thumbnail">
+                            <a href="/2018/05/16/Elasticsearch实践索引及索引别名alias/" class="thumbnail">
     
     
         <span style="background-image:url(https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1529643264225&amp;di=cb242c448c2a3bab04ce1acab4135689&amp;imgtype=0&amp;src=http%3A%2F%2Fjbcdn2.b0.upaiyun.com%2F2017%2F10%2Fc6cf4b2000277c64f55e00cf6d2f294f.png)" alt="Elasticsearch实践(2)-索引及索引别名alias" class="thumbnail-image"></span>
@@ -444,7 +438,7 @@
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/elasticsearch/">elasticsearch</a></p>
-                            <p class="item-title"><a href="/2018/05/16/Elasticsearch实践(2)索引及索引别名alias/" class="title">Elasticsearch实践(2)-索引及索引别名alias</a></p>
+                            <p class="item-title"><a href="/2018/05/16/Elasticsearch实践索引及索引别名alias/" class="title">Elasticsearch实践(2)-索引及索引别名alias</a></p>
                             <p class="item-date"><time datetime="2018-05-15T16:00:00.000Z" itemprop="datePublished">2018-05-16</time></p>
                         </div>
                     </li>
@@ -452,7 +446,7 @@
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/05/15/Elasticsearch实践(1)搭建及IK中文分词/" class="thumbnail">
+                            <a href="/2018/05/15/Elasticsearch实践搭建及IK中文分词/" class="thumbnail">
     
     
         <span style="background-image:url(https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1529643264225&amp;di=cb242c448c2a3bab04ce1acab4135689&amp;imgtype=0&amp;src=http%3A%2F%2Fjbcdn2.b0.upaiyun.com%2F2017%2F10%2Fc6cf4b2000277c64f55e00cf6d2f294f.png)" alt="Elasticsearch实践(1)-搭建及IK中文分词" class="thumbnail-image"></span>
@@ -463,7 +457,7 @@
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/elasticsearch/">elasticsearch</a></p>
-                            <p class="item-title"><a href="/2018/05/15/Elasticsearch实践(1)搭建及IK中文分词/" class="title">Elasticsearch实践(1)-搭建及IK中文分词</a></p>
+                            <p class="item-title"><a href="/2018/05/15/Elasticsearch实践搭建及IK中文分词/" class="title">Elasticsearch实践(1)-搭建及IK中文分词</a></p>
                             <p class="item-date"><time datetime="2018-05-14T16:00:00.000Z" itemprop="datePublished">2018-05-15</time></p>
                         </div>
                     </li>
