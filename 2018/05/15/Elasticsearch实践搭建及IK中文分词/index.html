@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="WONDEROMG">
 <meta property="og:description" content="🔍近期在做商品搜索优化，对比了Solr与Elasticsearch的区别，两者都是基于Lucene实现的封装，但es在数据量越大的情况下实时检索性能优于solr，更适用于实时商品搜索，于是选用了es，下面介绍elasticsearch搜索引擎的搭建及使用，这里使用的是2.2.1的es版本，以及1.8.1的ik分词版本。">
 <meta property="og:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1529643264225&di=cb242c448c2a3bab04ce1acab4135689&imgtype=0&src=http%3A%2F%2Fjbcdn2.b0.upaiyun.com%2F2017%2F10%2Fc6cf4b2000277c64f55e00cf6d2f294f.png">
-<meta property="og:updated_time" content="2018-06-22T14:05:55.911Z">
+<meta property="og:updated_time" content="2018-09-18T15:09:00.872Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Elasticsearch实践(1)-搭建及IK中文分词">
 <meta name="twitter:description" content="🔍近期在做商品搜索优化，对比了Solr与Elasticsearch的区别，两者都是基于Lucene实现的封装，但es在数据量越大的情况下实时检索性能优于solr，更适用于实时商品搜索，于是选用了es，下面介绍elasticsearch搜索引擎的搭建及使用，这里使用的是2.2.1的es版本，以及1.8.1的ik分词版本。">
@@ -279,7 +279,7 @@
 <h2 id="6-启动ES"><a href="#6-启动ES" class="headerlink" title="6. 启动ES"></a>6. 启动ES</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> /opt/elasticsearch/elasticsearch-2.2.1</span></div><div class="line"><span class="meta">$</span><span class="bash"> su elasticsearch</span></div><div class="line"><span class="meta">$</span><span class="bash"> ./bin/elasticsearch</span></div></pre></td></tr></table></figure>
 <p>再访问<code>http://ip:9200/_plugin/head/</code>即可。</p>
 <h2 id="7-安装IK分词器"><a href="#7-安装IK分词器" class="headerlink" title="7. 安装IK分词器"></a>7. 安装IK分词器</h2><p>在<a href="https://github.com/medcl/elasticsearch-analysis-ik" target="_blank" rel="external">https://github.com/medcl/elasticsearch-analysis-ik</a></p>
-<p>此处选择与es版本对应的ik分词版本，我这里下载的是<code>elasticsearch-analysis-ik-1.8.1.zip</code>，在 <code>/opt/elasticsearch/elasticsearch-2.2.1/plugins</code>目录下新建文件夹：<code>ik</code>;将<code>elasticsearch-analysis-ik-1.8.1.zip</code>的解压文件放入<code>ik</code>目录下，并将解压后的<code>config</code>文件放入 <code>/opt/elasticsearch/elasticsearch-2.2.1/config</code>下面，并改名成<code>ik</code>;</p>
+<p>此处选择与es版本对应的ik分词版本，我这里下载的是<a href="https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v1.8.1/elasticsearch-analysis-ik-1.8.1.zip" target="_blank" rel="external">elasticsearch-analysis-ik-1.8.1.zip</a>，在 <code>/opt/elasticsearch/elasticsearch-2.2.1/plugins</code>目录下新建文件夹：<code>ik</code>;将<code>elasticsearch-analysis-ik-1.8.1.zip</code>的解压文件放入<code>ik</code>目录下，并将解压后的<code>config</code>文件放入 <code>/opt/elasticsearch/elasticsearch-2.2.1/config</code>下面，并改名成<code>ik</code>;</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> unzip elasticsearch-analysis-ik-1.8.1.zip</span></div><div class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> /opt/elasticsearch/elasticsearch-2.2.1/plugins</span></div><div class="line"><span class="meta">$</span><span class="bash"> mkdir ik</span></div><div class="line"><span class="meta">$</span><span class="bash"> cp -rf /opt/elasticsearch/elasticsearch-analysis-ik-1.8.1/ ik/</span></div><div class="line"><span class="meta">$</span><span class="bash"> mv /opt/elasticsearch/elasticsearch-analysis-ik-1.8.1/config /opt/elasticsearch/elasticsearch-2.2.1/config</span></div><div class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> /opt/elasticsearch/elasticsearch-2.2.1/config</span></div><div class="line"><span class="meta">$</span><span class="bash"> mv config ik</span></div></pre></td></tr></table></figure>
 <p>在<code>/config/elasticsearch.yml</code>文件的最后加上一句话：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">index.analysis.analyzer.ik.type : &quot;ik&quot;</div></pre></td></tr></table></figure>
@@ -297,7 +297,7 @@
 
 </div>
 
-    <a data-url="https://wonderomg.github.io/2018/05/15/Elasticsearch实践搭建及IK中文分词/" data-id="cjj77dlmw0002i0hgqgb4xhir" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="https://wonderomg.github.io/2018/05/15/Elasticsearch实践搭建及IK中文分词/" data-id="cjm7unc1l000014hg5p6di05a" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
