@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="WONDEROMG">
 <meta property="og:description" content="elasticsearch系列： (1)Elasticsearch实践(1)-搭建及IK中文分词 (2)Elasticsearch实践(2)-索引及索引别名alias (3)Elasticsearch实践(3)-api分页查询 es分页有两种，from size浅分页和scroll深分页，这里对这两种分页都做了实现，使用的是es的java api。from size类似于mysql的limit分页">
 <meta property="og:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1529643264225&di=cb242c448c2a3bab04ce1acab4135689&imgtype=0&src=http%3A%2F%2Fjbcdn2.b0.upaiyun.com%2F2017%2F10%2Fc6cf4b2000277c64f55e00cf6d2f294f.png">
-<meta property="og:updated_time" content="2018-09-26T13:58:24.275Z">
+<meta property="og:updated_time" content="2018-09-26T14:00:57.822Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Elasticsearch实践(3)-api分页查询">
 <meta name="twitter:description" content="elasticsearch系列： (1)Elasticsearch实践(1)-搭建及IK中文分词 (2)Elasticsearch实践(2)-索引及索引别名alias (3)Elasticsearch实践(3)-api分页查询 es分页有两种，from size浅分页和scroll深分页，这里对这两种分页都做了实现，使用的是es的java api。from size类似于mysql的limit分页">
@@ -313,7 +313,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -XGET "10.10.13.234:9200/jd_mall_v2/_settings?preserve_existing=true"</div></pre></td></tr></table></figure>
 <p>(2)更改index.max_result_window</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -XPUT "10.10.13.234:9200/jd_mall_v2/_settings?preserve_existing=true" -d '&#123; "index" : &#123; "max_result_window" : 100000000&#125;&#125;'</div></pre></td></tr></table></figure>
-<p>设置max_result_window的时候需要先关闭索引，不然会报错<code>Can&#39;t update non dynamic settings[[index.preserve_existing]] for open indices</code>的错误，可以通过指令关闭，也可以通过head可视化界面关闭和开启，也可以通过1.7和1.8的api关闭和开启。</p>
+<p>设置max_result_window的时候需要先关闭索引，不然会报错<code>Can&#39;t update non dynamic settings[[index.preserve_existing]] for open indices</code>的错误，可以通过指令关闭，也可以通过head可视化界面关闭和开启，也可以通过上述步骤1.7和1.8的api关闭和开启。</p>
 <h2 id="6-排序"><a href="#6-排序" class="headerlink" title="6. 排序"></a>6. 排序</h2><p>分页的时候我们可以还有排序的场景，java api的话增加代码：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">searchRequestBuilder.addSort(<span class="string">"publish_time"</span>, SortOrder.DESC);</div></pre></td></tr></table></figure>
 <p>按照某个字段排序的话，hit.getScore()将会失效<br>如果是scroll分页无法进行排序。</p>
