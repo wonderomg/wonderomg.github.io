@@ -158,7 +158,7 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                16
+                18
                 <span>文章</span>
             </div>
             <div class="article-info-block">
@@ -205,7 +205,7 @@
 
             
             <section id="main">
-    <article id="post-mongodb学习笔记--$elemMatch操作符的使用" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-mybatis_operator" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -213,7 +213,7 @@
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2017/02/21/mongodb学习笔记--$elemMatch操作符的使用/">mongodb学习笔记--$elemMatch操作符的使用</a>
+            <a class="article-title" href="/2017/04/20/mybatis_operator/">mybatis中的#{}和${}的区别</a>
         </h1>
     
 
@@ -222,7 +222,271 @@
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2017/02/21/mongodb学习笔记--$elemMatch操作符的使用/">
+        <a href="/2017/04/20/mybatis_operator/">
+            <time datetime="2017-04-19T16:00:00.000Z" itemprop="datePublished">2017-04-20</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/mybatis/">mybatis</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/mybatis/">mybatis</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p>　　在使用<code>mybatis</code>时都会用到<code>#{}</code>和<code>${}</code>符号来进行传值，我们来看下两者的区别。</p>
+            <p class="article-more-link">
+                <a href="/2017/04/20/mybatis_operator/#more">查看更多</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://wonderomg.github.io/2017/04/20/mybatis_operator/" data-id="cki0bfuaw000zy0hghzjdu3o3" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-前后端分离，前端跨域访问后台的两种方式" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2017/02/28/前后端分离，前端跨域访问后台的两种方式/">前后端分离，前端跨域访问后台的两种方式</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2017/02/28/前后端分离，前端跨域访问后台的两种方式/">
+            <time datetime="2017-02-27T16:00:00.000Z" itemprop="datePublished">2017-02-28</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/Web/">Web</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Java/">Java</a>, <a class="tag-link" href="/tags/Web/">Web</a>, <a class="tag-link" href="/tags/跨域/">跨域</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><blockquote>
+<p>​       在我们做web项目项目时，前端和后端都是不同的开发人员负责，到某个时间点必然要进行前后端数据交互，这时候就会遇到跨域问题。这里介绍两种解决方式。</p>
+</blockquote></p>
+            <p class="article-more-link">
+                <a href="/2017/02/28/前后端分离，前端跨域访问后台的两种方式/#more">查看更多</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://wonderomg.github.io/2017/02/28/前后端分离，前端跨域访问后台的两种方式/" data-id="cki0bfuby0015y0hgyf36u70m" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-mongodb学习笔记elemMatch操作符的使用" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2017/02/21/mongodb学习笔记elemMatch操作符的使用/">mongodb学习笔记--$elemMatch操作符的使用</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2017/02/21/mongodb学习笔记elemMatch操作符的使用/">
             <time datetime="2017-02-20T16:00:00.000Z" itemprop="datePublished">2017-02-21</time>
         </a>
     </div>
@@ -249,7 +513,7 @@
         
             <p><p>　　mongodb提供了很多操作符以便更加方便快捷地操作数据，下面我们来认识一下查询操作符<code>$elemMatch</code>，<code>$elemMatch</code>投影操作符将限制查询返回的数组字段的内容只包含匹配<code>$elemMatch</code>条件的数组元素。</p></p>
             <p class="article-more-link">
-                <a href="/2017/02/21/mongodb学习笔记--$elemMatch操作符的使用/#more">查看更多</a>
+                <a href="/2017/02/21/mongodb学习笔记elemMatch操作符的使用/#more">查看更多</a>
             </p>
         
         </div>
@@ -260,7 +524,7 @@
 
 </div>
 
-    <a data-url="https://wonderomg.github.io/2017/02/21/mongodb学习笔记--$elemMatch操作符的使用/" data-id="ckh97h0b9000n4ghgkw2zczjo" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="https://wonderomg.github.io/2017/02/21/mongodb学习笔记elemMatch操作符的使用/" data-id="cki0bfua0000py0hgyxe1j3m7" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -392,7 +656,7 @@
 
 </div>
 
-    <a data-url="https://wonderomg.github.io/2017/01/10/Socket_send函数和recv函数详解/" data-id="ckh97h0ad000d4ghgjjejur46" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="https://wonderomg.github.io/2017/01/10/Socket_send函数和recv函数详解/" data-id="cki0bfu8u000fy0hgjlrm2z7i" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -468,7 +732,7 @@
 
 
 
-    <article id="post-mongodb学习笔记--C++操作mongodb" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-mongodb学习笔记C++操作mongodb" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -476,7 +740,7 @@
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2016/11/10/mongodb学习笔记--C++操作mongodb/">mongodb学习笔记--C++操作mongodb</a>
+            <a class="article-title" href="/2016/11/10/mongodb学习笔记C++操作mongodb/">mongodb学习笔记--C++操作mongodb</a>
         </h1>
     
 
@@ -485,7 +749,7 @@
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2016/11/10/mongodb学习笔记--C++操作mongodb/">
+        <a href="/2016/11/10/mongodb学习笔记C++操作mongodb/">
             <time datetime="2016-11-09T16:00:00.000Z" itemprop="datePublished">2016-11-10</time>
         </a>
     </div>
@@ -512,7 +776,7 @@
         
             <p><p>　　在学习mongodb过程当中，必须学习的就是用C++（Java、PHP、C#等）操作mongodb，这里讲述C++操作mongodb，在官方提供的mongo-cxx-driver驱动中有相关的操作例子，可以结合例子学习，目录是<code>mongo-cxx-driver-legacy-1.0.0-rc0\src\mongo\client\examples</code>，这里针对几个重要的点讲述。</p></p>
             <p class="article-more-link">
-                <a href="/2016/11/10/mongodb学习笔记--C++操作mongodb/#more">查看更多</a>
+                <a href="/2016/11/10/mongodb学习笔记C++操作mongodb/#more">查看更多</a>
             </p>
         
         </div>
@@ -523,7 +787,7 @@
 
 </div>
 
-    <a data-url="https://wonderomg.github.io/2016/11/10/mongodb学习笔记--C++操作mongodb/" data-id="ckh97h0bj000p4ghgsec9quv3" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="https://wonderomg.github.io/2016/11/10/mongodb学习笔记C++操作mongodb/" data-id="cki0bfu9p000ny0hgsreyx56d" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -654,7 +918,7 @@
 
 </div>
 
-    <a data-url="https://wonderomg.github.io/2016/04/19/关于=null和clear()问题(Java性能篇)/" data-id="ckh97h0c4000z4ghgbea4m8qm" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="https://wonderomg.github.io/2016/04/19/关于=null和clear()问题(Java性能篇)/" data-id="cki0bfubf0013y0hguczwxkro" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -785,7 +1049,7 @@
 
 </div>
 
-    <a data-url="https://wonderomg.github.io/2015/07/21/C++中sprintf函数的用法/" data-id="ckh97h08i00004ghgjfjsb80f" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="https://wonderomg.github.io/2015/07/21/C++中sprintf函数的用法/" data-id="cki0bfu5e0000y0hg250y0p79" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -916,7 +1180,7 @@
 
 </div>
 
-    <a data-url="https://wonderomg.github.io/2015/02/20/TCP长连接与短连接的区别/" data-id="ckh97h0ak000f4ghgti4nvvl3" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="https://wonderomg.github.io/2015/02/20/TCP长连接与短连接的区别/" data-id="cki0bfu8m000dy0hgdj90495o" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1008,10 +1272,48 @@
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/2020/09/25/mongodb学习笔记实现自增ID序列/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1606493854508&amp;di=bc438f7b1721ac9e5be21eeed86bc26e&amp;imgtype=0&amp;src=http%3A%2F%2Fg.hiphotos.baidu.com%2Fbaike%2Fpic%2Fitem%2F3b292df5e0fe99257ad18e3d35a85edf8cb171fa.jpg)" alt="mongodb学习笔记--实现自增ID序列" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/mongodb/">mongodb</a></p>
+                            <p class="item-title"><a href="/2020/09/25/mongodb学习笔记实现自增ID序列/" class="title">mongodb学习笔记--实现自增ID序列</a></p>
+                            <p class="item-date"><time datetime="2020-09-25T12:46:25.000Z" itemprop="datePublished">2020-09-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2020/09/13/mongodb学习笔记分页查询优化/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1606493854508&amp;di=bc438f7b1721ac9e5be21eeed86bc26e&amp;imgtype=0&amp;src=http%3A%2F%2Fg.hiphotos.baidu.com%2Fbaike%2Fpic%2Fitem%2F3b292df5e0fe99257ad18e3d35a85edf8cb171fa.jpg)" alt="mongodb学习笔记--分页查询优化" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/mongodb/">mongodb</a></p>
+                            <p class="item-title"><a href="/2020/09/13/mongodb学习笔记分页查询优化/" class="title">mongodb学习笔记--分页查询优化</a></p>
+                            <p class="item-date"><time datetime="2020-09-13T13:32:20.000Z" itemprop="datePublished">2020-09-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/2018/05/17/Elasticsearch实践api分页查询/" class="thumbnail">
     
     
-        <span style="background-image:url(https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1529643264225&amp;di=cb242c448c2a3bab04ce1acab4135689&amp;imgtype=0&amp;src=http%3A%2F%2Fjbcdn2.b0.upaiyun.com%2F2017%2F10%2Fc6cf4b2000277c64f55e00cf6d2f294f.png)" alt="Elasticsearch实践(3)-api分页查询" class="thumbnail-image"></span>
+        <span style="background-image:url(https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=4076020054,869666991&amp;fm=26&amp;gp=0.jpg)" alt="Elasticsearch实践(3)-api分页查询" class="thumbnail-image"></span>
     
 </a>
 
@@ -1030,7 +1332,7 @@
                             <a href="/2018/05/16/Elasticsearch实践索引及索引别名alias/" class="thumbnail">
     
     
-        <span style="background-image:url(https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1529643264225&amp;di=cb242c448c2a3bab04ce1acab4135689&amp;imgtype=0&amp;src=http%3A%2F%2Fjbcdn2.b0.upaiyun.com%2F2017%2F10%2Fc6cf4b2000277c64f55e00cf6d2f294f.png)" alt="Elasticsearch实践(2)-索引及索引别名alias" class="thumbnail-image"></span>
+        <span style="background-image:url(https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=4076020054,869666991&amp;fm=26&amp;gp=0.jpg)" alt="Elasticsearch实践(2)-索引及索引别名alias" class="thumbnail-image"></span>
     
 </a>
 
@@ -1049,7 +1351,7 @@
                             <a href="/2018/05/15/Elasticsearch实践搭建及IK中文分词/" class="thumbnail">
     
     
-        <span style="background-image:url(https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1529643264225&amp;di=cb242c448c2a3bab04ce1acab4135689&amp;imgtype=0&amp;src=http%3A%2F%2Fjbcdn2.b0.upaiyun.com%2F2017%2F10%2Fc6cf4b2000277c64f55e00cf6d2f294f.png)" alt="Elasticsearch实践(1)-搭建及IK中文分词" class="thumbnail-image"></span>
+        <span style="background-image:url(https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=4076020054,869666991&amp;fm=26&amp;gp=0.jpg)" alt="Elasticsearch实践(1)-搭建及IK中文分词" class="thumbnail-image"></span>
     
 </a>
 
@@ -1062,44 +1364,6 @@
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/03/15/Packet for query is too large/" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1522683004066&amp;di=e2500c85d9aa9d7c8b6c1329e31d50b0&amp;imgtype=0&amp;src=http%3A%2F%2Fmedia.fashiongroup.com%2Ffashionmag%2Fnewsletters%2Fimages%2F20110928%2Fefu_12386fac-2e69-4d75-83b6-486dc6c0600e.jpg)" alt="Packet for query is too large (84 &gt; -1)." class="thumbnail-image"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/ibatis/">ibatis</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/ibatis/mysql/">mysql</a></p>
-                            <p class="item-title"><a href="/2018/03/15/Packet for query is too large/" class="title">Packet for query is too large (84 &gt; -1).</a></p>
-                            <p class="item-date"><time datetime="2018-03-14T16:00:00.000Z" itemprop="datePublished">2018-03-15</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2017/09/15/zookeeper提示Unable to read additional data from server sessionid 0x/" class="thumbnail">
-    
-    
-        <span style="background-image:url(http://static.oschina.net/uploads/img/201308/08171345_l5K3.jpg)" alt="zookeeper提示Unable to read additional data from server sessionid 0x" class="thumbnail-image"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/zookeeper/">zookeeper</a></p>
-                            <p class="item-title"><a href="/2017/09/15/zookeeper提示Unable to read additional data from server sessionid 0x/" class="title">zookeeper提示Unable to read additional data from server sessionid 0x</a></p>
-                            <p class="item-date"><time datetime="2017-09-14T16:00:00.000Z" itemprop="datePublished">2017-09-15</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -1109,7 +1373,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C++</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/C/MongoDB/">MongoDB</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C/Socket/">Socket</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web/">Web</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/elasticsearch/">elasticsearch</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ibatis/">ibatis</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/ibatis/mysql/">mysql</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/ibatis/mysql/resin/">resin</a><span class="category-list-count">1</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mongodb/">mongodb</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mybatis/">mybatis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tcp/">tcp</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/zookeeper/">zookeeper</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随记/">随记</a><span class="category-list-count">1</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C++</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/C/MongoDB/">MongoDB</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C/Socket/">Socket</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web/">Web</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/elasticsearch/">elasticsearch</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ibatis/">ibatis</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/ibatis/mysql/">mysql</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/ibatis/mysql/resin/">resin</a><span class="category-list-count">1</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mongodb/">mongodb</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mybatis/">mybatis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tcp/">tcp</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/zookeeper/">zookeeper</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随记/">随记</a><span class="category-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -1118,7 +1382,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">1</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">九月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -1127,7 +1391,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">标签</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB/">MongoDB</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpingMvc/">SpingMvc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringData/">SpringData</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/">Web</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/alias/">alias</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/crontab/">crontab</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch/">elasticsearch</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elemMatch条件操作符/">elemMatch条件操作符</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ibatis/">ibatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/idea/">idea</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ik中文分词/">ik中文分词</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/maven/">maven</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mongodb/">mongodb</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/resin/">resin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/">socket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sprintf/">sprintf</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tcp/">tcp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zookeeper/">zookeeper</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分页查询/">分页查询</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能优化/">性能优化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/跨域/">跨域</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随记/">随记</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/集群/">集群</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB/">MongoDB</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpingMvc/">SpingMvc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringData/">SpringData</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/">Web</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/alias/">alias</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/crontab/">crontab</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch/">elasticsearch</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elemMatch条件操作符/">elemMatch条件操作符</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ibatis/">ibatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/idea/">idea</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ik中文分词/">ik中文分词</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/maven/">maven</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mongodb/">mongodb</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/resin/">resin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/">socket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sprintf/">sprintf</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tcp/">tcp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zookeeper/">zookeeper</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分页查询/">分页查询</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能优化/">性能优化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/跨域/">跨域</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随记/">随记</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/集群/">集群</a><span class="tag-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -1136,7 +1400,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/C/" style="font-size: 15px;">C++</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/SpingMvc/" style="font-size: 10px;">SpingMvc</a> <a href="/tags/SpringData/" style="font-size: 10px;">SpringData</a> <a href="/tags/Web/" style="font-size: 10px;">Web</a> <a href="/tags/alias/" style="font-size: 10px;">alias</a> <a href="/tags/crontab/" style="font-size: 10px;">crontab</a> <a href="/tags/elasticsearch/" style="font-size: 20px;">elasticsearch</a> <a href="/tags/elemMatch条件操作符/" style="font-size: 10px;">elemMatch条件操作符</a> <a href="/tags/ibatis/" style="font-size: 10px;">ibatis</a> <a href="/tags/idea/" style="font-size: 10px;">idea</a> <a href="/tags/ik中文分词/" style="font-size: 20px;">ik中文分词</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mongodb/" style="font-size: 10px;">mongodb</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/resin/" style="font-size: 10px;">resin</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/sprintf/" style="font-size: 10px;">sprintf</a> <a href="/tags/tcp/" style="font-size: 10px;">tcp</a> <a href="/tags/zookeeper/" style="font-size: 15px;">zookeeper</a> <a href="/tags/分页查询/" style="font-size: 10px;">分页查询</a> <a href="/tags/性能优化/" style="font-size: 10px;">性能优化</a> <a href="/tags/跨域/" style="font-size: 10px;">跨域</a> <a href="/tags/随记/" style="font-size: 10px;">随记</a> <a href="/tags/集群/" style="font-size: 10px;">集群</a>
+            <a href="/tags/C/" style="font-size: 15px;">C++</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/SpingMvc/" style="font-size: 10px;">SpingMvc</a> <a href="/tags/SpringData/" style="font-size: 10px;">SpringData</a> <a href="/tags/Web/" style="font-size: 10px;">Web</a> <a href="/tags/alias/" style="font-size: 10px;">alias</a> <a href="/tags/crontab/" style="font-size: 10px;">crontab</a> <a href="/tags/elasticsearch/" style="font-size: 20px;">elasticsearch</a> <a href="/tags/elemMatch条件操作符/" style="font-size: 10px;">elemMatch条件操作符</a> <a href="/tags/ibatis/" style="font-size: 10px;">ibatis</a> <a href="/tags/idea/" style="font-size: 10px;">idea</a> <a href="/tags/ik中文分词/" style="font-size: 20px;">ik中文分词</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mongodb/" style="font-size: 20px;">mongodb</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/resin/" style="font-size: 10px;">resin</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/sprintf/" style="font-size: 10px;">sprintf</a> <a href="/tags/tcp/" style="font-size: 10px;">tcp</a> <a href="/tags/zookeeper/" style="font-size: 15px;">zookeeper</a> <a href="/tags/分页查询/" style="font-size: 15px;">分页查询</a> <a href="/tags/性能优化/" style="font-size: 10px;">性能优化</a> <a href="/tags/跨域/" style="font-size: 10px;">跨域</a> <a href="/tags/随记/" style="font-size: 10px;">随记</a> <a href="/tags/集群/" style="font-size: 10px;">集群</a>
         </div>
     </div>
 
