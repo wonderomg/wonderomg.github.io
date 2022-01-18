@@ -330,7 +330,7 @@
   </url>
   
   <url>
-    <loc>https://wonderomg.github.io/tags/%E9%9B%86%E7%BE%A4/</loc>
+    <loc>https://wonderomg.github.io/tags/%E9%9A%8F%E8%AE%B0/</loc>
     <lastmod>2022-01-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -351,6 +351,13 @@
   </url>
   
   <url>
+    <loc>https://wonderomg.github.io/tags/%E9%9B%86%E7%BE%A4/</loc>
+    <lastmod>2022-01-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://wonderomg.github.io/tags/Web/</loc>
     <lastmod>2022-01-18</lastmod>
     <changefreq>weekly</changefreq>
@@ -359,13 +366,6 @@
   
   <url>
     <loc>https://wonderomg.github.io/tags/%E8%B7%A8%E5%9F%9F/</loc>
-    <lastmod>2022-01-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://wonderomg.github.io/tags/%E9%9A%8F%E8%AE%B0/</loc>
     <lastmod>2022-01-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -479,7 +479,7 @@
   </url>
   
   <url>
-    <loc>https://wonderomg.github.io/categories/zookeeper/</loc>
+    <loc>https://wonderomg.github.io/categories/%E9%9A%8F%E8%AE%B0/</loc>
     <lastmod>2022-01-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -487,6 +487,13 @@
   
   <url>
     <loc>https://wonderomg.github.io/categories/Java/</loc>
+    <lastmod>2022-01-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://wonderomg.github.io/categories/zookeeper/</loc>
     <lastmod>2022-01-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -501,13 +508,6 @@
   
   <url>
     <loc>https://wonderomg.github.io/categories/ibatis/mysql/resin/</loc>
-    <lastmod>2022-01-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://wonderomg.github.io/categories/%E9%9A%8F%E8%AE%B0/</loc>
     <lastmod>2022-01-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
