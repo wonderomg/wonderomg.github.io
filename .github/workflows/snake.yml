@@ -16,7 +16,7 @@ jobs:
       - name: Checkout main branch
         uses: actions/checkout@v4
         with:
-          ref: main
+          ref: master
           persist-credentials: true
 
       - name: Generate snake SVG
