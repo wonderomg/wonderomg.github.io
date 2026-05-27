@@ -35,4 +35,4 @@ jobs:
           # 无条件强制覆盖文件
           git add .github/assets/ --force
           git commit -m "force: update snake heatmap [skip ci]" || true
-          git push origin HEAD:main --force
+          git push origin HEAD:master --force
