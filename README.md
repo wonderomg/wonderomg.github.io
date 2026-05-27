@@ -1,6 +1,5 @@
 # wonderomg.github.io
 :octocat:wonderomg page.
-blog
 
 <!--
 **wonderomg/wonderomg** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
