@@ -16,7 +16,7 @@ Here are some ideas to get you started:
 - ⚡ Fun fact: ...
 -->
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./.github/assets/snake-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="./.github/assets/snake.svg">
-  <img alt="snake" src="./.github/assets/snake.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wonderomg/wonderomg/output/github-contribution-grid-snake-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/wonderomg/wonderomg/output/github-contribution-grid-snake.svg">
+  <img alt="github contribution grid snake animation" src="https://raw.githubusercontent.com/wonderomg/wonderomg/output/github-contribution-grid-snake.svg">
 </picture>
