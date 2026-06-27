@@ -11629,8 +11629,8 @@ figure.highlight .section {
 @media screen and (min-width: 769px), print {
   .is-1-column .container,
   .is-2-column .container {
-    width: 96%;
-    max-width: 1088px;
+    width: calc(100% - 192px);
+    max-width: calc(100vw - 192px);
   }
   .is-sticky {
     position: -webkit-sticky;
@@ -11658,11 +11658,9 @@ figure.highlight .section {
   }
 }
 @media screen and (min-width: 1680px) {
+  .is-1-column .container,
   .is-2-column .container {
-    max-width: 1408px;
-  }
-  .is-1-column .container {
-    max-width: 1088px;
+    max-width: min(calc(100vw - 192px), 1408px);
   }
 }
 @media screen and (max-width: 768px) {
