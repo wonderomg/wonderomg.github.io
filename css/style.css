@@ -11101,7 +11101,7 @@ footer.footer .level-end .field {
   box-shadow: 0 4px 10px rgba(0,0,0,0.05), 0 0 1px rgba(0,0,0,0.1);
   border-radius: 4px;
   background-color: #f5f5f5;
-  width: 540px;
+  width: 570px;
   top: 100px;
   bottom: 100px;
 }
@@ -11366,6 +11366,55 @@ figure.highlight .section {
 }
 .level.is-multiline {
   flex-wrap: wrap;
+}
+@media screen and (min-width: 769px), print {
+  .widget.card#toc {
+    max-height: calc(100vh - 3rem);
+    overflow: hidden;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0.75rem;
+    z-index: 98;
+  }
+  .widget.card#toc .card-content {
+    max-height: calc(100vh - 3rem);
+    overflow-y: auto;
+  }
+  .widget.card#toc .menu-list li.is-collapsed > .menu-list {
+    display: none;
+  }
+  .widget.card#toc .menu-list a.level {
+    padding-right: 1.75rem;
+    position: relative;
+  }
+  .widget.card#toc .menu-list .toc-toggle {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    color: inherit;
+    cursor: pointer;
+    display: inline-flex;
+    height: 1.5rem;
+    justify-content: center;
+    margin: 0;
+    opacity: 0.65;
+    padding: 0;
+    position: absolute;
+    right: 0.25rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1.5rem;
+  }
+  .widget.card#toc .menu-list .toc-toggle:hover {
+    opacity: 1;
+  }
+  .widget.card#toc .menu-list .toc-toggle i {
+    font-size: 0.75rem;
+    transition: transform 0.2s ease;
+  }
+  .widget.card#toc .menu-list li.is-collapsed > a .toc-toggle i {
+    transform: rotate(-90deg);
+  }
 }
 @media screen and (max-width: 768px) {
   .widget.card#toc {

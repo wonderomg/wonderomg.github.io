@@ -1,37 +1,26 @@
-$(document).ready(() => {
+(function($, window) {
+  function initBackToTop() {
     const $button = $('#back-to-top');
+    if (!$button.length) return;
+
     const $footer = $('footer.footer');
-    const $mainColumn = $('.column-main');
-    const $leftSidebar = $('.column-left');
-    const $rightSidebar = $('.column-right');
-    let lastScrollTop = 0;
     const rightMargin = 20;
     const bottomMargin = 20;
+    const showOffset = 240;
     let lastState = null;
     const state = {
         base: {
             classname: 'card has-text-centered',
-            left: '',
-            width: 64,
+            right: rightMargin,
+            width: 44,
             bottom: bottomMargin
         }
     };
-    state['desktop-hidden'] = Object.assign({}, state.base, {
+    state.hidden = Object.assign({}, state.base, {
         classname: state.base.classname + ' rise-up'
     });
-    state['desktop-visible'] = Object.assign({}, state['desktop-hidden'], {
-        classname: state['desktop-hidden'].classname + ' fade-in'
-    });
-    state['desktop-dock'] = Object.assign({}, state['desktop-visible'], {
-        classname: state['desktop-visible'].classname + ' fade-in is-rounded',
-        width: 40
-    });
-    state['mobile-hidden'] = Object.assign({}, state.base, {
-        classname: state.base.classname + ' fade-in',
-        right: rightMargin
-    });
-    state['mobile-visible'] = Object.assign({}, state['mobile-hidden'], {
-        classname: state['mobile-hidden'].classname + ' rise-up'
+    state.visible = Object.assign({}, state.hidden, {
+        classname: state.hidden.classname + ' fade-in is-rounded'
     });
 
     function isStateEquals(prev, next) {
@@ -56,35 +45,6 @@ $(document).ready(() => {
         lastState = state;
     }
 
-    function isDesktop() {
-        return window.innerWidth >= 1078;
-    }
-
-    function isTablet() {
-        return window.innerWidth >= 768 && !isDesktop();
-    }
-
-    function isScrollUp() {
-        return $(window).scrollTop() < lastScrollTop && $(window).scrollTop() > 0;
-    }
-
-    function hasLeftSidebar() {
-        return $leftSidebar.length > 0;
-    }
-
-    function hasRightSidebar() {
-        return $rightSidebar.length > 0;
-    }
-
-    function getRightSidebarBottom() {
-        if (!hasRightSidebar()) {
-            return 0;
-        }
-        return Math.max.apply(null, $rightSidebar.find('.widget').map(function() {
-            return $(this).offset().top + $(this).outerHeight(true);
-        }));
-    }
-
     function getScrollTop() {
         return $(window).scrollTop();
     }
@@ -101,52 +61,32 @@ $(document).ready(() => {
         return $button.outerHeight(true);
     }
 
-    function updateScrollTop() {
-        lastScrollTop = $(window).scrollTop();
-    }
-
     function update() {
-        // desktop mode or tablet mode with only right sidebar enabled
-        if (isDesktop() || (isTablet() && !hasLeftSidebar() && hasRightSidebar())) {
-            let nextState;
-            const padding = ($mainColumn.outerWidth() - $mainColumn.width()) / 2;
-            const maxLeft = $(window).width() - getButtonWidth() - rightMargin;
-            const maxBottom = $footer.offset().top + (getButtonHeight() / 2) + bottomMargin;
-            if (getScrollTop() === 0 || getScrollBottom() < getRightSidebarBottom() + padding + getButtonHeight()) {
-                nextState = state['desktop-hidden'];
-            } else if (getScrollBottom() < maxBottom) {
-                nextState = state['desktop-visible'];
-            } else {
-                nextState = Object.assign({}, state['desktop-dock'], {
-                    bottom: getScrollBottom() - maxBottom + bottomMargin
-                });
-            }
-
-            const left = $mainColumn.offset().left + $mainColumn.outerWidth() + padding;
-            nextState = Object.assign({}, nextState, {
-                left: Math.min(left, maxLeft)
-            });
-            applyState(nextState);
-        } else {
-            // mobile and tablet mode
-            if (!isScrollUp()) {
-                applyState(state['mobile-hidden']);
-            } else {
-                applyState(state['mobile-visible']);
-            }
-            updateScrollTop();
+        if (getScrollTop() < showOffset) {
+            applyState(state.hidden);
+            return;
         }
+
+        const footerTop = $footer.length ? $footer.offset().top : Number.POSITIVE_INFINITY;
+        const overlap = Math.max(0, getScrollBottom() + bottomMargin - footerTop);
+        applyState(Object.assign({}, state.visible, {
+            bottom: bottomMargin + overlap
+        }));
     }
 
     update();
-    $(window).resize(update);
-    $(window).scroll(update);
+    $(window).off('resize.icarusBackToTop').on('resize.icarusBackToTop', update);
+    $(window).off('scroll.icarusBackToTop').on('scroll.icarusBackToTop', update);
 
-    $('#back-to-top').on('click', () => {
+    $button.off('click.icarusBackToTop').on('click.icarusBackToTop', () => {
         if (CSS && CSS.supports && CSS.supports('(scroll-behavior: smooth)')) {
             window.scroll({ top: 0, behavior: 'smooth' });
         } else {
             $('body, html').animate({ scrollTop: 0 }, 400);
         }
     });
-});
+  }
+
+  window.icarusInitBackToTop = initBackToTop;
+  $(document).ready(initBackToTop);
+}(jQuery, window));

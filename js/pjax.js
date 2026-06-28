@@ -50,6 +50,9 @@
         if (typeof window.icarusInitPage === 'function') {
             window.icarusInitPage();
         }
+        if (typeof window.icarusInitBackToTop === 'function') {
+            window.icarusInitBackToTop();
+        }
         window.scrollTo(0, 0);
     }
 
