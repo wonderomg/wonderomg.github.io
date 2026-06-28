@@ -289,7 +289,13 @@ function loadInsight(config, translation) {
 
   function gotoLink($item) {
     if ($item && $item.length) {
-      location.href = $item.attr('href');
+      const url = $item.attr('href');
+      $main.removeClass('show');
+      if (window.pjax && typeof window.pjax.loadUrl === 'function') {
+        window.pjax.loadUrl(url);
+      } else {
+        location.href = url;
+      }
     }
   }
 
@@ -314,6 +320,8 @@ function loadInsight(config, translation) {
       if (e.type !== 'click' && !touch) {
         return;
       }
+      e.preventDefault();
+      e.stopPropagation();
       gotoLink($(this));
       touch = false;
     })
